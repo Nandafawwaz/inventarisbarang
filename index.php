@@ -66,34 +66,23 @@ require 'cek.php';
                                                 <th>Harga</th>
                                                 <th>Jumlah</th>
                                                 <th>Total</th>
-<<<<<<< HEAD
                                                 <th>Aksi</th>
-=======
->>>>>>> 110d4f07960d712677b859bdae8dd61a01c8648d
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                             <?php 
                                             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM stock");
-<<<<<<< HEAD
                                             $i = 1;
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) :
-=======
-                                            while ($data=mysqli_fetch_array($ambil_alldatastock)) :
-                                                $i = 1;
->>>>>>> 110d4f07960d712677b859bdae8dd61a01c8648d
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
                                                 $keterangan = $data['keterangan'];
                                                 $harga = $data['harga'];
                                                 $jumlah = $data['jumlah'];
                                                 $total = $data['total'];
-<<<<<<< HEAD
                                                 $idb = $data['idbarang'];
-=======
 
->>>>>>> 110d4f07960d712677b859bdae8dd61a01c8648d
                                             
                                             ?>
 
@@ -105,7 +94,6 @@ require 'cek.php';
                                                 <td><?=$harga?></td>
                                                 <td><?=$jumlah ?></td>
                                                 <td><?=$total ?></td>
-<<<<<<< HEAD
                                                 <td>
                                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$idb;?>">
                                                             Edit
@@ -116,7 +104,9 @@ require 'cek.php';
                                                         </button>
                                                 </td>
 
-                                            </tr>         
+                                            </tr>      
+                                            
+
                                             <!-- Edit Modal -->                                           
                                             <div class="modal fade" id="edit<?=$idb;?>">
                                             <div class="modal-dialog">
@@ -193,11 +183,9 @@ require 'cek.php';
                                             </div>
                                         </div>    
 
-=======
 
                                             </tr>         
                                             
->>>>>>> 110d4f07960d712677b859bdae8dd61a01c8648d
                                             <?php 
                                                 endwhile;
                                             ?>
