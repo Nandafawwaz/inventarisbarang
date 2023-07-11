@@ -34,16 +34,16 @@ if (isset($_POST['barangmasuk'])) {
     $item_barang = $_POST['item_barang'];
     $penerima = $_POST['penerima'];
     $tanggal = $_POST['tanggal'];
-    $jumlah = $_POST['jumlah'];
+    $qty = $_POST['qty'];
 
     $cekstocksekarang = mysqli_query($conn,"select * from stock where idbarang='$item_barang'");
     $ambil_data = mysqli_fetch_array($cekstocksekarang);
 
     $currentstock = $ambil_data['jumlah'];
-    $tambahstock = $currentstock+$jumlah;
+    $tambahstock = $currentstock+$qty;
 
-    $addtomasuk = mysqli_query($conn,"insert into masuk (idbarang, penerima, tanggal, jumlah) values('$item_barang','$penerima','$tanggal','$jumlah')");
-    $updatestockmasuk = mysqli_query($conn,"update stock set jumlah='$tambahstock' where idbarang='$item_barang'");
+    $addtomasuk = mysqli_query($conn,"insert into masuk (idbarang, penerima, tanggal, qty) values('$item_barang','$penerima','$tanggal','$qty')");
+    $updatestockmasuk = mysqli_query($conn,"update stock set jumlah ='$tambahstock' where idbarang='$item_barang'");
     if ($addtomasuk && $updatestockmasuk) {
         header('location:masuk.php');
 
@@ -58,15 +58,15 @@ if (isset($_POST['barangkeluar'])) {
     $item_barang = $_POST['item_barang'];
     $tujuan = $_POST['tujuan'];
     $tanggal = $_POST['tanggal'];
-    $jumlah = $_POST['jumlah'];
+    $qty = $_POST['qty'];
 
     $cekstocksekarang = mysqli_query($conn,"select * from stock where idbarang='$item_barang'");
     $ambil_data = mysqli_fetch_array($cekstocksekarang);
 
     $currentstock = $ambil_data['jumlah'];
-    $tambahstock = $currentstock-$jumlah;
+    $tambahstock = $currentstock-$qty;
 
-    $addtokeluar = mysqli_query($conn,"insert into keluar (idbarang, tujuan, tanggal, jumlah) values('$item_barang','$tujuan','$tanggal','$jumlah')");
+    $addtokeluar = mysqli_query($conn,"insert into keluar (idbarang, tujuan, tanggal, qty) values('$item_barang','$tujuan','$tanggal','$qty')");
     $updatestockmasuk = mysqli_query($conn,"update stock set jumlah='$tambahstock' where idbarang='$item_barang'");
     if ($addtokeluar && $updatestockmasuk) {
         header('location:keluar.php');

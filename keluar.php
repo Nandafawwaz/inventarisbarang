@@ -72,7 +72,7 @@ require 'cek.php';
                                                 $tanggal = $data['tanggal'];
                                                 $namabarang = $data['namabarang'];
                                                 $tujuan = $data['tujuan'];
-                                                $jumlah = $data['jumlah'];
+                                                $qty = $data['qty'];
 
                                             
                                             ?>
@@ -81,7 +81,7 @@ require 'cek.php';
                                                 <td><?= $tanggal?></td>
                                                 <td><?=$namabarang?></td>
                                                 <td><?=$tujuan?></td>                                               
-                                                <td><?=$jumlah ?></td>                                          
+                                                <td><?=$qty ?></td>                                          
                                             </tr>         
                                             
                                             <?php 
@@ -147,7 +147,7 @@ require 'cek.php';
           <br>
           <input type="date" name="tanggal" class="form-control" required>
           <br>
-          <input type="number" name="jumlah" placeholder="Stock" class="form-control" required>
+          <input type="number" name="qty" placeholder="Stock" class="form-control" required>
           <br>
           <br>
           <button type="submit" class="btn btn-primary" name="barangkeluar">Submit</button>
