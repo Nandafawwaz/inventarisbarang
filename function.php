@@ -77,6 +77,7 @@ if (isset($_POST['barangkeluar'])) {
     }
 }
 
+<<<<<<< HEAD
 
     //Update info barang
     if (isset($_POST['updatebarang'])) {
@@ -178,4 +179,6 @@ if (isset($_POST['barangkeluar'])) {
 
 }
 
+=======
+>>>>>>> 110d4f07960d712677b859bdae8dd61a01c8648d
 ?>
