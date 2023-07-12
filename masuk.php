@@ -61,42 +61,30 @@ require 'cek.php';
                                             <tr>
                                                 <th>Tanggal</th>
                                                 <th>Nama Barang</th>
-<<<<<<< HEAD
                                                 <th>Penerima</th>
                                                 <th>Jumlah</th>
                                                 <th>Aksi</th>
-=======
-                                                <th>Deskripsi</th>
-                                                <th>Jumlah</th>
->>>>>>> 110d4f07960d712677b859bdae8dd61a01c8648d
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php 
                                             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM masuk m, stock s WHERE s.idbarang=m.idbarang");
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) :
-<<<<<<< HEAD
                                                 $idb = $data['idbarang'];
                                                 $idm = $data['idmasuk'];
-=======
->>>>>>> 110d4f07960d712677b859bdae8dd61a01c8648d
                                                 $tanggal = $data['tanggal'];
                                                 $namabarang = $data['namabarang'];
                                                 $penerima = $data['penerima'];
                                                 $qty = $data['qty'];
-<<<<<<< HEAD
     
-=======
 
                                             
->>>>>>> 110d4f07960d712677b859bdae8dd61a01c8648d
                                             ?>
 
                                             <tr>
                                                 <td><?= $tanggal?></td>
                                                 <td><?=$namabarang?></td>
                                                 <td><?=$penerima?></td>                                               
-<<<<<<< HEAD
                                                 <td><?=$qty ?></td>  
                                                 <td>
                                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$idb;?>">
@@ -162,20 +150,18 @@ require 'cek.php';
                                                 <br>
                                                 <input type ="hidden" name ="idb" value = "<?=$idb;?>">
                                                 <input type ="hidden" name ="kty" value = "<?=$qty;?>">
+                                                <input type ="hidden" name ="idm" value = "<?=$idm;?>">
                                                 <button type="submit" class="btn btn-danger" name="hapusbarangmasuk">Hapus</button>
                                                 </div>
-                                                </form>
-                                                
+                                                </form>   
                                                 
                                             </div>
                                             </div>
                                         </div>    
 
-=======
-                                                <td><?=$qty ?></td>                                          
+                                                <!-- <td><?=$qty ?></td>                                           -->
                                             </tr>         
                                             
->>>>>>> 110d4f07960d712677b859bdae8dd61a01c8648d
                                             <?php 
                                                 endwhile;
                                             ?>               
