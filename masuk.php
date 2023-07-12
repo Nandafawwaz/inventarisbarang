@@ -76,6 +76,9 @@ require 'cek.php';
                                                 $namabarang = $data['namabarang'];
                                                 $penerima = $data['penerima'];
                                                 $qty = $data['qty'];
+    
+
+                                            
                                             ?>
 
                                             <tr>
@@ -147,15 +150,17 @@ require 'cek.php';
                                                 <br>
                                                 <input type ="hidden" name ="idb" value = "<?=$idb;?>">
                                                 <input type ="hidden" name ="kty" value = "<?=$qty;?>">
+                                                <input type ="hidden" name ="idm" value = "<?=$idm;?>">
                                                 <button type="submit" class="btn btn-danger" name="hapusbarangmasuk">Hapus</button>
                                                 </div>
-                                                </form>
-                                                
+                                                </form>   
                                                 
                                             </div>
                                             </div>
                                         </div>    
-        
+
+                                                <!-- <td><?=$qty ?></td>                                           -->
+                                            </tr>         
                                             
                                             <?php 
                                                 endwhile;
