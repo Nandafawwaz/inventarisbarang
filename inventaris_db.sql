@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2023 at 08:37 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 7.4.33
+-- Generation Time: Jul 12, 2023 at 11:07 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,8 +40,7 @@ CREATE TABLE `keluar` (
 --
 
 INSERT INTO `keluar` (`idkeluar`, `idbarang`, `tanggal`, `tujuan`, `qty`) VALUES
-(1, 19, '2023-07-11', 'KCP Cirendeu', 150),
-(2, 19, '2023-07-07', 'KCP Bintaro Jaya', 91);
+(20, 48, '2023-07-12', 'KCP Bintaro Jaya', 10);
 
 -- --------------------------------------------------------
 
@@ -70,7 +69,7 @@ INSERT INTO `login` (`iduser`, `username`, `password`) VALUES
 
 CREATE TABLE `masuk` (
   `idmasuk` int(11) NOT NULL,
-  `idbarang` int(11) NOT NULL,
+  `idbarang` int(150) NOT NULL,
   `penerima` varchar(64) NOT NULL,
   `tanggal` date NOT NULL DEFAULT current_timestamp(),
   `qty` int(50) NOT NULL
@@ -81,7 +80,7 @@ CREATE TABLE `masuk` (
 --
 
 INSERT INTO `masuk` (`idmasuk`, `idbarang`, `penerima`, `tanggal`, `qty`) VALUES
-(43, 26, 'Agung', '2023-07-12', 1);
+(70, 48, 'Joko', '2023-07-12', 50);
 
 -- --------------------------------------------------------
 
@@ -104,7 +103,7 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`idbarang`, `namabarang`, `deskripsi`, `keterangan`, `harga`, `jumlah`, `total`) VALUES
-(26, 'PC GAM', 'Cetakan', 'pack', 10, 2, 10);
+(48, 'pulpen', 'ATK', 'roll', 1000, 190, 190000);
 
 --
 -- Indexes for dumped tables
@@ -114,7 +113,8 @@ INSERT INTO `stock` (`idbarang`, `namabarang`, `deskripsi`, `keterangan`, `harga
 -- Indexes for table `keluar`
 --
 ALTER TABLE `keluar`
-  ADD PRIMARY KEY (`idkeluar`);
+  ADD PRIMARY KEY (`idkeluar`),
+  ADD KEY `idbarang` (`idbarang`);
 
 --
 -- Indexes for table `login`
@@ -126,7 +126,8 @@ ALTER TABLE `login`
 -- Indexes for table `masuk`
 --
 ALTER TABLE `masuk`
-  ADD PRIMARY KEY (`idmasuk`);
+  ADD PRIMARY KEY (`idmasuk`),
+  ADD KEY `idbarang` (`idbarang`);
 
 --
 -- Indexes for table `stock`
@@ -142,7 +143,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT for table `keluar`
 --
 ALTER TABLE `keluar`
-  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `login`
@@ -154,13 +155,29 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `masuk`
 --
 ALTER TABLE `masuk`
-  MODIFY `idmasuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `idmasuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `keluar`
+--
+ALTER TABLE `keluar`
+  ADD CONSTRAINT `keluar_ibfk_1` FOREIGN KEY (`idbarang`) REFERENCES `stock` (`idbarang`);
+
+--
+-- Constraints for table `masuk`
+--
+ALTER TABLE `masuk`
+  ADD CONSTRAINT `masuk_ibfk_1` FOREIGN KEY (`idbarang`) REFERENCES `stock` (`idbarang`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
