@@ -103,15 +103,8 @@ require 'cek.php';
                                                             Delete
                                                         </button>
                                                 </td>
-<<<<<<< HEAD
                                             </tr>      
                                             
-=======
-
-                                            </tr>      
-                                            
-
->>>>>>> origin
                                             <!-- Edit Modal -->                                           
                                             <div class="modal fade" id="edit<?=$idb;?>">
                                             <div class="modal-dialog">
@@ -186,10 +179,6 @@ require 'cek.php';
                                             </div>
                                         </div>    
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin
                                             </tr>         
                                             
                                             <?php 
