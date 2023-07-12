@@ -76,12 +76,9 @@ require 'cek.php';
                                                 $namabarang = $data['namabarang'];
                                                 $penerima = $data['penerima'];
                                                 $qty = $data['qty'];
-<<<<<<< HEAD
     
 
                                             
-=======
->>>>>>> origin
                                             ?>
 
                                             <tr>
@@ -161,13 +158,9 @@ require 'cek.php';
                                             </div>
                                             </div>
                                         </div>    
-<<<<<<< HEAD
 
                                                 <!-- <td><?=$qty ?></td>                                           -->
                                             </tr>         
-=======
-        
->>>>>>> origin
                                             
                                             <?php 
                                                 endwhile;
