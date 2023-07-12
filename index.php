@@ -104,10 +104,8 @@ require 'cek.php';
                                                             Delete
                                                         </button>
                                                 </td>
-
                                             </tr>      
                                             
-
                                             <!-- Edit Modal -->                                           
                                             <div class="modal fade" id="edit<?=$idb;?>">
                                             <div class="modal-dialog">
@@ -178,12 +176,9 @@ require 'cek.php';
                                                 <button type="submit" class="btn btn-danger" name="hapusbarang">Hapus</button>
                                                 </div>
                                                 </form>
-                                                
-                                                
                                             </div>
                                             </div>
                                         </div>    
-
 
                                             </tr>         
                                             
