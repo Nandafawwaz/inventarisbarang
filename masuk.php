@@ -116,7 +116,7 @@ require 'cek.php';
                                                 <br>
                                                 <input type="text" name="penerima" value="<?=$penerima;?>" class="form-control" required>
                                                 <br>
-                                                <br>
+                                                
                                                 <input type="number" name="qty" value="<?=$qty;?>" class="form-control" required>
                                                 <br>
                                                 <br>

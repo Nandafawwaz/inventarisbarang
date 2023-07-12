@@ -70,7 +70,7 @@ require 'cek.php';
                                         <?php 
                                             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) {
-                                                $idk = $data['idkurang'];
+                                                $idk = $data['idkeluar'];
                                                 $idb = $data['idbarang'];
                                                 $tanggal = $data['tanggal'];
                                                 $namabarang = $data['namabarang'];
@@ -110,10 +110,21 @@ require 'cek.php';
                                                 <!-- Modal body -->
                                                 <form method="post">
                                                 <div class="modal-body">
+                                                <select name="tujuan" class="form-control" required>
+                                                    <option value="">Tujuan</option>
+                                                    <option value="Cabang Tangerang Selatan">Cabang Tangerang Selatan</option>
+                                                    <option value="KCP Alam Sutera">KCP Alam Sutera</option>
+                                                    <option value="KCP Bintaro Jaya">KCP Bintaro Jaya</option>
+                                                    <option value="KCP Bintaro">KCP Bintaro</option>
+                                                    <option value="KCP Cirendeu">KCP Cirendeu</option>
+                                                    <option value="KCP Ciputat">KCP Ciputat</option>
+                                                    <option value="KCP Pamulang">KCP Pamulang</option>
+                                                    <option value="KCP Pahlawan Seribu">KCP Pahlawan Seribu</option>
+                                                    <option value="KCP Serpong">KCP Serpong</option>
+                                                </select>
+                                                <br>
                                                 <input type="date" name="tanggal" value="<?$tanggal;?>" class="form-control" required>
-                                                <br>
-                                                <input type="text" name="penerima" value="<?=$penerima;?>" class="form-control" required>
-                                                <br>
+                                                
                                                 <br>
                                                 <input type="number" name="qty" value="<?=$qty;?>" class="form-control" required>
                                                 <br>
@@ -148,6 +159,7 @@ require 'cek.php';
                                                 <br>
                                                 <input type ="hidden" name ="idb" value = "<?=$idb;?>">
                                                 <input type ="hidden" name ="kty" value = "<?=$qty;?>">
+                                                <input type ="hidden" name ="idk" value = "<?=$idk;?>">
                                                 <button type="submit" class="btn btn-danger" name="hapusbarangkeluar">Hapus</button>
                                                 </div>
                                                 </form>
