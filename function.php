@@ -65,18 +65,36 @@ if (isset($_POST['barangkeluar'])) {
     $ambil_data = mysqli_fetch_array($cekstocksekarang);
 
     $currentstock = $ambil_data['jumlah'];
-    $tambahstock = $currentstock-$qty;
 
-    $addtokeluar = mysqli_query($conn,"insert into keluar (idbarang, tujuan, tanggal, qty) values('$item_barang','$tujuan','$tanggal','$qty')");
-    $updatestockmasuk = mysqli_query($conn,"update stock set jumlah='$tambahstock' where idbarang='$item_barang'");
-    $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$item_barang'");
-    if ($addtokeluar && $updatestockmasuk && $updatetotal) {
+
+    if ($currentstock > $qty) {
+        $tambahstock = $currentstock-$qty;
+
+        $addtokeluar = mysqli_query($conn,"insert into keluar (idbarang, tujuan, tanggal, qty) values('$item_barang','$tujuan','$tanggal','$qty')");
+        $updatestockmasuk = mysqli_query($conn,"update stock set jumlah='$tambahstock' where idbarang='$item_barang'");
+        $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$item_barang'");
+        if ($addtokeluar && $updatestockmasuk && $updatetotal) {
         header('location:keluar.php');
+
+        }else {
+            echo 'Gagal';
+            header('location:keluar.php');
+        }
 
     }else {
-        echo 'Gagal';
-        header('location:keluar.php');
+        // if barangnya tak cukup
+        echo "<script>
+        alert('Stock saat ini tidak mencukupi');
+        window.location.href='keluar.php';
+        </script>";
+        
+        
+
     }
+
+
+
+    
 }
 
 
@@ -252,4 +270,19 @@ if (isset($_POST['barangkeluar'])) {
         }
     
     }
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
 ?>

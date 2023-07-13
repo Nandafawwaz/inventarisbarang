@@ -56,6 +56,30 @@ require 'cek.php';
                                  <a href="export.php" class="btn btn-info">Export Tabel</a>
                             </div>
                             <div class="card-body">
+
+                            <?php 
+                                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM stock where jumlah <= 10");
+
+                                while ($fetch=mysqli_fetch_array($ambil_alldatastock)) :
+                                    $barang = $fetch['namabarang'];
+
+
+                                
+                                
+                            ?>
+
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>Perhatian!</strong> Stock <?= $barang?> Hampir Habis!
+                            </div>
+
+
+                            <?php 
+                            
+                                endwhile;
+                            
+                            ?>
+
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
