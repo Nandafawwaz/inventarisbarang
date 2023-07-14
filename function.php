@@ -277,11 +277,64 @@ if (isset($_POST['barangkeluar'])) {
     
     }
 
+// menambah admin baru
+if (isset($_POST['addnewadmin'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $queryinsert = mysqli_query($conn, "insert into login (username,password) values ('$username','$password')");
+
+    if ($queryinsert) {
+        // if berhasil
+        header('location:admin.php');
+
+    }else{
+        // if gagal
+        echo 'Gagal';
+        header('location:admin.php');
+    }
 
 
+}
+
+// update admin
+if (isset($_POST['updateadmin'])) {
+    $newusername = $_POST['username_baru'];
+    $newpassword = $_POST['password_baru'];
+    $id_user = $_POST['iduser'];
+
+
+    $queryupdate = mysqli_query($conn, "update login set username='$newusername', password='$newpassword' where iduser='$id_user'");
+
+    if ($queryupdate) {
+     // if berhasil
+     header('location:admin.php');
+
+    }else{
+        // if gagal
+        echo 'Gagal';
+        header('location:admin.php');
+    }
+
+}
     
+// hapus admin
+if (isset($_POST['hapusadmin'])) {
+    $id = $_POST['iduser'];
 
+    $querydelete = mysqli_query($conn, "delete from login where iduser='$id'");
 
+    if ($querydelete) {
+        // if berhasil
+        header('location:admin.php');
+   
+       }else{
+           // if gagal
+           echo 'Gagal';
+           header('location:admin.php');
+       }
+
+}
 
 
 
