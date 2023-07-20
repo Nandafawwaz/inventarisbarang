@@ -24,10 +24,10 @@ if (isset($_POST['addnewbarang'])) {
 }
 
 // Menampilkan isi kolom "total"
-$result = mysqli_query($conn, "SELECT total FROM stock");
-while ($row = mysqli_fetch_assoc($result)) {
-    echo $row['total'] . "<br>";
-}
+// $result = mysqli_query($conn, "SELECT total FROM stock");
+// while ($row = mysqli_fetch_assoc($result)) {
+//     echo $row['total'] . "<br>";
+// }
 
 // Menambah barang masuk
 if (isset($_POST['barangmasuk'])) {
@@ -101,8 +101,9 @@ if (isset($_POST['barangkeluar'])) {
         $deskripsi = $_POST['deskripsi'];
         $keterangan = $_POST['keterangan'];
         $harga = $_POST['harga'];
+        $jumlah = $_POST['jumlah'];
         
-        $update = mysqli_query($conn,"update stock set namabarang='$namabarang', deskripsi='$deskripsi', keterangan='$keterangan', harga='$harga' where idbarang='$idb'");
+        $update = mysqli_query($conn,"update stock set namabarang='$namabarang', deskripsi='$deskripsi', keterangan='$keterangan', harga='$harga', jumlah='$jumlah' where idbarang='$idb'");
         $updatestock = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
         $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$item_barang'");
         if ($update && $updatestock && $updatetotal) {

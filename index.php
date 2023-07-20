@@ -29,10 +29,6 @@ require 'cek.php';
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Stock Barang
                             </a>
-                            <a class="nav-link" href="masuk.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Barang Masuk
-                            </a>
                             <a class="nav-link" href="keluar.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Barang Keluar
@@ -171,6 +167,8 @@ require 'cek.php';
                                                 </select>
                                                 <br>
                                                 <input type="number" name="harga" value="<?=$harga;?>" class="form-control" required>
+                                                <br>
+                                                <input type="number" name="jumlah" value="<?=$jumlah?>" class="form-control" required>
                                                 <br>
                                                 <br>
                                                 <input type ="hidden" name ="idb" value = "<?=$idb;?>">
