@@ -62,12 +62,15 @@ require 'cek.php';
                                                 <th>Nama Barang</th>
                                                 <th>Tujuan</th>
                                                 <th>Jumlah</th>
+                                                <th>Total</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php 
                                             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+                                            $i = 1;
+                                            $grandtotal = 0;
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) {
                                                 $idk = $data['idkeluar'];
                                                 $idb = $data['idbarang'];
@@ -75,15 +78,17 @@ require 'cek.php';
                                                 $namabarang = $data['namabarang'];
                                                 $tujuan = $data['tujuan'];
                                                 $qty = $data['qty'];
-
+                                                $total = $data['harga']*$qty;
+                                                $grandtotal += $total;
                                             
                                             ?>
 
                                             <tr>
                                                 <td><?= $tanggal?></td>
                                                 <td><?=$namabarang?></td>
-                                                <td><?=$tujuan?></td>                                               
+                                                <td><?=$tujuan?></td>                                              
                                                 <td><?=$qty ?></td> 
+                                                <td><?=$total?></td> 
                                                 <td>
                                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$idk;?>">
                                                             Edit
@@ -170,7 +175,13 @@ require 'cek.php';
 
                                             <?php 
                                             };
-                                            ?>                  
+                                            ?>
+                                            
+                                            <tr>
+                                                <td colspan="4" align="center"><b>Grand Total</b></td>
+                                                <td align="left"><b>Rp <?=$grandtotal?></b></td>
+                                                <!-- <td></td> -->
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

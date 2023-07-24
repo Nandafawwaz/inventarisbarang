@@ -91,10 +91,10 @@ require 'cek.php';
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             <?php 
                                             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM stock");
                                             $i = 1;
+                                            $grand_total = 0;
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) :
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
@@ -103,10 +103,10 @@ require 'cek.php';
                                                 $jumlah = $data['jumlah'];
                                                 $total = $data['total'];
                                                 $idb = $data['idbarang'];
+                                                $grand_total += $total;
 
-                                            
                                             ?>
-
+    
                                             <tr>
                                                 <td><?= $i++;?></td>
                                                 <td><?=$namabarang?></td>
@@ -207,7 +207,12 @@ require 'cek.php';
                                             <?php 
                                                 endwhile;
                                             ?>
-
+                                            <tr>
+                                                <td colspan="6" align="center"><b>Grand Total</b></td>
+                                                <td align="center"><b>Rp <?=$grand_total?></b></td>
+                                                <td></td>
+                                            </tr>
+                                                
                                         </tbody>
                                     </table>
                                 </div>
