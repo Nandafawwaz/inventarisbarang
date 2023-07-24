@@ -209,7 +209,7 @@ require 'cek.php';
                                             ?>
                                             <tr>
                                                 <td colspan="6" align="center"><b>Grand Total</b></td>
-                                                <td align="center"><b>Rp <?=$grand_total?></b></td>
+                                                <td align="left"><b>Rp <?=$grand_total?></b></td>
                                                 <td></td>
                                             </tr>
                                                 

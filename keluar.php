@@ -53,6 +53,23 @@ require 'cek.php';
                                     Tambah Barang
                                  </button>
                             </div>
+                            <form action="keluar.php" method="post">
+                                    <select name="location" id="location">
+                                        <option value="">All Location</option>
+                                        <option value="Cabang Tangerang Selatan">Cabang Tangerang Selatan</option>
+                                        <option value="KCP Alam Sutera">KCP Alam Sutera</option>
+                                        <option value="KCP Bintaro Jaya">KCP Bintaro Jaya</option>
+                                        <option value="KCP Bintaro">KCP Bintaro</option>
+                                        <option value="KCP Cirendeu">KCP Cirendeu</option>
+                                        <option value="KCP Ciputat">KCP Ciputat</option>
+                                        <option value="KCP Pamulang">KCP Pamulang</option>
+                                        <option value="KCP Pahlawan Seribu">KCP Pahlawan Seribu</option>
+                                        <option value="KCP Serpong">KCP Serpong</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" name="filter">
+                                    Filter Lokasi
+                                 </button>
+                                 </form>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -71,6 +88,18 @@ require 'cek.php';
                                             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
                                             $i = 1;
                                             $grandtotal = 0;
+                                            if(isset($_POST['filter'])){
+                                                $location = $_POST['location'];
+                                                if($location==""){
+                                                    $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+                                                }else{
+                                                    $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
+                                                }
+                                                
+                                            }else{
+                                                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+                                            };
+                             
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) {
                                                 $idk = $data['idkeluar'];
                                                 $idb = $data['idbarang'];
