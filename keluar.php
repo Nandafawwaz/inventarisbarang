@@ -1,6 +1,19 @@
 <?php
 require 'function.php';
 require 'cek.php';
+
+if(isset($_POST['filter'])){
+                $location = $_POST['location'];
+                if($location==""){
+                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+                }else{
+                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
+                }     
+}else{
+     $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+     $location="";
+}
+        
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +27,7 @@ require 'cek.php';
         <link href="css/styles.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+        
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -49,27 +63,29 @@ require 'cek.php';
                         <h1 class="mt-4">Barang Keluar</h1>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="float: left;">
                                     Tambah Barang
-                                 </button>
-                            </div>
-                            <form action="keluar.php" method="post">
+                                </button>
+                                <form action="keluar.php" method="post" style="float:right">
                                     <select name="location" id="location">
-                                        <option value="">All Location</option>
-                                        <option value="Cabang Tangerang Selatan">Cabang Tangerang Selatan</option>
-                                        <option value="KCP Alam Sutera">KCP Alam Sutera</option>
-                                        <option value="KCP Bintaro Jaya">KCP Bintaro Jaya</option>
-                                        <option value="KCP Bintaro">KCP Bintaro</option>
-                                        <option value="KCP Cirendeu">KCP Cirendeu</option>
-                                        <option value="KCP Ciputat">KCP Ciputat</option>
-                                        <option value="KCP Pamulang">KCP Pamulang</option>
-                                        <option value="KCP Pahlawan Seribu">KCP Pahlawan Seribu</option>
-                                        <option value="KCP Serpong">KCP Serpong</option>
+                                        <option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
+                                        <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
+                                        <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
+                                        <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
+                                        <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
+                                        <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
+                                        <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
+                                        <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
+                                        <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
+                                        <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
                                     </select>
                                     <button type="submit" class="btn btn-primary" name="filter">
                                     Filter Lokasi
                                  </button>
                                  </form>
+                                 
+                            </div>
+                            
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -88,17 +104,6 @@ require 'cek.php';
                                             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
                                             $i = 1;
                                             $grandtotal = 0;
-                                            if(isset($_POST['filter'])){
-                                                $location = $_POST['location'];
-                                                if($location==""){
-                                                    $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-                                                }else{
-                                                    $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
-                                                }
-                                                
-                                            }else{
-                                                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-                                            };
                              
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) {
                                                 $idk = $data['idkeluar'];

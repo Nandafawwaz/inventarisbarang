@@ -1,6 +1,18 @@
 <?php
 require 'function.php';
 require 'cek.php';
+
+if(isset($_POST['filter'])){
+    $desc = $_POST['desc'];
+    if($desc==""){
+    $datastock = mysqli_query($conn,"SELECT * FROM stock");
+    }else{
+    $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE deskripsi='$desc'");
+    }     
+}else{
+$datastock = mysqli_query($conn,"SELECT * FROM stock");
+$desc="";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,6 +66,17 @@ require 'cek.php';
                                     Tambah Barang
                                  </button>
                                  <a href="export.php" class="btn btn-info">Export Tabel</a>
+                                 <form action="index.php" method="post" style="float:right">
+                                    <select name="desc" id="desc">
+                                        <option value="" <?php echo ($desc == '')?"selected":"" ?>>Deskripsi</option>
+                                        <option value="ATK" <?php echo ($desc == 'ATK')?"selected":"" ?>>ATK</option>
+                                        <option value="Cetakan" <?php echo ($desc == 'Cetakan')?"selected":"" ?>>Cetakan</option>
+                            
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" name="filter">
+                                    Filter Deskripsi
+                                 </button>
+                                 </form>
                             </div>
                             <div class="card-body">
 
@@ -91,11 +114,10 @@ require 'cek.php';
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php 
-                                            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM stock");
+                                        <?php 
                                             $i = 1;
                                             $grand_total = 0;
-                                            while ($data=mysqli_fetch_array($ambil_alldatastock)) :
+                                            while ($data=mysqli_fetch_array($datastock)) :
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
                                                 $keterangan = $data['keterangan'];
