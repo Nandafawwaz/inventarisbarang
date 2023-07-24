@@ -63,16 +63,12 @@ require 'cek.php';
                                 while ($fetch=mysqli_fetch_array($ambil_alldatastock)) :
                                     $barang = $fetch['namabarang'];
 
-
-                                
-                                
                             ?>
 
                             <div class="alert alert-danger alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                                 <strong>Perhatian!</strong> Stock <?= $barang?> Hampir Habis!
                             </div>
-
 
                             <?php 
                             
