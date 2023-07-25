@@ -1,6 +1,19 @@
 <?php
 require 'function.php';
 require 'cek.php';
+
+if(isset($_POST['filter'])){
+                $location = $_POST['location'];
+                if($location==""){
+                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+                }else{
+                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
+                }     
+}else{
+     $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+     $location="";
+}
+        
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,10 +27,20 @@ require 'cek.php';
         <link href="css/styles.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+        <style>
+        .navbar-brand img {
+        max-width: 100px; /* Set the maximum width of the image */
+        height: auto; /* Automatically adjust the height while maintaining the aspect ratio */
+        margin-right: 100px;
+        margin-left: 25px; /* Move the image slightly to the right */
+        }
+        </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="index.php">Inventaris Bank BJB</a>
+        <a class="navbar-brand" href="index.php">
+                <img src="assets/img/bjb.png" alt =Logo class="logo-img">
+        </a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         </nav>
         <div id="layoutSidenav">
@@ -49,16 +72,35 @@ require 'cek.php';
                         <h1 class="mt-4">Barang Keluar</h1>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="float: left;">
                                     Tambah Barang
+                                </button>
+                                <form action="keluar.php" method="post" style="float:right">
+                                    <select name="location" id="location">
+                                        <option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
+                                        <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
+                                        <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
+                                        <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
+                                        <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
+                                        <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
+                                        <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
+                                        <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
+                                        <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
+                                        <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" name="filter">
+                                    Filter Lokasi
                                  </button>
+                                 </form>
+                                 
                             </div>
+                            
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
+                                                <th>Tanggal</th>
                                                 <th>Nama Barang</th>
                                                 <th>Tujuan</th>
                                                 <th>Jumlah</th>
@@ -71,6 +113,7 @@ require 'cek.php';
                                             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
                                             $i = 1;
                                             $grandtotal = 0;
+                             
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) {
                                                 $idk = $data['idkeluar'];
                                                 $idb = $data['idbarang'];
