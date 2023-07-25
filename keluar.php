@@ -91,7 +91,7 @@ if(isset($_POST['filter'])){
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
+                                                <th>Tanggal</th>
                                                 <th>Nama Barang</th>
                                                 <th>Tujuan</th>
                                                 <th>Jumlah</th>
