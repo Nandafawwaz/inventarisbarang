@@ -268,9 +268,35 @@ if (isset($_POST['hapusadmin'])) {
 }
 
 
+// filter deskripsi stock
+if(isset($_POST['filter'])){
+    $desc = $_POST['desc'];
+    if($desc==""){
+    $datastock = mysqli_query($conn,"SELECT * FROM stock");
+    }else{
+    $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE deskripsi='$desc'");
+    }     
+}else{
+$datastock = mysqli_query($conn,"SELECT * FROM stock");
+$desc="";
+}
 
 
+// filter lokasi
 
+                                    $grand_total = 0;
+                                    if(isset($_POST['filter'])){
+                                        $location = $_POST['location'];
+                                        if($location==""){
+                                            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+                                        }else{
+                                            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
+                                        }
+                                        
+                                    }else{
+                                        $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+                                    }
+                    
 
 
 
