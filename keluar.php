@@ -1,19 +1,6 @@
 <?php
 require 'function.php';
 require 'cek.php';
-
-if(isset($_POST['filter'])){
-                $location = $_POST['location'];
-                if($location==""){
-                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-                }else{
-                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
-                }     
-}else{
-     $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-     $location="";
-}
-        
 ?>
 <!DOCTYPE html>
 <html lang="en">
