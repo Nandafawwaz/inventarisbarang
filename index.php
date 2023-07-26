@@ -2,17 +2,6 @@
 require 'function.php';
 require 'cek.php';
 
-if(isset($_POST['filter'])){
-    $desc = $_POST['desc'];
-    if($desc==""){
-    $datastock = mysqli_query($conn,"SELECT * FROM stock");
-    }else{
-    $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE deskripsi='$desc'");
-    }     
-}else{
-$datastock = mysqli_query($conn,"SELECT * FROM stock");
-$desc="";
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
