@@ -76,7 +76,7 @@ require 'cek.php';
                                         <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
                                         <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
                                     </select>
-                                    <button type="submit" class="btn btn-primary" name="filter">
+                                    <button type="submit" class="btn btn-primary" name="filter_location">
                                     Filter Lokasi
                                  </button>
                                  </form>
@@ -91,6 +91,7 @@ require 'cek.php';
                                                 <th>Tanggal</th>
                                                 <th>Nama Barang</th>
                                                 <th>Tujuan</th>
+                                                <th>Harga</th>
                                                 <th>Jumlah</th>
                                                 <th>Total</th>
                                                 <th>Aksi</th>
@@ -98,16 +99,14 @@ require 'cek.php';
                                         </thead>
                                         <tbody>
                                         <?php 
-                                            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-                                            $i = 1;
-                                            $grandtotal = 0;
-                             
+                                            
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) {
                                                 $idk = $data['idkeluar'];
                                                 $idb = $data['idbarang'];
                                                 $tanggal = $data['tanggal'];
                                                 $namabarang = $data['namabarang'];
                                                 $tujuan = $data['tujuan'];
+                                                $harga = $data['harga'];
                                                 $qty = $data['qty'];
                                                 $total = $data['harga']*$qty;
                                                 $grandtotal += $total;
@@ -117,7 +116,8 @@ require 'cek.php';
                                             <tr>
                                                 <td><?= $tanggal?></td>
                                                 <td><?=$namabarang?></td>
-                                                <td><?=$tujuan?></td>                                              
+                                                <td><?=$tujuan?></td>    
+                                                <td><?=$harga?></td>                                          
                                                 <td><?=$qty ?></td> 
                                                 <td><?=$total?></td> 
                                                 <td>
@@ -209,7 +209,7 @@ require 'cek.php';
                                             ?>
                                             
                                             <tr>
-                                                <td colspan="4" align="center"><b>Grand Total</b></td>
+                                                <td colspan="5" align="center"><b>Grand Total</b></td>
                                                 <td align="left"><b>Rp <?=$grandtotal?></b></td>
                                                 <!-- <td></td> -->
                                             </tr>
@@ -231,6 +231,29 @@ require 'cek.php';
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/datatables-demo.js"></script>
+        <script type="text/javascript">
+            function showPrice(str) {
+                if (str == "") {
+                    document.getElementById("price").innerHTML = "";
+                    return;
+                } else { 
+                    if (window.XMLHttpRequest) {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    } else {
+                        // code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            document.getElementById("price").innerHTML = this.responseText;
+                        }
+                    };
+                    xmlhttp.open("GET","function.php?price="+str,true);
+                    xmlhttp.send();
+                }
+            }
+        </script>
     </body>
     
      <!-- The Modal -->
@@ -253,10 +276,15 @@ require 'cek.php';
                     while ($fetcharray = mysqli_fetch_array($ambil_data)) :
                         $nama = $fetcharray['namabarang'];
                         $id_barang = $fetcharray['idbarang'];
+                        // $harga = $fetcharray['harga'];
                     ?>
                         <option value="<?=$id_barang?>"><?=$nama?></option>
                     <?php endwhile; ?>
             </select>
+          <br>
+          <div id="price">
+
+          </div>
           <br>
           <select name="tujuan" class="form-control" required>
             <option value="">Tujuan</option>
@@ -272,6 +300,8 @@ require 'cek.php';
           </select>
           <br>
           <input type="date" name="tanggal" class="form-control" required>
+          <!-- <br> -->
+          <!-- <input type="text" name="harga" class="form-control" placeholder="<?=$harga?>" disabled> -->
           <br>
           <input type="number" name="qty" placeholder="Stock" class="form-control" required>
           <br>
@@ -279,8 +309,6 @@ require 'cek.php';
           <button type="submit" class="btn btn-primary" name="barangkeluar">Submit</button>
         </div>
         </form>
-        
-        
       </div>
     </div>
   </div>

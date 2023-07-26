@@ -269,7 +269,7 @@ if (isset($_POST['hapusadmin'])) {
 
 
 // filter deskripsi stock
-if(isset($_POST['filter'])){
+if(isset($_POST['filter_desc'])){
     $desc = $_POST['desc'];
     if($desc==""){
     $datastock = mysqli_query($conn,"SELECT * FROM stock");
@@ -283,20 +283,35 @@ $desc="";
 
 
 // filter lokasi
-
-                                    $grand_total = 0;
-                                    if(isset($_POST['filter'])){
-                                        $location = $_POST['location'];
-                                        if($location==""){
-                                            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-                                        }else{
-                                            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
-                                        }
+$ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+$i = 1;
+$grandtotal = 0;
+        if(isset($_POST['filter_location'])){
+        $location = $_POST['location'];
+        if($location==""){
+             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+                                            
+        }else{
+            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
+            $location = "";
+        }
                                         
-                                    }else{
-                                        $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-                                    }
+    }else{
+        $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+        $location = "";
+    }
                     
+// get price
+$q = intval($_GET['price']);
+    $sql="SELECT * FROM stock WHERE idbarang = '".$q."'";
+    $result = mysqli_query($conn,$sql);
+    
+if (isset($_GET[$q])) {
+    
+    while($row = mysqli_fetch_array($result)) {
+        echo '<input type="text" name="harga" class="form-control" id="harga" value="'.$row['harga'].'" readonly>';
+    }
+}
 
 
 

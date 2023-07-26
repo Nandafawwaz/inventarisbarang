@@ -68,12 +68,12 @@ require 'cek.php';
                                  <a href="export.php" class="btn btn-info">Export Tabel</a>
                                  <form action="index.php" method="post" style="float:right">
                                     <select name="desc" id="desc">
-                                        <option value="" <?php echo ($desc == '')?"selected":"" ?>>Deskripsi</option>
+                                        <option value="" <?php echo ($desc == '')?"selected":"" ?>>All Deskripsi</option>
                                         <option value="ATK" <?php echo ($desc == 'ATK')?"selected":"" ?>>ATK</option>
                                         <option value="Cetakan" <?php echo ($desc == 'Cetakan')?"selected":"" ?>>Cetakan</option>
                             
                                     </select>
-                                    <button type="submit" class="btn btn-primary" name="filter">
+                                    <button type="submit" class="btn btn-primary" name="filter_desc">
                                     Filter Deskripsi
                                  </button>
                                  </form>
