@@ -12,9 +12,10 @@ if (isset($_POST['addnewbarang'])) {
     $harga = $_POST['harga'];
     $jumlah = $_POST['jumlah'];
     $total = $jumlah * $harga;
+    $tanggal = $_POST['tanggal'];
 
 
-    $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, keterangan, harga, jumlah, total) values('$namabarang','$deskripsi','$keterangan','$harga','$jumlah','$total')");
+    $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, keterangan, harga, jumlah, total, tanggal) values('$namabarang','$deskripsi','$keterangan','$harga','$jumlah','$total','$tanggal')");
     if ($addtotable) {
         header('location:index.php');
     }else{
@@ -30,29 +31,29 @@ if (isset($_POST['addnewbarang'])) {
 // }
 
 // Menambah barang masuk
-if (isset($_POST['barangmasuk'])) {
-    $item_barang = $_POST['item_barang'];
-    $penerima = $_POST['penerima'];
-    $tanggal = $_POST['tanggal'];
-    $qty = $_POST['qty'];
+// if (isset($_POST['barangmasuk'])) {
+//     $item_barang = $_POST['item_barang'];
+//     $penerima = $_POST['penerima'];
+//     $tanggal = $_POST['tanggal'];
+//     $qty = $_POST['qty'];
 
-    $cekstocksekarang = mysqli_query($conn,"select * from stock where idbarang='$item_barang'");
-    $ambil_data = mysqli_fetch_array($cekstocksekarang);
+//     $cekstocksekarang = mysqli_query($conn,"select * from stock where idbarang='$item_barang'");
+//     $ambil_data = mysqli_fetch_array($cekstocksekarang);
 
-    $currentstock = $ambil_data['jumlah'];
-    $tambahstock = $currentstock+$qty;
+//     $currentstock = $ambil_data['jumlah'];
+//     $tambahstock = $currentstock+$qty;
 
-    $addtomasuk = mysqli_query($conn,"insert into masuk (idbarang, penerima, tanggal, qty) values('$item_barang','$penerima','$tanggal','$qty')");
-    $updatestockmasuk = mysqli_query($conn,"update stock set jumlah ='$tambahstock' where idbarang='$item_barang'");
-    $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$item_barang'");
-    if ($addtomasuk && $updatestockmasuk && $updatetotal) {
-        header('location:masuk.php');
+//     $addtomasuk = mysqli_query($conn,"insert into masuk (idbarang, penerima, tanggal, qty) values('$item_barang','$penerima','$tanggal','$qty')");
+//     $updatestockmasuk = mysqli_query($conn,"update stock set jumlah ='$tambahstock' where idbarang='$item_barang'");
+//     $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$item_barang'");
+//     if ($addtomasuk && $updatestockmasuk && $updatetotal) {
+//         header('location:masuk.php');
 
-    }else {
-        echo 'Gagal';
-        header('location:masuk.php');
-    }
-}
+//     }else {
+//         echo 'Gagal';
+//         header('location:masuk.php');
+//     }
+// }
 
 // Menambah barang keluar
 if (isset($_POST['barangkeluar'])) {
@@ -87,8 +88,6 @@ if (isset($_POST['barangkeluar'])) {
         alert('Stock saat ini tidak mencukupi');
         window.location.href='keluar.php';
         </script>";
-        
-        
 
     }
 
@@ -102,8 +101,9 @@ if (isset($_POST['barangkeluar'])) {
         $keterangan = $_POST['keterangan'];
         $harga = $_POST['harga'];
         $jumlah = $_POST['jumlah'];
+        $tanggal = $_POST['tanggal'];
         
-        $update = mysqli_query($conn,"update stock set namabarang='$namabarang', deskripsi='$deskripsi', keterangan='$keterangan', harga='$harga', jumlah='$jumlah' where idbarang='$idb'");
+        $update = mysqli_query($conn,"update stock set namabarang='$namabarang', deskripsi='$deskripsi', keterangan='$keterangan', harga='$harga', jumlah='$jumlah', tanggal='$tanggal' where idbarang='$idb'");
         $updatestock = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
         $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$item_barang'");
         if ($update && $updatestock && $updatetotal) {
@@ -302,12 +302,12 @@ $grandtotal = 0;
     }
                     
 // get price
-$q = intval($_GET['price']);
+
+    
+if (isset($_GET['price'])) {
+    $q = intval($_GET['price']);
     $sql="SELECT * FROM stock WHERE idbarang = '".$q."'";
     $result = mysqli_query($conn,$sql);
-    
-if (isset($_GET[$q])) {
-    
     while($row = mysqli_fetch_array($result)) {
         echo '<input type="text" name="harga" class="form-control" id="harga" value="'.$row['harga'].'" readonly>';
     }

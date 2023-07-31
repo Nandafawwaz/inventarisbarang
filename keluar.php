@@ -270,7 +270,7 @@ require 'cek.php';
         <!-- Modal body -->
         <form method="post">
         <div class="modal-body">
-            <select name="item_barang" class="form-control">
+            <select name="item_barang" class="form-control" onchange="showPrice(this.value)">
                 <?php
                     $ambil_data = $conn->query("SELECT * FROM stock");
                     while ($fetcharray = mysqli_fetch_array($ambil_data)) :

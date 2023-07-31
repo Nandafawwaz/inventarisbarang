@@ -110,6 +110,7 @@ require 'cek.php';
                                                 <th>Harga</th>
                                                 <th>Jumlah</th>
                                                 <th>Total</th>
+                                                <th>Tanggal</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -126,6 +127,7 @@ require 'cek.php';
                                                 $total = $data['total'];
                                                 $idb = $data['idbarang'];
                                                 $grand_total += $total;
+                                                $tanggal = $data['tanggal'];
 
                                             ?>
     
@@ -137,6 +139,7 @@ require 'cek.php';
                                                 <td><?=$harga?></td>
                                                 <td><?=$jumlah ?></td>
                                                 <td><?=$total ?></td>
+                                                <td><?= $tanggal?></td>
                                                 <td>
                                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$idb;?>">
                                                             Edit
@@ -187,6 +190,8 @@ require 'cek.php';
                                                 <input type="number" name="harga" value="<?=$harga;?>" class="form-control" required>
                                                 <br>
                                                 <input type="number" name="jumlah" value="<?=$jumlah?>" class="form-control" required>
+                                                <br>
+                                                <input type="date" name="tanggal" value="<?$tanggal;?>" class="form-control" required>
                                                 <br>
                                                 <br>
                                                 <input type ="hidden" name ="idb" value = "<?=$idb;?>">
@@ -294,6 +299,8 @@ require 'cek.php';
           <input type="number" name="harga" placeholder="Harga" class="form-control" required>
           <br>
           <input type="number" name="jumlah" placeholder="Stock" class="form-control" required>
+          <br>
+          <input type="date" name="tanggal" class="form-control" required>
           <br>
           <br>
           <button type="submit" class="btn btn-primary" name="addnewbarang">Submit</button>
