@@ -18,7 +18,7 @@ require 'cek.php';
 
 <body>
 <div class="container">
-			<h2>Stock Bahan</h2>
+			<h2>Stock Tersedia</h2>
 			<h4>(Inventory)</h4>
 				<div class="data-tables datatable-dark">
 					
@@ -39,13 +39,15 @@ require 'cek.php';
                                             <?php 
                                             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM stock");
                                             $i = 1;
+                                            $grand_total = 0;
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) :
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
                                                 $keterangan = $data['keterangan'];
                                                 $harga = $data['harga'];
                                                 $jumlah = $data['jumlah'];
-                                                $total = $data['total'];                   
+                                                $total = $data['total'];   
+                                                $grand_total += $total;                
                                             ?>
 
                                             <tr>
@@ -57,13 +59,19 @@ require 'cek.php';
                                                 <td><?php echo$jumlah ?></td>
                                                 <td><?php echo$total ?></td>
 
-                                            </tr>             
+                                            </tr>            
                                             
                                             <?php 
                                                 endwhile;
                                             ?>
-
                                         </tbody>
+                                        <tfoot>
+                                        <tr>
+                                                <td colspan="6" align="center"><b>Grand Total</b></td>
+                                                <td align="left"><b>Rp <?=$grand_total?></b></td>
+
+                                            </tr> 
+                                        </tfoot>
                                     </table>
 					
 				</div>

@@ -34,6 +34,14 @@ if(!isset($_SESSION['log'])){
         <title>Halaman Login</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+        <style>
+        /* CSS for the card background image */
+        body {
+            background-image: url("assets/img/backdrop.jpg");
+            background-size: cover; /* Adjust the image size to cover the card */
+            background-repeat: no-repeat; /* Prevent image from repeating */
+        }
+    </style>
     </head>
     <body class="bg-primary">
         <div id="layoutAuthentication">
@@ -43,8 +51,10 @@ if(!isset($_SESSION['log'])){
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
+                                    <div class="text-center mb-4">
+                                        <img src="assets/img/bjb.png" alt =Logo class="logo-img">
+                                    </div>                                        
                                         <form method= "post">
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputUsername">Username</label>

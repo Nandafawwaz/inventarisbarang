@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2023 at 11:07 AM
+-- Generation Time: Jul 31, 2023 at 10:43 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -40,7 +40,12 @@ CREATE TABLE `keluar` (
 --
 
 INSERT INTO `keluar` (`idkeluar`, `idbarang`, `tanggal`, `tujuan`, `qty`) VALUES
-(20, 48, '2023-07-12', 'KCP Bintaro Jaya', 10);
+(28, 53, '2023-07-18', 'KCP Bintaro Jaya', 450),
+(29, 52, '2023-07-18', 'KCP Bintaro', 150),
+(35, 58, '2023-07-24', 'KCP Alam Sutera', 100),
+(36, 58, '2023-07-24', 'KCP Bintaro', 100),
+(38, 59, '2023-07-25', 'KCP Alam Sutera', 199),
+(39, 60, '2023-07-25', 'KCP Pahlawan Seribu', 10);
 
 -- --------------------------------------------------------
 
@@ -59,28 +64,7 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`iduser`, `username`, `password`) VALUES
-(1, 'tes', 'tes');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `masuk`
---
-
-CREATE TABLE `masuk` (
-  `idmasuk` int(11) NOT NULL,
-  `idbarang` int(150) NOT NULL,
-  `penerima` varchar(64) NOT NULL,
-  `tanggal` date NOT NULL DEFAULT current_timestamp(),
-  `qty` int(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `masuk`
---
-
-INSERT INTO `masuk` (`idmasuk`, `idbarang`, `penerima`, `tanggal`, `qty`) VALUES
-(70, 48, 'Joko', '2023-07-12', 50);
+(2, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -95,15 +79,19 @@ CREATE TABLE `stock` (
   `keterangan` varchar(50) NOT NULL,
   `harga` int(50) NOT NULL,
   `jumlah` int(50) NOT NULL,
-  `total` int(50) NOT NULL
+  `total` int(50) NOT NULL,
+  `tanggal` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `stock`
 --
 
-INSERT INTO `stock` (`idbarang`, `namabarang`, `deskripsi`, `keterangan`, `harga`, `jumlah`, `total`) VALUES
-(48, 'pulpen', 'ATK', 'roll', 1000, 190, 190000);
+INSERT INTO `stock` (`idbarang`, `namabarang`, `deskripsi`, `keterangan`, `harga`, `jumlah`, `total`, `tanggal`) VALUES
+(63, 'dus arsip', 'Cetakan', 'pack', 2000, 150, 300000, '2023-07-26'),
+(64, 'Pulpen', 'ATK', 'pack', 5500, 500, 2750000, '2023-07-26'),
+(65, 'Pulpen', 'Cetakan', 'pack', 4000, 200, 800000, '2023-07-26'),
+(66, 'tinta printer', 'ATK', 'dus', 7000, 40, 280000, '2023-07-26');
 
 --
 -- Indexes for dumped tables
@@ -123,13 +111,6 @@ ALTER TABLE `login`
   ADD PRIMARY KEY (`iduser`);
 
 --
--- Indexes for table `masuk`
---
-ALTER TABLE `masuk`
-  ADD PRIMARY KEY (`idmasuk`),
-  ADD KEY `idbarang` (`idbarang`);
-
---
 -- Indexes for table `stock`
 --
 ALTER TABLE `stock`
@@ -143,41 +124,19 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT for table `keluar`
 --
 ALTER TABLE `keluar`
-  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `masuk`
---
-ALTER TABLE `masuk`
-  MODIFY `idmasuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `keluar`
---
-ALTER TABLE `keluar`
-  ADD CONSTRAINT `keluar_ibfk_1` FOREIGN KEY (`idbarang`) REFERENCES `stock` (`idbarang`);
-
---
--- Constraints for table `masuk`
---
-ALTER TABLE `masuk`
-  ADD CONSTRAINT `masuk_ibfk_1` FOREIGN KEY (`idbarang`) REFERENCES `stock` (`idbarang`);
+  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
