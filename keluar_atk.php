@@ -40,9 +40,13 @@ require 'cek.php';
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Stock Barang
                             </a>
-                            <a class="nav-link" href="keluar.php">
+                            <a class="nav-link" href="keluar_atk.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Barang Keluar
+                                Barang Keluar ATK
+                            </a>
+                            <a class="nav-link" href="keluar_cetakan.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Barang Keluar Cetakan
                             </a>
                             <a class="nav-link" href="admin.php">
                                 Kelola Admin
@@ -272,7 +276,7 @@ require 'cek.php';
         <div class="modal-body">
             <select name="item_barang" class="form-control" onchange="showPrice(this.value)">
                 <?php
-                    $ambil_data = $conn->query("SELECT * FROM stock");
+                    $ambil_data = $conn->query("SELECT * FROM stock WHERE deskripsi = 'ATK'");
                     while ($fetcharray = mysqli_fetch_array($ambil_data)) :
                         $nama = $fetcharray['namabarang'];
                         $id_barang = $fetcharray['idbarang'];
@@ -300,8 +304,6 @@ require 'cek.php';
           </select>
           <br>
           <input type="date" name="tanggal" class="form-control" required>
-          <!-- <br> -->
-          <!-- <input type="text" name="harga" class="form-control" placeholder="<?=$harga?>" disabled> -->
           <br>
           <input type="number" name="qty" placeholder="Stock" class="form-control" required>
           <br>

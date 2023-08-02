@@ -67,9 +67,16 @@ require 'cek.php';
                                         </tbody>
                                         <tfoot>
                                         <tr>
-                                                <td colspan="6" align="center"><b>Grand Total</b></td>
-                                                <td align="left"><b>Rp <?=$grand_total?></b></td>
-
+                                               
+                                        <!-- <td colspan="6" align="center"><b>Grand Total</b></td> -->
+                                                <!-- <td align="left"><b>Rp <?=$grand_total?></b></td> -->
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><b>Grand Total</b></td>
+                                                <td><b><?=$grand_total?></b></td>
                                             </tr> 
                                         </tfoot>
                                     </table>
@@ -79,10 +86,15 @@ require 'cek.php';
 	
 <script>
 $(document).ready(function() {
-    $('#mauexport').DataTable( {
+var table =    $('#mauexport').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            'copy','csv','excel', 'pdf', 'print'
+            { extend: 'copyHtml5', footer: true },
+            { extend: 'excelHtml5', footer: true },
+            { extend: 'csvHtml5', footer: true },
+            { extend: 'pdfHtml5', footer: true },
+            { extend: 'print', footer: true }
+            
         ]
     } );
 } );

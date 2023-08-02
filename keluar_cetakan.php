@@ -11,7 +11,7 @@ require 'cek.php';
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Stock Barang</title>
+        <title>Barang Keluar</title>
         <link href="css/styles.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -21,15 +21,14 @@ require 'cek.php';
         height: auto; /* Automatically adjust the height while maintaining the aspect ratio */
         margin-right: 100px;
         margin-left: 25px; /* Move the image slightly to the right */
-
         }
         </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="index.php">
+        <a class="navbar-brand" href="index.php">
                 <img src="assets/img/bjb.png" alt =Logo class="logo-img">
-            </a>
+        </a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         </nav>
         <div id="layoutSidenav">
@@ -37,7 +36,7 @@ require 'cek.php';
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="index.php">
+                        <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Stock Barang
                             </a>
@@ -55,7 +54,6 @@ require 'cek.php';
                             <a class="nav-link" href="logout.php">
                                 Logout
                             </a>
-
                         </div>
                     </div>
                 </nav>
@@ -63,100 +61,82 @@ require 'cek.php';
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Inventaris Bank BJB</h1>
+                        <h1 class="mt-4">Barang Keluar</h1>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="float: left;">
                                     Tambah Barang
-                                 </button>
-                                 <a href="export.php" class="btn btn-info">Export Tabel</a>
-                                 <form action="index.php" method="post" style="float:right">
-                                    <select name="desc" id="desc">
-                                        <option value="" <?php echo ($desc == '')?"selected":"" ?>>All Deskripsi</option>
-                                        <option value="ATK" <?php echo ($desc == 'ATK')?"selected":"" ?>>ATK</option>
-                                        <option value="Cetakan" <?php echo ($desc == 'Cetakan')?"selected":"" ?>>Cetakan</option>
-                            
+                                </button>
+                                <form action="keluar.php" method="post" style="float:right">
+                                    <select name="location" id="location">
+                                        <option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
+                                        <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
+                                        <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
+                                        <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
+                                        <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
+                                        <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
+                                        <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
+                                        <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
+                                        <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
+                                        <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
                                     </select>
-                                    <button type="submit" class="btn btn-primary" name="filter_desc">
-                                    Filter Deskripsi
+                                    <button type="submit" class="btn btn-primary" name="filter_location">
+                                    Filter Lokasi
                                  </button>
                                  </form>
+                                 
                             </div>
+                            
                             <div class="card-body">
-
-                            <?php 
-                                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM stock where jumlah <= 10");
-
-                                while ($fetch=mysqli_fetch_array($ambil_alldatastock)) :
-                                    $barang = $fetch['namabarang'];
-
-                            ?>
-
-                            <div class="alert alert-danger alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                <strong>Perhatian!</strong> Stock <?= $barang?> Hampir Habis!
-                            </div>
-
-                            <?php 
-                            
-                                endwhile;
-                            
-                            ?>
-
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
+                                                <th>Tanggal</th>
                                                 <th>Nama Barang</th>
-                                                <th>Deskripsi</th>
-                                                <th>Keterangan</th>
+                                                <th>Tujuan</th>
                                                 <th>Harga</th>
                                                 <th>Jumlah</th>
                                                 <th>Total</th>
-                                                <th>Tanggal</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php 
-                                            $i = 1;
-                                            $grand_total = 0;
-                                            while ($data=mysqli_fetch_array($datastock)) :
-                                                $namabarang = $data['namabarang'];
-                                                $deskripsi = $data['deskripsi'];
-                                                $keterangan = $data['keterangan'];
-                                                $harga = $data['harga'];
-                                                $jumlah = $data['jumlah'];
-                                                $total = $data['total'];
+                                            
+                                            while ($data=mysqli_fetch_array($ambil_alldatastock)) {
+                                                $idk = $data['idkeluar'];
                                                 $idb = $data['idbarang'];
-                                                $grand_total += $total;
                                                 $tanggal = $data['tanggal'];
-
+                                                $namabarang = $data['namabarang'];
+                                                $tujuan = $data['tujuan'];
+                                                $harga = $data['harga'];
+                                                $qty = $data['qty'];
+                                                $total = $data['harga']*$qty;
+                                                $grandtotal += $total;
+                                            
                                             ?>
-    
+
                                             <tr>
-                                                <td><?= $i++;?></td>
-                                                <td><?=$namabarang?></td>
-                                                <td><?=$deskripsi?></td>
-                                                <td><?=$keterangan ?></td>
-                                                <td><?=$harga?></td>
-                                                <td><?=$jumlah ?></td>
-                                                <td><?=$total ?></td>
                                                 <td><?= $tanggal?></td>
+                                                <td><?=$namabarang?></td>
+                                                <td><?=$tujuan?></td>    
+                                                <td><?=$harga?></td>                                          
+                                                <td><?=$qty ?></td> 
+                                                <td><?=$total?></td> 
                                                 <td>
-                                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$idb;?>">
+                                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$idk;?>">
                                                             Edit
                                                         </button>
                                                         <input type ="hidden" name ="idbaranghapus" value = "<?=$idb;?>">
-                                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?=$idb;?>">
+                                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?=$idk;?>">
                                                             Delete
                                                         </button>
-                                                </td>
-                                            </tr>      
+                                                </td>                                         
+                                            </tr>         
                                             
                                             <!-- Edit Modal -->                                           
-                                            <div class="modal fade" id="edit<?=$idb;?>">
+                                            <div class="modal fade" id="edit<?=$idk;?>">
                                             <div class="modal-dialog">
                                             <div class="modal-content">
                                             
@@ -169,37 +149,28 @@ require 'cek.php';
                                                 <!-- Modal body -->
                                                 <form method="post">
                                                 <div class="modal-body">
-                                                <input type="text" name="namabarang" value="<?=$namabarang;?>" class="form-control" required>
-                                                <br>
-                                                <select name="deskripsi" class="form-control" required>
-                                                    <option value="">Pilih Deskripsi</option>
-                                                    <option value="ATK">ATK</option>
-                                                    <option value="Cetakan">Cetakan</option>
+                                                <select name="tujuan" class="form-control" required>
+                                                    <option value="">Tujuan</option>
+                                                    <option value="Cabang Tangerang Selatan">Cabang Tangerang Selatan</option>
+                                                    <option value="KCP Alam Sutera">KCP Alam Sutera</option>
+                                                    <option value="KCP Bintaro Jaya">KCP Bintaro Jaya</option>
+                                                    <option value="KCP Bintaro">KCP Bintaro</option>
+                                                    <option value="KCP Cirendeu">KCP Cirendeu</option>
+                                                    <option value="KCP Ciputat">KCP Ciputat</option>
+                                                    <option value="KCP Pamulang">KCP Pamulang</option>
+                                                    <option value="KCP Pahlawan Seribu">KCP Pahlawan Seribu</option>
+                                                    <option value="KCP Serpong">KCP Serpong</option>
                                                 </select>
-                                                <br>
-                                                <select name="keterangan" class="form-control" required>
-                                                    <option value="">Keterangan</option>
-                                                    <option value="bk">bk</option>
-                                                    <option value="buku">buku</option>
-                                                    <option value="pack">pack</option>
-                                                    <option value="pcs">pcs</option>
-                                                    <option value="roll">roll</option>
-                                                    <option value="dus">dus</option>
-                                                    <option value="rim">rim</option>
-                                                    <option value="lusin">lusin</option>
-                                                    <option value="set">set</option>
-
-                                                </select>
-                                                <br>
-                                                <input type="number" name="harga" value="<?=$harga;?>" class="form-control" required>
-                                                <br>
-                                                <input type="number" name="jumlah" value="<?=$jumlah?>" class="form-control" required>
                                                 <br>
                                                 <input type="date" name="tanggal" value="<?$tanggal;?>" class="form-control" required>
+                                                
+                                                <br>
+                                                <input type="number" name="qty" value="<?=$qty;?>" class="form-control" required>
                                                 <br>
                                                 <br>
                                                 <input type ="hidden" name ="idb" value = "<?=$idb;?>">
-                                                <button type="submit" class="btn btn-primary" name="updatebarang">Submit</button>
+                                                <input type ="hidden" name ="idk" value = "<?=$idk;?>">
+                                                <button type="submit" class="btn btn-primary" name="updatebarangkeluar">Submit</button>
                                                 </div>
                                                 </form>
                                                 
@@ -209,7 +180,7 @@ require 'cek.php';
                                         </div>    
 
                                             <!-- Delete Modal -->                                           
-                                            <div class="modal fade" id="delete<?=$idb;?>">
+                                            <div class="modal fade" id="delete<?=$idk;?>">
                                             <div class="modal-dialog">
                                             <div class="modal-content">
                                             
@@ -226,24 +197,26 @@ require 'cek.php';
                                                 <br>
                                                 <br>
                                                 <input type ="hidden" name ="idb" value = "<?=$idb;?>">
-                                                <button type="submit" class="btn btn-danger" name="hapusbarang">Hapus</button>
+                                                <input type ="hidden" name ="kty" value = "<?=$qty;?>">
+                                                <input type ="hidden" name ="idk" value = "<?=$idk;?>">
+                                                <button type="submit" class="btn btn-danger" name="hapusbarangkeluar">Hapus</button>
                                                 </div>
                                                 </form>
-                                            </div>
-                                            </div>
-                                        </div>    
-
-                                            </tr>         
-                                            
-                                            <?php 
-                                                endwhile;
-                                            ?>
-                                            <tr>
-                                                <td colspan="6" align="center"><b>Grand Total</b></td>
-                                                <td align="left"><b>Rp <?=$grand_total?></b></td>
-                                                <td></td>
-                                            </tr>
                                                 
+                                                
+                                            </div>
+                                            </div>
+                                        </div> 
+
+                                            <?php 
+                                            };
+                                            ?>
+                                            
+                                            <tr>
+                                                <td colspan="5" align="center"><b>Grand Total</b></td>
+                                                <td align="left"><b>Rp <?=$grandtotal?></b></td>
+                                                <!-- <td></td> -->
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -262,9 +235,32 @@ require 'cek.php';
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/datatables-demo.js"></script>
+        <script type="text/javascript">
+            function showPrice(str) {
+                if (str == "") {
+                    document.getElementById("price").innerHTML = "";
+                    return;
+                } else { 
+                    if (window.XMLHttpRequest) {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    } else {
+                        // code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            document.getElementById("price").innerHTML = this.responseText;
+                        }
+                    };
+                    xmlhttp.open("GET","function.php?price="+str,true);
+                    xmlhttp.send();
+                }
+            }
+        </script>
     </body>
-
-    <!-- The Modal -->
+    
+     <!-- The Modal -->
   <div class="modal fade" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -278,41 +274,45 @@ require 'cek.php';
         <!-- Modal body -->
         <form method="post">
         <div class="modal-body">
-        <input type="text" name="namabarang" placeholder="Nama Barang" class="form-control" required>
+            <select name="item_barang" class="form-control" onchange="showPrice(this.value)">
+                <?php
+                    $ambil_data = $conn->query("SELECT * FROM stock WHERE deskripsi = 'Cetakan'");
+                    while ($fetcharray = mysqli_fetch_array($ambil_data)) :
+                        $nama = $fetcharray['namabarang'];
+                        $id_barang = $fetcharray['idbarang'];
+                        // $harga = $fetcharray['harga'];
+                    ?>
+                        <option value="<?=$id_barang?>"><?=$nama?></option>
+                    <?php endwhile; ?>
+            </select>
           <br>
-          <select name="deskripsi" class="form-control" required>
-            <option value="">Pilih Deskripsi</option>
-            <option value="ATK">ATK</option>
-            <option value="Cetakan">Cetakan</option>
-          </select>
-          <br>
-          <select name="keterangan" class="form-control" required>
-            <option value="">Keterangan</option>
-            <option value="bk">bk</option>
-            <option value="buku">buku</option>
-            <option value="pack">pack</option>
-            <option value="pcs">pcs</option>
-            <option value="roll">roll</option>
-            <option value="dus">dus</option>
-            <option value="rim">rim</option>
-            <option value="lusin">lusin</option>
-            <option value="set">set</option>
+          <div id="price">
 
+          </div>
+          <br>
+          <select name="tujuan" class="form-control" required>
+            <option value="">Tujuan</option>
+            <option value="Cabang Tangerang Selatan">Cabang Tangerang Selatan</option>
+            <option value="KCP Alam Sutera">KCP Alam Sutera</option>
+            <option value="KCP Bintaro Jaya">KCP Bintaro Jaya</option>
+            <option value="KCP Bintaro">KCP Bintaro</option>
+            <option value="KCP Cirendeu">KCP Cirendeu</option>
+            <option value="KCP Ciputat">KCP Ciputat</option>
+            <option value="KCP Pamulang">KCP Pamulang</option>
+            <option value="KCP Pahlawan Seribu">KCP Pahlawan Seribu</option>
+            <option value="KCP Serpong">KCP Serpong</option>
           </select>
-          <br>
-          <input type="number" name="harga" placeholder="Harga" class="form-control" required>
-          <br>
-          <input type="number" name="jumlah" placeholder="Stock" class="form-control" required>
           <br>
           <input type="date" name="tanggal" class="form-control" required>
           <br>
+          <input type="number" name="qty" placeholder="Stock" class="form-control" required>
           <br>
-          <button type="submit" class="btn btn-primary" name="addnewbarang">Submit</button>
+          <br>
+          <button type="submit" class="btn btn-primary" name="barangkeluar">Submit</button>
         </div>
         </form>
-        
-        
       </div>
     </div>
   </div>
+
 </html>
