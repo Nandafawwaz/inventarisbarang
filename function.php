@@ -129,8 +129,8 @@ if (isset($_POST['barangkeluar'])) {
         }
     }
 
-    //Edit barang keluar
-    if (isset($_POST['updatebarangkeluar'])) {   
+    //Edit barang keluar atk
+    if (isset($_POST['updatebarangkeluar_atk'])) {   
         $idb = $_POST['idb'];
         $idk = $_POST['idk'];
 
@@ -155,11 +155,11 @@ if (isset($_POST['barangkeluar'])) {
                 $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
 
                 if($kurangistock&&$updatenya&&$updatetotal){
-                    header('location:keluar.php');
+                    header('location:keluar_atk.php');
         
                 }else {
                     echo 'Gagal';
-                    header('location:keluar.php');
+                    header('location:keluar_atk.php');
                 }
             } else {
                 $selisih = $qtyskrg-$qty;
@@ -168,11 +168,11 @@ if (isset($_POST['barangkeluar'])) {
                 $updatenya = mysqli_query($conn, "update keluar set qty='$qty', tanggal ='$tanggal', tujuan ='$tujuan' where idkeluar ='$idk'");
                 $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
                 if($kurangistock&&$updatenya&&$updatetotal){
-                    header('location:keluar.php');
+                    header('location:keluar_atk.php');
         
                 }else {
                     echo 'Gagal';
-                    header('location:keluar.php');
+                    header('location:keluar_atk.php');
                 }
             }
         } else {
@@ -184,9 +184,10 @@ if (isset($_POST['barangkeluar'])) {
         }
             
     }
+    
 
         // Menghapus barang keluar
-        if(isset($_POST['hapusbarangkeluar'])) {   
+        if(isset($_POST['hapusbarangkeluar_atk'])) {   
             $idb = $_POST['idb'];
             $qty = $_POST['kty'];
             $idk = $_POST['idk'];
@@ -201,9 +202,9 @@ if (isset($_POST['barangkeluar'])) {
         $hapusdata = mysqli_query($conn, "delete from keluar where idkeluar='$idk'");
         $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
         if($update&&$hapusdata&&$updatetotal){
-            header('location:keluar.php');
+            header('location:keluar_atk.php');
         }else {
-            header('location:keluar.php');
+            header('location:keluar_atk.php');
         }
     
     }

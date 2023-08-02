@@ -16,19 +16,22 @@ require 'cek.php';
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
         <style>
-        .navbar-brand img {
-        max-width: 100px; /* Set the maximum width of the image */
-        height: auto; /* Automatically adjust the height while maintaining the aspect ratio */
+        .sb-nav-link-icon img {
+        max-width: 130px; 
+        height: auto; 
         margin-right: 100px;
-        margin-left: 25px; /* Move the image slightly to the right */
+        margin-left: 45px; 
+        margin-top: 370px;
+        }
+        .navbar {
+        background-image: url('assets/img/navbar.png'); /* Replace with the actual path to your background image */
+        background-size: cover; /* Adjust how the image covers the background */
+        background-repeat: no-repeat; /* Prevent the background image from repeating */
         }
         </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.php">
-                <img src="assets/img/bjb.png" alt =Logo class="logo-img">
-        </a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         </nav>
         <div id="layoutSidenav">
@@ -40,13 +43,9 @@ require 'cek.php';
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Stock Barang
                             </a>
-                            <a class="nav-link" href="keluar_atk.php">
+                            <a class="nav-link" href="keluar.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Barang Keluar ATK
-                            </a>
-                            <a class="nav-link" href="keluar_cetakan.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Barang Keluar Cetakan
+                                Barang Keluar
                             </a>
                             <a class="nav-link" href="admin.php">
                                 Kelola Admin
@@ -54,6 +53,11 @@ require 'cek.php';
                             <a class="nav-link" href="logout.php">
                                 Logout
                             </a>
+
+                            <div class="sb-nav-link-icon">
+                            <img src="assets/img/bjb.png" alt="Icon 2">
+                           </div>
+
                         </div>
                     </div>
                 </nav>
@@ -64,9 +68,21 @@ require 'cek.php';
                         <h1 class="mt-4">Barang Keluar</h1>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="float: left;">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="float: left; margin-right: 4px;">
                                     Tambah Barang
                                 </button>
+                                <a href="export.php" class="btn btn-info">Export Tabel</a>
+                                <form action="keluar.php" method="post" style="float:right">
+                                    <select name="desc" id="desc">
+                                        <option value="" <?php echo ($desc == '')?"selected":"" ?>>All Deskripsi</option>
+                                        <option value="ATK" <?php echo ($desc == 'ATK')?"selected":"" ?>>ATK</option>
+                                        <option value="Cetakan" <?php echo ($desc == 'Cetakan')?"selected":"" ?>>Cetakan</option>
+                            
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" name="filter_desc" style="margin-left: 5px">
+                                    Filter Deskripsi
+                                 </button>
+                                 </form>
                                 <form action="keluar.php" method="post" style="float:right">
                                     <select name="location" id="location">
                                         <option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
@@ -80,7 +96,7 @@ require 'cek.php';
                                         <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
                                         <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
                                     </select>
-                                    <button type="submit" class="btn btn-primary" name="filter_location">
+                                    <button type="submit" class="btn btn-primary" name="filter_location" style = "margin-left: 5px; margin-right: 20px">
                                     Filter Lokasi
                                  </button>
                                  </form>
@@ -276,7 +292,7 @@ require 'cek.php';
         <div class="modal-body">
             <select name="item_barang" class="form-control" onchange="showPrice(this.value)">
                 <?php
-                    $ambil_data = $conn->query("SELECT * FROM stock WHERE deskripsi = 'ATK'");
+                    $ambil_data = $conn->query("SELECT * FROM stock");
                     while ($fetcharray = mysqli_fetch_array($ambil_data)) :
                         $nama = $fetcharray['namabarang'];
                         $id_barang = $fetcharray['idbarang'];
