@@ -22,7 +22,7 @@ require 'cek.php';
         height: auto; 
         margin-right: 100px;
         margin-left: 45px; 
-        margin-top: 370px;
+        margin-top: 410px;
         }
         .navbar {
         background-image: url('assets/img/navbar.png'); /* Replace with the actual path to your background image */
