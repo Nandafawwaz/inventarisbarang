@@ -315,5 +315,21 @@ if (isset($_GET['price'])) {
 }
 
 
+// filter tanggal
+if(isset($_POST['filter_tgl'])){
+    $mulai = $_POST['tgl_mulai'];
+    $selesai = $_POST['tgl_selesai'];
+    if($mulai !=null || $selesai !=null){
+        $datastock = mysqli_query($conn,"SELECT * FROM  stock WHERE tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
+    } else {
+        $datastock = mysqli_query($conn,"SELECT * FROM  stock");
+    }
+
+} else {
+    $datastock = mysqli_query($conn,"SELECT * FROM  stock");
+}
+
+
+
 
 ?>

@@ -100,9 +100,20 @@ require 'cek.php';
                                     Filter Lokasi
                                  </button>
                                  </form>
-                                 
+                                
+                                 <div class="row mt-4">
+                                 <div class="col">
+                                 <form method ="post" class="form-inline">
+                                    <input type ="date" name ="tgl_mulai" class="form-control">
+                                    <input type ="date" name ="tgl_selesai" class="form-control ml-3">
+                                    <button type ="submit" name="filter_tgl" class="btn btn-info ml-3">
+                                    Filter
+                                    </button>
+
+                                 </form>  
+                                 </div>
+                                 </div>
                             </div>
-                            
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

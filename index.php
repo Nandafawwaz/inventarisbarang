@@ -137,18 +137,7 @@ require 'cek.php';
                                         <tbody>
                                         <?php 
 
-                                        if(isset($_POST['filter_tgl'])){
-                                            $mulai = $_POST['tgl_mulai'];
-                                            $selesai = $_POST['tgl_selesai'];
-                                            if($mulai !=null || $selesai !=null){
-                                                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM  stock WHERE idbarang and tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)order by idbarang DESC");
-                                            } else {
-                                                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM  stock WHERE idbarang = namabarang order by idbarang DESC");
-                                            }
 
-                                        } else {
-                                            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM  stock WHERE idbarang = namabarang order by idbarang DESC");
-                                        }
                                             $i = 1;
                                             $grand_total = 0;
                                             while ($data=mysqli_fetch_array($datastock)) :

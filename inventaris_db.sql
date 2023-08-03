@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 31, 2023 at 10:43 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Aug 03, 2023 at 08:34 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,7 +45,8 @@ INSERT INTO `keluar` (`idkeluar`, `idbarang`, `tanggal`, `tujuan`, `qty`) VALUES
 (35, 58, '2023-07-24', 'KCP Alam Sutera', 100),
 (36, 58, '2023-07-24', 'KCP Bintaro', 100),
 (38, 59, '2023-07-25', 'KCP Alam Sutera', 199),
-(39, 60, '2023-07-25', 'KCP Pahlawan Seribu', 10);
+(39, 60, '2023-07-25', 'KCP Pahlawan Seribu', 10),
+(43, 64, '2023-08-11', 'KCP Bintaro Jaya', 1);
 
 -- --------------------------------------------------------
 
@@ -89,9 +90,9 @@ CREATE TABLE `stock` (
 
 INSERT INTO `stock` (`idbarang`, `namabarang`, `deskripsi`, `keterangan`, `harga`, `jumlah`, `total`, `tanggal`) VALUES
 (63, 'dus arsip', 'Cetakan', 'pack', 2000, 150, 300000, '2023-07-26'),
-(64, 'Pulpen', 'ATK', 'pack', 5500, 500, 2750000, '2023-07-26'),
+(64, 'Pulpen', 'ATK', 'pack', 5500, 499, 2744500, '2023-07-26'),
 (65, 'Pulpen', 'Cetakan', 'pack', 4000, 200, 800000, '2023-07-26'),
-(66, 'tinta printer', 'ATK', 'dus', 7000, 40, 280000, '2023-07-26');
+(66, 'tinta printer', 'ATK', 'buku', 7000, 40, 280000, '2023-06-13');
 
 --
 -- Indexes for dumped tables
@@ -124,7 +125,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT for table `keluar`
 --
 ALTER TABLE `keluar`
-  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `login`
