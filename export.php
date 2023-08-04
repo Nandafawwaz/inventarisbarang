@@ -30,7 +30,7 @@ require 'cek.php';
 
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-<a class="navbar-brand" href="index.php">
+<a class="navbar-brand" href="stock.php">
         <img src="assets/img/bjb.png" alt="Logo" class="logo-img">
     </a>
         </nav>

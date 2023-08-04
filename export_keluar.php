@@ -19,13 +19,11 @@ require 'cek.php';
 <body>
 <div class="container">
 			<h2>Stock Tersedia</h2>
-			<h4>(Inventory)</h4>
 				<div class="data-tables datatable-dark">
 					
 					                    <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
                                                 <th>Nama Barang</th>
                                                 <th>Deskripsi</th>
                                                 <th>Keterangan</th>
@@ -37,8 +35,7 @@ require 'cek.php';
                                         <tbody>
 
                                             <?php 
-                                            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM stock");
-                                            $i = 1;
+                                            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar");
                                             $grand_total = 0;
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) :
                                                 $namabarang = $data['namabarang'];
