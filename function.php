@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 // Koneksi ke database
 $conn = mysqli_connect("localhost","root","","inventaris_db");
@@ -17,10 +16,10 @@ if (isset($_POST['addnewbarang'])) {
 
     $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, keterangan, harga, jumlah, total, tanggal) values('$namabarang','$deskripsi','$keterangan','$harga','$jumlah','$total','$tanggal')");
     if ($addtotable) {
-        header('location:index.php');
+        header('location:stock.php');
     }else{
         echo 'Gagal';
-        header('location:index.php');
+        header('location:stock.php');
     }
 }
 
@@ -211,24 +210,18 @@ if (isset($_POST['barangkeluar'])) {
 
 // menambah admin baru
 if (isset($_POST['addnewadmin'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $queryinsert = mysqli_query($conn, "insert into login (username,password) values ('$username','$password')");
-
-    if ($queryinsert) {
-        // if berhasil
-        header('location:admin.php');
-
-    }else{
-        // if gagal
-        echo 'Gagal';
-        header('location:admin.php');
+    $username      = $_POST['username'];
+    $password       = md5($_POST['password']);
+    
+    $query = mysqli_query($conn, "INSERT INTO login VALUES ('', '$username', '$password')") or die(mysqli_error($conn));
+    
+    if($query){
+        header("location:admin.php");
     }
-
-
+    else{
+        echo "Inputan Gagal";
+    }
 }
-
 // update admin
 if (isset($_POST['updateadmin'])) {
     $newusername = $_POST['username_baru'];
@@ -282,6 +275,19 @@ $datastock = mysqli_query($conn,"SELECT * FROM stock");
 $desc="";
 }
 
+// filter deskripsi keluar
+if(isset($_POST['filter_desc_kl'])){
+    $desc_kl = $_POST['desc_kl'];
+    if($desc_kl==""){
+    $datastock = mysqli_query($conn,"SELECT * FROM stock");
+    }else{
+    $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE deskripsi='$desc_kl'");
+    }     
+}else{
+$datastock = mysqli_query($conn,"SELECT * FROM stock");
+$desc="";
+}
+
 
 // filter lokasi
 $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
@@ -315,8 +321,8 @@ if (isset($_GET['price'])) {
 }
 
 
-// filter tanggal
-if(isset($_POST['filter_tgl'])){
+// filter tanggal stock
+if(isset($_POST['filter_tgl_st'])){
     $mulai = $_POST['tgl_mulai'];
     $selesai = $_POST['tgl_selesai'];
     if($mulai !=null || $selesai !=null){
@@ -329,6 +335,35 @@ if(isset($_POST['filter_tgl'])){
     $datastock = mysqli_query($conn,"SELECT * FROM  stock s, keluar k");
 }
 
+// filter tanggal keluar
+// if(isset($_POST['filter_tgl_kl'])){
+//     $mulai1 = $_POST['tgl_mulai1'];
+//     $selesai1 = $_POST['tgl_selesai1'];
+//     if($mulai1 !=null || $selesai1 !=null){
+//         $datastock = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE s.idbarang = k.idbarang and tanggal BETWEEN '$mulai1' and DATE_ADD('$selesai1',INTERVAL 1 DAY)");
+//     } else {
+//         $datastock = mysqli_query($conn,"SELECT * FROM  keluar k, stock s ");
+//     }
+
+// } else {
+//     $datastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s");
+// }
+
+
+// if(isset($_POST['filter_location'])){
+//     $location = $_POST['location'];
+//     if($location==""){
+//          $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+                                        
+//     }else{
+//         $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
+//         $location = "";
+//     }
+                                    
+// }else{
+//     $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+//     $location = "";
+// }
 
 
 ?>
