@@ -320,15 +320,14 @@ if(isset($_POST['filter_tgl'])){
     $mulai = $_POST['tgl_mulai'];
     $selesai = $_POST['tgl_selesai'];
     if($mulai !=null || $selesai !=null){
-        $datastock = mysqli_query($conn,"SELECT * FROM  stock WHERE tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
+        $datastock = mysqli_query($conn,"SELECT * FROM  stock s, keluar k WHERE s.idbarang=k.idbarang AND k.tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
     } else {
-        $datastock = mysqli_query($conn,"SELECT * FROM  stock");
+        $datastock = mysqli_query($conn,"SELECT * FROM  stock s, keluar k WHERE s.idbarang=k.idbarang");
     }
 
 } else {
-    $datastock = mysqli_query($conn,"SELECT * FROM  stock");
+    $datastock = mysqli_query($conn,"SELECT * FROM  stock s, keluar k");
 }
-
 
 
 
