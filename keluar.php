@@ -115,18 +115,6 @@ require 'cek.php';
                                  </div>
                                  </div>
                                 
-                                 <div class="row mt-4">
-                                 <div class="col">
-                                 <form method ="post" class="form-inline">
-                                    <input type ="date" name ="tgl_mulai" class="form-control">
-                                    <input type ="date" name ="tgl_selesai" class="form-control ml-3">
-                                    <button type ="submit" name="filter_tgl" class="btn btn-info ml-3">
-                                    Filter
-                                    </button>
-
-                                 </form>  
-                                 </div>
-                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -144,19 +132,6 @@ require 'cek.php';
                                         </thead>
                                         <tbody>
                                         <?php 
-                                            
-                                            if(isset($_POST['filter_tgl'])){
-                                                $mulai = $_POST['tgl_mulai'];
-                                                $selesai = $_POST['tgl_selesai'];
-                                                if($mulai !=null || $selesai !=null){
-                                                    $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM  stock WHERE idbarang and tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)order by idbarang DESC");
-                                                } else {
-                                                    $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM  stock WHERE idbarang = namabarang order by idbarang DESC");
-                                                }
-    
-                                            } else {
-                                                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM  stock WHERE idbarang = namabarang order by idbarang DESC");
-                                            }
 
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) {
                                                 $idk = $data['idkeluar'];
