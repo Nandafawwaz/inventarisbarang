@@ -133,7 +133,7 @@ require 'cek.php';
                                         <tbody>
                                         <?php 
 
-                                            while ($data=mysqli_fetch_array($ambil_alldatastock)) {
+                                            while ($data=mysqli_fetch_array($datastock)) {
                                                 $idk = $data['idkeluar'];
                                                 $idb = $data['idbarang'];
                                                 $tanggal = $data['tanggal'];
