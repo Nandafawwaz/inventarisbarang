@@ -1,19 +1,28 @@
 <?php
-    session_start();
-    include "function.php";
+    // session_start();
+    require "function.php";
 
-    $username=$_POST['username'];
-    $password=$_POST['password'];
-    $enpass=md5($password);
+    if (isset($_POST['login'])) {
+        $username=$_POST['username'];
+        $password = md5($_POST["password"]);
 
-    $query=mysqli_query($conn, "SELECT * FROM login WHERE username='$username' and password='$enpass'");     
+    $query=mysqli_query($conn, "SELECT * FROM login WHERE username='$username' and password='$password'");     
     $cek=mysqli_num_rows($query);
 
     if ($cek>0) {
+        $_SESSION['log']='True';
         $_SESSION['username']=$username;
-        $_SESSION['password']=$password;
         header("location:stock.php");
     } else {
         header("location:index.php?pesan=gagal");
-    }
+    };
+
+    };
+
+    if (!isset($_SESSION['log'])) {
+        
+    } else {
+        header('location:index.php');
+    };
+
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2023 at 08:34 AM
+-- Generation Time: Aug 04, 2023 at 01:55 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -46,7 +46,9 @@ INSERT INTO `keluar` (`idkeluar`, `idbarang`, `tanggal`, `tujuan`, `qty`) VALUES
 (36, 58, '2023-07-24', 'KCP Bintaro', 100),
 (38, 59, '2023-07-25', 'KCP Alam Sutera', 199),
 (39, 60, '2023-07-25', 'KCP Pahlawan Seribu', 10),
-(43, 64, '2023-08-11', 'KCP Bintaro Jaya', 1);
+(43, 64, '2023-08-11', 'KCP Bintaro Jaya', 1),
+(44, 63, '2023-08-25', 'KCP Bintaro', 50),
+(45, 66, '2023-09-07', 'KCP Cirendeu', 1);
 
 -- --------------------------------------------------------
 
@@ -65,7 +67,8 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`iduser`, `username`, `password`) VALUES
-(2, 'admin', 'admin');
+(2, 'admin', 'admin'),
+(4, 'fawwaz', '28b662d883b6d76fd96e4ddc5e9ba780');
 
 -- --------------------------------------------------------
 
@@ -89,10 +92,11 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`idbarang`, `namabarang`, `deskripsi`, `keterangan`, `harga`, `jumlah`, `total`, `tanggal`) VALUES
-(63, 'dus arsip', 'Cetakan', 'pack', 2000, 150, 300000, '2023-07-26'),
+(63, 'dus arsip', 'Cetakan', 'pack', 2000, 100, 200000, '2023-07-26'),
 (64, 'Pulpen', 'ATK', 'pack', 5500, 499, 2744500, '2023-07-26'),
 (65, 'Pulpen', 'Cetakan', 'pack', 4000, 200, 800000, '2023-07-26'),
-(66, 'tinta printer', 'ATK', 'buku', 7000, 40, 280000, '2023-06-13');
+(66, 'tinta printer', 'ATK', 'buku', 7000, 39, 273000, '2023-06-13'),
+(67, 'dus arsip', 'Cetakan', 'pack', 1000, 50, 50000, '2023-08-02');
 
 --
 -- Indexes for dumped tables
@@ -125,19 +129,19 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT for table `keluar`
 --
 ALTER TABLE `keluar`
-  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
