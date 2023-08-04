@@ -44,13 +44,9 @@ require 'cek.php';
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Stock Barang
                             </a>
-                            <a class="nav-link" href="keluar_atk.php">
+                            <a class="nav-link" href="keluar.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Barang Keluar ATK
-                            </a>
-                            <a class="nav-link" href="keluar_cetakan.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Barang Keluar Cetakan
+                                Barang Keluar
                             </a>
                             <a class="nav-link" href="admin.php">
                                 Kelola Admin
