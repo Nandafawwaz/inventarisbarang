@@ -263,16 +263,16 @@ if (isset($_POST['hapusadmin'])) {
 
 
 // filter deskripsi stock
-if(isset($_POST['filter_desc'])){
+if (isset($_POST['filter_desc'])) {
     $desc = $_POST['desc'];
-    if($desc==""){
-    $datastock = mysqli_query($conn,"SELECT * FROM stock");
-    }else{
-    $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE deskripsi='$desc'");
-    }     
-}else{
-$datastock = mysqli_query($conn,"SELECT * FROM stock");
-$desc="";
+    if ($desc == "") {
+        $datastock = mysqli_query($conn, "SELECT * FROM stock");
+    } else {
+        $datastock = mysqli_query($conn, "SELECT * FROM stock WHERE deskripsi='$desc'");
+    }
+} else {
+    $datastock = mysqli_query($conn, "SELECT * FROM stock");
+    $desc = "";
 }
 
 // filter deskripsi keluar
@@ -285,7 +285,7 @@ if(isset($_POST['filter_desc_kl'])){
     }     
 }else{
 $datastock = mysqli_query($conn,"SELECT * FROM stock");
-$desc="";
+$desc_kl="";
 }
 
 

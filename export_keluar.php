@@ -35,6 +35,7 @@ require 'cek.php';
                                         <tbody>
 
                                             <?php 
+
                                             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar");
                                             $grand_total = 0;
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) :

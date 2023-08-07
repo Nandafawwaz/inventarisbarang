@@ -39,7 +39,7 @@ require 'cek.php';
 			<h2>Stock Tersedia</h2>
 
             <div>
-    <form method="GET" action="">
+            <form method="GET" action="">
         <label>Filter by Deskripsi:</label>
         <input type="radio" name="filter" value="ATK"> ATK
         <input type="radio" name="filter" value="Cetakan"> Cetakan
@@ -88,20 +88,17 @@ if (isset($_GET['filter'])) {
     if ($filter === "ATK" || $filter === "Cetakan") {
         $filter_query = "SELECT * FROM stock WHERE deskripsi LIKE '%$filter%'";
         $ambil_alldatastock = mysqli_query($conn, $filter_query);
-    } else {
-        $ambil_alldatastock = mysqli_query($conn, "SELECT * FROM stock");
     }
-} else {
-    $ambil_alldatastock = mysqli_query($conn, "SELECT * FROM stock");
 }
 
 if (isset($_GET['month'])) {
     $month = $_GET['month'];
     $filter_query = "SELECT * FROM stock WHERE MONTH(tanggal) = '$month'";
-    $ambil_alldatastock = mysqli_query($conn, $filter_query);
 } else {
-    $ambil_alldatastock = mysqli_query($conn, "SELECT * FROM stock");
+    $filter_query = "SELECT * FROM stock";
 }
+
+$ambil_alldatastock = mysqli_query($conn, $filter_query);
 
                                             // $i = 1;
                                             $grand_total = 0;
@@ -163,6 +160,7 @@ var table =    $('#mauexport').DataTable( {
     } );
 } );
 
+    
 </script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
