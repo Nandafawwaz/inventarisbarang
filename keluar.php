@@ -134,7 +134,7 @@ require 'cek.php';
                                         <tbody>
                                         <?php 
 
-                                            while ($data=mysqli_fetch_array($datastock)) {
+                                            while ($data=mysqli_fetch_array($datastockkeluar)) {
                                                 $idk = $data['idkeluar'];
                                                 $idb = $data['idbarang'];
                                                 $tanggal = $data['tanggal'];
@@ -317,10 +317,6 @@ require 'cek.php';
                         <option value="<?=$id_barang?>"><?=$nama?> <?=$harga?></option>
                     <?php endwhile; ?>
             </select>
-          <!-- <br>
-          <div id="price">
-
-          </div> -->
           <br>
           <select name="tujuan" class="form-control" required>
             <option value="">Tujuan</option>

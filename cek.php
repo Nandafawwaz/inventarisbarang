@@ -1,6 +1,6 @@
 <?php
-if(isset($_SESSION['log'])){
-
+if($_SESSION['log'] == 'True'){
+    // header('location:stock.php');
 } else {
     header('location:index.php');
 }

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 // Koneksi ke database
 $conn = mysqli_connect("localhost","root","","inventaris_db");
 
@@ -186,7 +186,7 @@ if (isset($_POST['barangkeluar'])) {
     
 
         // Menghapus barang keluar
-        if(isset($_POST['hapusbarangkeluar_atk'])) {   
+        if(isset($_POST['hapusbarangkeluar'])) {   
             $idb = $_POST['idb'];
             $qty = $_POST['kty'];
             $idk = $_POST['idk'];
@@ -201,9 +201,9 @@ if (isset($_POST['barangkeluar'])) {
         $hapusdata = mysqli_query($conn, "delete from keluar where idkeluar='$idk'");
         $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
         if($update&&$hapusdata&&$updatetotal){
-            header('location:keluar_atk.php');
+            header('location:keluar.php');
         }else {
-            header('location:keluar_atk.php');
+            header('location:keluar.php');
         }
     
     }
@@ -326,44 +326,30 @@ if(isset($_POST['filter_tgl_st'])){
     $mulai = $_POST['tgl_mulai'];
     $selesai = $_POST['tgl_selesai'];
     if($mulai !=null || $selesai !=null){
-        $datastock = mysqli_query($conn,"SELECT * FROM  stock s, keluar k WHERE s.idbarang=k.idbarang AND k.tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
+        $datastock = mysqli_query($conn,"SELECT * FROM  stock WHERE tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
     } else {
-        $datastock = mysqli_query($conn,"SELECT * FROM  stock s, keluar k WHERE s.idbarang=k.idbarang");
+        $datastock = mysqli_query($conn,"SELECT * FROM  stock");
     }
 
 } else {
-    $datastock = mysqli_query($conn,"SELECT * FROM  stock s, keluar k");
+    $datastock = mysqli_query($conn,"SELECT * FROM  stock");
 }
 
+
 // filter tanggal keluar
-// if(isset($_POST['filter_tgl_kl'])){
-//     $mulai1 = $_POST['tgl_mulai1'];
-//     $selesai1 = $_POST['tgl_selesai1'];
-//     if($mulai1 !=null || $selesai1 !=null){
-//         $datastock = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE s.idbarang = k.idbarang and tanggal BETWEEN '$mulai1' and DATE_ADD('$selesai1',INTERVAL 1 DAY)");
-//     } else {
-//         $datastock = mysqli_query($conn,"SELECT * FROM  keluar k, stock s ");
-//     }
+if(isset($_POST['filter_tgl_kl'])){
+    $mulai1 = $_POST['tgl_mulai1'];
+    $selesai1 = $_POST['tgl_selesai1'];
+    if($mulai1 !=null || $selesai1 !=null){
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE (s.idbarang = k.idbarang) and (k.tanggal >= '$mulai1' AND k.tanggal<= '$selesai1')");
+    } else {
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE s.idbarang = k.idbarang ");
+    }
 
-// } else {
-//     $datastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s");
-// }
+} else {
+    $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang = k.idbarang");
+}
 
-
-// if(isset($_POST['filter_location'])){
-//     $location = $_POST['location'];
-//     if($location==""){
-//          $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-                                        
-//     }else{
-//         $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
-//         $location = "";
-//     }
-                                    
-// }else{
-//     $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-//     $location = "";
-// }
 
 
 ?>

@@ -1,3 +1,12 @@
+<!-- <?=
+require "function.php";
+if (isset($_SESSION['log'])) {
+    header('location:stock.php');
+
+}
+
+?> -->
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -40,7 +49,7 @@
                                                 <input class="form-control py-4" name="password" id="inputPassword" type="password" placeholder="Enter password" />
                                             </div>
                                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <button class="btn btn-primary" name="login">Login</button>
+                                                <button class="btn btn-primary" type="submit" name="login">Login</button>
                                             </div>
                                         </form>
                                         <br>
