@@ -47,33 +47,38 @@ require 'cek.php';
     </form>
 </div>
 
+<?php
+
+$ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, '');
+
+
+function filterExportKeluarStockByDateRange($conn, $startDate, $endDate) {
+    $query = "SELECT * FROM stock WHERE tanggal BETWEEN '$startDate' AND '$endDate'";
+    $result = mysqli_query($conn, $query);
+    return $result;
+}
+?>
+
 <div>
-    <form method="GET" action="">
-        <label>Filter by Month:</label>
-        <select name="month" onchange="this.form.submit()">
-            <option value="01">Januari</option>
-            <option value="02">Februari</option>
-            <option value="03">Maret</option>
-            <option value="04">April</option>
-            <option value="05">Mei</option>
-            <option value="06">Juni</option>
-            <option value="07">Juli</option>
-            <option value="08">Agustus</option>
-            <option value="09">September</option>
-            <option value="10">Oktober</option>
-            <option value="11">November</option>
-            <option value="12">Desember</option>
-        </select>
-    </form>
+
+<form method="GET" action="">
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date" name="start-date">
+    
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date" name="end-date">
+    
+    <button type="submit">Filter</button>
+</form>
 </div>
 				<div class="data-tables datatable-dark">
-					
+					<br>
 					                    <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Tanggal</th>
-                                                <th>Nama Barang</th>
                                                 <th>Deskripsi</th>
+                                                <th>Nama Barang</th>
                                                 <th>Keterangan</th>
                                                 <th>Harga</th>
                                                 <th>Jumlah</th>
@@ -83,29 +88,25 @@ require 'cek.php';
                                         <tbody>
 
                                             <?php 
+
+if (isset($_GET['start-date']) && isset($_GET['end-date'])) {
+    $startDate = $_GET['start-date'];
+    $endDate = $_GET['end-date'];
+    $ambil_alldatastock = filterExportKeluarStockByDateRange($conn, $startDate, $endDate);
+}
+
 if (isset($_GET['filter'])) {
     $filter = $_GET['filter'];
-    if ($filter === "ATK" || $filter === "Cetakan") {
-        $filter_query = "SELECT * FROM stock WHERE deskripsi LIKE '%$filter%'";
-        $ambil_alldatastock = mysqli_query($conn, $filter_query);
-    }
+    $ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, $filter);
 }
 
-if (isset($_GET['month'])) {
-    $month = $_GET['month'];
-    $filter_query = "SELECT * FROM stock WHERE MONTH(tanggal) = '$month'";
-} else {
-    $filter_query = "SELECT * FROM stock";
-}
-
-$ambil_alldatastock = mysqli_query($conn, $filter_query);
 
                                             // $i = 1;
                                             $grand_total = 0;
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) :
                                                 $tanggal = $data['tanggal'];
-                                                $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
+                                                $namabarang = $data['namabarang'];
                                                 $keterangan = $data['keterangan'];
                                                 $harga = $data['harga'];
                                                 $jumlah = $data['jumlah'];
@@ -116,13 +117,12 @@ $ambil_alldatastock = mysqli_query($conn, $filter_query);
                                             <tr>
                                                 <!-- <td><?= $i++;?></td> -->
                                                 <td><?php echo$tanggal?></td>
-                                                <td><?php echo$namabarang?></td>
                                                 <td><?php echo$deskripsi?></td>
+                                                <td><?php echo$namabarang?></td>
                                                 <td><?php echo$keterangan ?></td>
-                                                <td><?php echo$harga?></td>
-                                                <td><?php echo$jumlah ?></td>
-                                                <td><?php echo$total ?></td>
-
+                                                <td><?php echo number_format($harga, 0, ',', '.'); ?></td>
+                                                <td><?php echo number_format($jumlah, 0, ',', '.'); ?></td>
+                                                <td><?php echo number_format($total, 0, ',', '.'); ?></td>  
                                             </tr>            
                                             
                                             <?php 
@@ -137,7 +137,7 @@ $ambil_alldatastock = mysqli_query($conn, $filter_query);
                                                 <td></td>
                                                 <td></td>
                                                 <td><b>Grand Total</b></td>
-                                                <td><b><?=$grand_total?></b></td>
+                                                <td><b>Rp <?php echo number_format($grand_total, 0, ',', '.'); ?></b></td>
                                             </tr> 
                                         </tfoot>
                                     </table>
