@@ -276,41 +276,30 @@ if (isset($_POST['filter_desc'])) {
 }
 
 // filter deskripsi keluar
-if(isset($_POST['filter_desc_kl'])){
-    $desc_kl = $_POST['desc_kl'];
-    if($desc_kl==""){
-    $datastock = mysqli_query($conn,"SELECT * FROM stock");
-    }else{
-    $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE deskripsi='$desc_kl'");
-    }     
-}else{
-$datastock = mysqli_query($conn,"SELECT * FROM stock");
-$desc_kl="";
-}
+// 
 
 
 // filter lokasi
-$ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+
 $i = 1;
 $grandtotal = 0;
-        if(isset($_POST['filter_location'])){
-        $location = $_POST['location'];
-        if($location==""){
-             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+    //     if(isset($_POST['filter_location'])){
+    //     $location = $_POST['location'];
+    //     if($location==""){
+    //          $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
                                             
-        }else{
-            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
-            $location = "";
-        }
+    //     }else{
+    //         $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
+    //         $location = "";
+    //     }
                                         
-    }else{
-        $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-        $location = "";
-    }
-                    
-// get price
-
+    // }else{
+    //     $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+    //     $location = "";
+    // }
+        
     
+// get price    
 if (isset($_GET['price'])) {
     $q = intval($_GET['price']);
     $sql="SELECT * FROM stock WHERE idbarang = '".$q."'";
@@ -337,19 +326,61 @@ if(isset($_POST['filter_tgl_st'])){
 
 
 // filter tanggal keluar
-if(isset($_POST['filter_tgl_kl'])){
-    $mulai1 = $_POST['tgl_mulai1'];
-    $selesai1 = $_POST['tgl_selesai1'];
-    if($mulai1 !=null || $selesai1 !=null){
-        $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE (s.idbarang = k.idbarang) and (k.tanggal >= '$mulai1' AND k.tanggal<= '$selesai1')");
-    } else {
-        $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE s.idbarang = k.idbarang ");
-    }
+// if(isset($_POST['filter_tgl_kl'])){
+//     $mulai1 = $_POST['tgl_mulai1'];
+//     $selesai1 = $_POST['tgl_selesai1'];
+//     if($mulai1 !=null || $selesai1 !=null){
+//         $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE (s.idbarang = k.idbarang) and (k.tanggal >= '$mulai1' AND k.tanggal<= '$selesai1')");
+//     } else {
+//         $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE s.idbarang = k.idbarang ");
+//     }
 
-} else {
+// } else {
+//     $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang = k.idbarang");
+// }
+
+
+if(isset($_POST['filter_all'])){
+    if(isset($_POST['tgl_mulai1']) && isset($_POST['tgl_selsai1']) && !isset($_POST['location']) && !isset($_POST['desc_kl'])){
+        $mulai1 = $_POST['tgl_mulai1'];
+        $selesai1 = $_POST['tgl_selesai1'];
+        if($mulai1 !=null || $selesai1 !=null){
+            $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE (s.idbarang = k.idbarang) and (k.tanggal >= '$mulai1' AND k.tanggal<= '$selesai1')");
+            $location = "";
+            $desc_kl = "";
+        } else {
+            $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE s.idbarang = k.idbarang ");
+        }
+    }
+    else if(!isset($_POST['tgl_mulai1']) && !isset($_POST['tgl_selsai1']) && isset($_POST['location']) && !isset($_POST['desc_kl'])){
+        $location = $_POST['location'];
+        if($location==""){
+             $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+             $desc_kl = "";                     
+        }else{
+            $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
+            $desc_kl = "";
+        }
+    }
+    else if(!isset($_POST['tgl_mulai1']) && !isset($_POST['tgl_selsai1']) && !isset($_POST['location']) && isset($_POST['desc_kl'])){
+        $desc_kl = $_POST['desc_kl'];
+        if($desc_kl==""){
+            $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+            $location = "";
+        }else{
+            $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND s.deskripsi='$desc_kl'");
+            $location = "";
+        }     
+    }
+}else{
     $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang = k.idbarang");
+    $desc_kl = "";
+    $location = "";
 }
 
 
+if (isset($_POST[$deskripsi_])) {
+    # code...
+}
 
 ?>

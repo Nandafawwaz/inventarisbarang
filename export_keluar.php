@@ -36,9 +36,9 @@ require 'cek.php';
 
                                             <?php 
 
-                                            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar");
+                                            $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar");
                                             $grand_total = 0;
-                                            while ($data=mysqli_fetch_array($ambil_alldatastock)) :
+                                            while ($data=mysqli_fetch_array($datastockkeluar)) :
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
                                                 $keterangan = $data['keterangan'];

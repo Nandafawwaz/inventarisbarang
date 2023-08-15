@@ -71,49 +71,52 @@ require 'cek.php';
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="float: left; margin-right: 4px;">
                                     Tambah Barang
                                 </button>
-                                <a href="export.php" class="btn btn-info">Export Tabel</a>
-                                <form action="keluar.php" method="post" style="float:right">
-                                    <select name="desc_kl" id="desc_kl">
-                                        <option value="" <?php echo ($desc == '')?"selected":"" ?>>All Deskripsi</option>
-                                        <option value="ATK" <?php echo ($desc == 'ATK')?"selected":"" ?>>ATK</option>
-                                        <option value="Cetakan" <?php echo ($desc == 'Cetakan')?"selected":"" ?>>Cetakan</option>
-                            
-                                    </select>
-                                    <button type="submit" class="btn btn-primary" name="filter_desc_kl" style="margin-left: 5px">
-                                    Filter Deskripsi
-                                 </button>
-                                 </form>
-                                <form action="keluar.php" method="post" style="float:right">
-                                    <select name="location" id="location">
-                                        <option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
-                                        <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
-                                        <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
-                                        <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
-                                        <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
-                                        <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
-                                        <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
-                                        <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
-                                        <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
-                                        <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
-                                    </select>
-                                    <button type="submit" class="btn btn-primary" name="filter_location" style = "margin-left: 5px; margin-right: 20px">
-                                    Filter Lokasi
-                                 </button>
-                                 </form>
-                                 
-                                <br>
-                                <div class="row mt-4">
-                                 <div class="col">
-                                 <form method ="post" class="form-inline">
-                                    <input type ="date" name ="tgl_mulai1" class="form-control">
-                                    <input type ="date" name ="tgl_selesai1" class="form-control ml-3">
-                                    <button type ="submit" name="filter_tgl_kl" class="btn btn-info ml-3">
+                                <a href="export_keluar.php" class="btn btn-info">Export Tabel</a>
+                                <form action="" method="post">
+                                    <div style="float: right;">
+                                        <select name="desc_kl" id="desc_kl">
+                                            <option value="" <?php echo ($desc_kl == '')?"selected":"" ?>>All Deskripsi</option>
+                                            <option value="ATK" <?php echo ($desc_kl == 'ATK')?"selected":"" ?>>ATK</option>
+                                            <option value="Cetakan" <?php echo ($desc_kl == 'Cetakan')?"selected":"" ?>>Cetakan</option>
+                                        </select>
+                                        
+                                    </div>
+
+                                    <div style="float: right;">
+                                        <select name="location" id="location">
+                                                <option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
+                                                <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
+                                                <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
+                                                <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
+                                                <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
+                                                <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
+                                                <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
+                                                <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
+                                                <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
+                                                <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
+                                        </select>
+                                        
+                                    </div>
+                                    
+                                    <br>
+                                    
+                                    <div class="row mt-4">
+                                        <div class="col">
+                                            <div class="form-inline">
+                                                <input type ="date" name ="tgl_mulai1" class="form-control">
+                                                <input type ="date" name ="tgl_selesai1" class="form-control ml-3">
+                                            </div>
+                                   
+                                        </div>
+                                    </div>
+                                
+                                <button type ="submit" name="filter_all" class="btn btn-info ml-2">
                                     Filter
                                     </button>
-
-                                 </form>  
-                                 </div>
-                                 </div>
+                                </form>
+                                 
+                                <br>
+                                
                                 
                             </div>
                             <div class="card-body">
@@ -306,6 +309,18 @@ require 'cek.php';
         <!-- Modal body -->
         <form method="post">
         <div class="modal-body">
+            <input type="radio" name="deskripsi" value="atk" onclick="showItemOptions(this.value)">ATK 
+            <input type="radio" name="deskripsi" value="cetakan" onclick="showItemOptions(this.value)">Cetakan
+            <?php 
+                if (isset($_POST['deskripsi'])) {
+                    $deskripsi = $_POST['deskripsi'];
+                } else {
+                    $deskripsi = '';
+                }
+            
+            ?>
+            <br>
+            <br>
             <select name="item_barang" class="form-control" onchange="showPrice(this.value)">
                 <?php
                     $ambil_data = $conn->query("SELECT * FROM stock");
