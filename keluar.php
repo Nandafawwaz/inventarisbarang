@@ -15,6 +15,7 @@ require 'cek.php';
         <link href="css/styles.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
         <style>
         .sb-nav-link-icon img {
         max-width: 130px; 
@@ -72,45 +73,42 @@ require 'cek.php';
                                     Tambah Barang
                                 </button>
                                 <a href="export_keluar.php" class="btn btn-info">Export Tabel</a>
-                                <form action="" method="post">
-                                    <div style="float: right;">
-                                        <select name="desc_kl" id="desc_kl">
-                                            <option value="" <?php echo ($desc_kl == '')?"selected":"" ?>>All Deskripsi</option>
-                                            <option value="ATK" <?php echo ($desc_kl == 'ATK')?"selected":"" ?>>ATK</option>
-                                            <option value="Cetakan" <?php echo ($desc_kl == 'Cetakan')?"selected":"" ?>>Cetakan</option>
-                                        </select>
-                                        
-                                    </div>
-
-                                    <div style="float: right;">
-                                        <select name="location" id="location">
-                                                <option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
-                                                <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
-                                                <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
-                                                <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
-                                                <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
-                                                <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
-                                                <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
-                                                <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
-                                                <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
-                                                <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
-                                        </select>
-                                        
-                                    </div>
-                                    
-                                    <br>
-                                    
-                                    <div class="row mt-4">
-                                        <div class="col">
-                                            <div class="form-inline">
-                                                <input type ="date" name ="tgl_mulai1" class="form-control">
-                                                <input type ="date" name ="tgl_selesai1" class="form-control ml-3">
-                                            </div>
-                                   
-                                        </div>
-                                    </div>
-                                
-                                <button type ="submit" name="filter_all" class="btn btn-info ml-2">
+                                <form id="descForm" method="post" style="float:right">
+                                    <select name="desc_kl" id="desc_kl">
+                                        <option value="" <?php echo ($desc_kl == '')?"selected":"" ?>>All Deskripsi</option>
+                                        <option value="ATK" <?php echo ($desc_kl == 'ATK')?"selected":"" ?>>ATK</option>
+                                        <option value="Cetakan" <?php echo ($desc_kl == 'Cetakan')?"selected":"" ?>>Cetakan</option>
+                            
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" name="filter_desc_kl" style="margin-left: 5px">
+                                    Filter Deskripsi
+                                 </button>
+                                 </form>
+                                <form id="locationForm" method="post" style="float:right">
+                                    <select name="location" id="location">
+                                        <option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
+                                        <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
+                                        <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
+                                        <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
+                                        <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
+                                        <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
+                                        <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
+                                        <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
+                                        <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
+                                        <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" name="filter_location" style = "margin-left: 5px; margin-right: 20px">
+                                    Filter Lokasi
+                                 </button>
+                                 </form>
+                                 
+                                <br>
+                                <div class="row mt-4">
+                                 <div class="col">
+                                 <form id="dateForm" method ="post" class="form-inline">
+                                    <input type ="date" name ="tgl_mulai1" class="form-control">
+                                    <input type ="date" name ="tgl_selesai1" class="form-control ml-3">
+                                    <button type ="submit" name="filter_tgl_kl" class="btn btn-info ml-3">
                                     Filter
                                     </button>
                                 </form>
@@ -140,7 +138,7 @@ require 'cek.php';
                                             while ($data=mysqli_fetch_array($datastockkeluar)) {
                                                 $idk = $data['idkeluar'];
                                                 $idb = $data['idbarang'];
-                                                $tanggal = $data['tanggal'];
+                                                $tanggal = $data['tanggal_k'];
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
                                                 $tujuan = $data['tujuan'];
@@ -156,9 +154,9 @@ require 'cek.php';
                                                 <td><?=$namabarang?></td>
                                                 <td><?=$deskripsi?></td>
                                                 <td><?=$tujuan?></td>    
-                                                <td><?=$harga?></td>                                          
-                                                <td><?=$qty ?></td> 
-                                                <td><?=$total?></td> 
+                                                <td><?php echo number_format($harga, 0, ',', '.'); ?></td>
+                                                <td><?php echo number_format($qty, 0, ',', '.'); ?></td>
+                                                <td><?php echo number_format($total, 0, ',', '.'); ?></td> 
                                                 <td>
                                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$idk;?>">
                                                             Edit
@@ -248,8 +246,8 @@ require 'cek.php';
                                             ?>
                                             
                                             <tr>
-                                                <td colspan="5" align="center"><b>Grand Total</b></td>
-                                                <td align="left"><b>Rp <?=$grandtotal?></b></td>
+                                                <td colspan="6" align="center"><b>Grand Total</b></td>
+                                                <td><b>Rp <?php echo number_format($grandtotal, 0, ',', '.'); ?></b></td>
                                                 <!-- <td></td> -->
                                             </tr>
                                         </tbody>
@@ -293,6 +291,37 @@ require 'cek.php';
                 }
             }
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2();
+            });
+        </script>
+        <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const locationForm = document.getElementById("locationForm");
+        const descForm = document.getElementById("descForm");
+        const dateForm = document.getElementById("dateForm");
+
+        locationForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Submit location form
+            this.submit();
+        });
+
+        descForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Submit description form
+            this.submit();
+        });
+
+        dateForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Submit date form
+            this.submit();
+        });
+    });
+</script>
     </body>
     
      <!-- The Modal -->
@@ -309,29 +338,18 @@ require 'cek.php';
         <!-- Modal body -->
         <form method="post">
         <div class="modal-body">
-            <input type="radio" name="deskripsi" value="atk" onclick="showItemOptions(this.value)">ATK 
-            <input type="radio" name="deskripsi" value="cetakan" onclick="showItemOptions(this.value)">Cetakan
-            <?php 
-                if (isset($_POST['deskripsi'])) {
-                    $deskripsi = $_POST['deskripsi'];
-                } else {
-                    $deskripsi = '';
-                }
-            
-            ?>
-            <br>
-            <br>
-            <select name="item_barang" class="form-control" onchange="showPrice(this.value)">
-                <?php
-                    $ambil_data = $conn->query("SELECT * FROM stock");
-                    while ($fetcharray = mysqli_fetch_array($ambil_data)) :
-                        $nama = $fetcharray['namabarang'];
-                        $id_barang = $fetcharray['idbarang'];
-                        $harga = $fetcharray['harga'];
-                    ?>
-                        <option value="<?=$id_barang?>"><?=$nama?> <?=$harga?></option>
-                    <?php endwhile; ?>
-            </select>
+        <select name="item_barang" class="select2 " onchange="showPrice(this.value)">
+    <?php
+    $ambil_data = $conn->query("SELECT * FROM keluar k, stock s GROUP BY namabarang");
+    while ($fetcharray = mysqli_fetch_array($ambil_data)) :
+        $nama = $fetcharray['namabarang'];
+        $id_barang = $fetcharray['idbarang'];
+        $harga = $fetcharray['harga'];
+    ?>
+        <option value="<?=$id_barang?>"><b><?=$nama?></b> - Rp <?=number_format($harga, 0, ',', '.')?></option>
+    <?php endwhile; ?>
+</select>
+          <br>
           <br>
           <select name="tujuan" class="form-control" required>
             <option value="">Tujuan</option>
@@ -359,3 +377,4 @@ require 'cek.php';
   </div>
 
 </html>
+
