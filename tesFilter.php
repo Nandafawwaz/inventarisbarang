@@ -32,11 +32,27 @@ function filterKeluarStockByLokasi($conn, $location){
 
 function filterKeluarStockByDate($conn, $mulai, $selesai){
     if($mulai !=null || $selesai !=null){
-        $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE (s.idbarang = k.idbarang) and (k.tanggal >= '$mulai' AND k.tanggal<= '$selesai')");
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE (s.idbarang = k.idbarang) and (k.tanggal_k >= '$mulai' AND k.tanggal_k<= '$selesai')");
         return $datastockkeluar;
     } 
         $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE s.idbarang = k.idbarang ");
         return $datastockkeluar;
+}
+
+function filterKeluarStockByAll($conn, $location, $mulai, $selesai, $desc_kl){
+    if ($location != "" && $mulai != null && $selesai != null) {
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tujuan = '$location' AND keluar.tanggal_k BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
+        return $datastockkeluar;
+    } elseif ($location != "" && $desc_kl != "") {
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tujuan = '$location' AND stock.deskripsi = '$desc_kl'");
+        return $datastockkeluar;
+    }elseif ($mulai != null && $selesai != null && $desc_kl != "") {
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tanggal_k BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY) AND stock.deskripsi = '$desc_kl'");
+        return $datastockkeluar;
+    }elseif ($location != "" && $mulai != null && $selesai != null && $desc_kl != "") {
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tujuan = '$location' AND keluar.tanggal_k BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY) AND stock.deskripsi = '$desc_kl'");
+        return $datastockkeluar;
+    }
 }
 
 function filterKeluarStockByDeskripsi($conn, $desc_kl){
@@ -60,7 +76,7 @@ function filterExportKeluarStockByDeskripsi($conn, $desc){
 
 function filterExportKeluarStockByBulan($conn, $month){
     if ($month != "") {
-        $ambil_alldatastock = mysqli_query($conn,  "SELECT * FROM stock WHERE  MONTH(tanggal) = '$month'");
+        $ambil_alldatastock = mysqli_query($conn,  "SELECT * FROM stock WHERE  MONTH(tanggal_k) = '$month'");
         return $ambil_alldatastock;
     }
     

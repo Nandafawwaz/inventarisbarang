@@ -298,6 +298,15 @@ if(isset($_POST['filter_location'])){
     $location = $_POST['location'];
     $datastockkeluar = filterKeluarStockByLokasi($conn, $location);                              
 }
+
+// filter semua
+if(isset($_POST['filter_all'])){
+    $location = $_POST['location'];
+    $desc_kl = $_POST['desc_kl'];
+    $tglmulai = $_POST['tgl_mulai1'];
+    $tglselesai = $_POST['tgl_selesai1'];
+    $datastockkeluar = filterKeluarStockByAll($conn, $location, $desc_kl, $tglmulai, $tglselesai);                              
+}
                     
 // get price
     
