@@ -1,7 +1,12 @@
 <?php
+
+require 'tesFilter.php';
+
 session_start();
 // Koneksi ke database
 $conn = mysqli_connect("localhost","root","","inventaris_db");
+
+
 
 // Menambah barang baru
 if (isset($_POST['addnewbarang'])) {
@@ -263,53 +268,38 @@ if (isset($_POST['hapusadmin'])) {
 
 
 // filter deskripsi stock
+$desc = '';
+$datastock = filterStockByDeskripsi($conn, $desc);
+
 if (isset($_POST['filter_desc'])) {
-    $desc = $_POST['desc'];
-    if ($desc == "") {
-        $datastock = mysqli_query($conn, "SELECT * FROM stock");
-    } else {
-        $datastock = mysqli_query($conn, "SELECT * FROM stock WHERE deskripsi='$desc'");
-    }
-} else {
-    $datastock = mysqli_query($conn, "SELECT * FROM stock");
-    $desc = "";
-}
+    $desc = (isset($_POST['desc']))? $_POST['desc'] : "";  
+    $datastock = filterStockByDeskripsi($conn, $desc);
+} 
 
 // filter deskripsi keluar
+$desc_kl = '';
+$datastockkeluar = filterKeluarStockByDeskripsi($conn, "");   
+
+
 if(isset($_POST['filter_desc_kl'])){
-    $desc_kl = $_POST['desc_kl'];
-    if($desc_kl==""){
-    $datastock = mysqli_query($conn,"SELECT * FROM stock");
-    }else{
-    $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE deskripsi='$desc_kl'");
-    }     
-}else{
-$datastock = mysqli_query($conn,"SELECT * FROM stock");
-$desc_kl="";
+    
+    $desc_kl = (isset($_POST['desc_kl']))? $_POST['desc_kl'] : "";  
+
+    $datastockkeluar = filterKeluarStockByDeskripsi($conn, $desc_kl);   
 }
 
 
 // filter lokasi
-$ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
 $i = 1;
 $grandtotal = 0;
-        if(isset($_POST['filter_location'])){
-        $location = $_POST['location'];
-        if($location==""){
-             $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-                                            
-        }else{
-            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang AND tujuan='$location'");
-            $location = "";
-        }
-                                        
-    }else{
-        $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
-        $location = "";
-    }
+$location = '';
+
+if(isset($_POST['filter_location'])){
+    $location = $_POST['location'];
+    $datastockkeluar = filterKeluarStockByLokasi($conn, $location);                              
+}
                     
 // get price
-
     
 if (isset($_GET['price'])) {
     $q = intval($_GET['price']);
@@ -325,31 +315,19 @@ if (isset($_GET['price'])) {
 if(isset($_POST['filter_tgl_st'])){
     $mulai = $_POST['tgl_mulai'];
     $selesai = $_POST['tgl_selesai'];
-    if($mulai !=null || $selesai !=null){
-        $datastock = mysqli_query($conn,"SELECT * FROM  stock WHERE tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
-    } else {
-        $datastock = mysqli_query($conn,"SELECT * FROM  stock");
-    }
-
-} else {
-    $datastock = mysqli_query($conn,"SELECT * FROM  stock");
-}
+    $datastock = filterStockByDate($conn, $mulai, $selesai);
+} 
 
 
 // filter tanggal keluar
 if(isset($_POST['filter_tgl_kl'])){
     $mulai1 = $_POST['tgl_mulai1'];
     $selesai1 = $_POST['tgl_selesai1'];
-    if($mulai1 !=null || $selesai1 !=null){
-        $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE (s.idbarang = k.idbarang) and (k.tanggal >= '$mulai1' AND k.tanggal<= '$selesai1')");
-    } else {
-        $datastockkeluar = mysqli_query($conn,"SELECT * FROM  keluar k, stock s WHERE s.idbarang = k.idbarang ");
-    }
+    $datastockkeluar = filterKeluarStockByDate($conn, $mulai1, $selesai1);
+} 
 
-} else {
-    $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang = k.idbarang");
-}
-
-
+// inisiasi variabel filter dan month untuk digunakan di module exports
+$filter = '';
+$month = '';
 
 ?>

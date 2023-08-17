@@ -47,22 +47,33 @@ require 'cek.php';
     </form>
 </div>
 
+<?php
+
+$ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, '');
+
+
+if (isset($_GET['month'])) {
+    $month = $_GET['month'];
+    $ambil_alldatastock = filterExportKeluarStockByBulan($conn, $month);
+}
+?>
+
 <div>
     <form method="GET" action="">
         <label>Filter by Month:</label>
         <select name="month" onchange="this.form.submit()">
-            <option value="01">Januari</option>
-            <option value="02">Februari</option>
-            <option value="03">Maret</option>
-            <option value="04">April</option>
-            <option value="05">Mei</option>
-            <option value="06">Juni</option>
-            <option value="07">Juli</option>
-            <option value="08">Agustus</option>
-            <option value="09">September</option>
-            <option value="10">Oktober</option>
-            <option value="11">November</option>
-            <option value="12">Desember</option>
+            <option value="01" <?= ($month == '01')? "selected" : ""?>>Januari</option>
+            <option value="02" <?= ($month == '02')? "selected" : ""?>>Februari</option>
+            <option value="03" <?= ($month == '03')? "selected" : ""?>>Maret</option>
+            <option value="04" <?= ($month == '04')? "selected" : ""?>>April</option>
+            <option value="05" <?= ($month == '05')? "selected" : ""?>>Mei</option>
+            <option value="06" <?= ($month == '06')? "selected" : ""?>>Juni</option>
+            <option value="07" <?= ($month == '07')? "selected" : ""?>>Juli</option>
+            <option value="08" <?= ($month == '08')? "selected" : ""?>>Agustus</option>
+            <option value="09" <?= ($month == '09')? "selected" : ""?>>September</option>
+            <option value="10" <?= ($month == '10')? "selected" : ""?>>Oktober</option>
+            <option value="11" <?= ($month == '11')? "selected" : ""?>>November</option>
+            <option value="12" <?= ($month == '12')? "selected" : ""?>>Desember</option>
         </select>
     </form>
 </div>
@@ -83,22 +94,13 @@ require 'cek.php';
                                         <tbody>
 
                                             <?php 
+
+
 if (isset($_GET['filter'])) {
     $filter = $_GET['filter'];
-    if ($filter === "ATK" || $filter === "Cetakan") {
-        $filter_query = "SELECT * FROM stock WHERE deskripsi LIKE '%$filter%'";
-        $ambil_alldatastock = mysqli_query($conn, $filter_query);
-    }
+    $ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, $filter);
 }
 
-if (isset($_GET['month'])) {
-    $month = $_GET['month'];
-    $filter_query = "SELECT * FROM stock WHERE MONTH(tanggal) = '$month'";
-} else {
-    $filter_query = "SELECT * FROM stock";
-}
-
-$ambil_alldatastock = mysqli_query($conn, $filter_query);
 
                                             // $i = 1;
                                             $grand_total = 0;

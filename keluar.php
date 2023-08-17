@@ -74,9 +74,9 @@ require 'cek.php';
                                 <a href="export.php" class="btn btn-info">Export Tabel</a>
                                 <form action="keluar.php" method="post" style="float:right">
                                     <select name="desc_kl" id="desc_kl">
-                                        <option value="" <?php echo ($desc == '')?"selected":"" ?>>All Deskripsi</option>
-                                        <option value="ATK" <?php echo ($desc == 'ATK')?"selected":"" ?>>ATK</option>
-                                        <option value="Cetakan" <?php echo ($desc == 'Cetakan')?"selected":"" ?>>Cetakan</option>
+                                        <option value="" <?php echo ($desc_kl == '')?"selected":"" ?>>All Deskripsi</option>
+                                        <option value="ATK" <?php echo ($desc_kl == 'ATK')?"selected":"" ?>>ATK</option>
+                                        <option value="Cetakan" <?php echo ($desc_kl == 'Cetakan')?"selected":"" ?>>Cetakan</option>
                             
                                     </select>
                                     <button type="submit" class="btn btn-primary" name="filter_desc_kl" style="margin-left: 5px">

@@ -72,12 +72,11 @@ require 'cek.php';
                                     Tambah Barang
                                  </button>
                                  <a href="export.php" class="btn btn-info">Export Tabel</a>
-                                 <form action="stock.php" method="post" style="float:right">
+                                 <form action="" method="post" style="float:right">
                                     <select name="desc" id="desc">
-                                        <option value="" <?php echo ($desc == '')?"selected":"" ?>>All Deskripsi</option>
-                                        <option value="ATK" <?php echo ($desc == 'ATK')?"selected":"" ?>>ATK</option>
-                                        <option value="Cetakan" <?php echo ($desc == 'Cetakan')?"selected":"" ?>>Cetakan</option>
-                            
+                                        <option value="" <?= ($desc == "") ? "selected" : "" ?>>All Deskripsi</option>
+                                        <option value="ATK" <?= ($desc == "ATK") ? "selected" : "" ?>>ATK</option>
+                                        <option value="Cetakan" <?= ($desc == "Cetakan") ? "selected" : "" ?>>Cetakan</option>
                                     </select>
                                     <button type="submit" class="btn btn-primary" name="filter_desc">
                                     Filter Deskripsi

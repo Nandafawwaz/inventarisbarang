@@ -4,9 +4,10 @@
 
     if (isset($_POST['login'])) {
         $username=$_POST['username'];
-        $password = md5($_POST["password"]);
+        $password = ($_POST["password"]);
 
-        $query=mysqli_query($conn, "SELECT * FROM login WHERE username='$username' and password='$password'");     
+        $query=mysqli_query($conn, "SELECT * FROM login WHERE username='$username' and password='$password'");
+
         $cek=mysqli_num_rows($query);
 
         if ($cek>0) {
