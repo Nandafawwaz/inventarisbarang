@@ -14,16 +14,91 @@ require 'cek.php';
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <style>
+        .navbar-brand img {
+        max-width: 80px; /* Set the maximum width of the image */
+        height: auto; /* Automatically adjust the height while maintaining the aspect ratio */
+        margin-right: 10px; /* Optional: Add some spacing between the image and the text */
+    }
+        .navbar {
+        background-image: url('assets/img/navbar.png'); /* Replace with the actual path to your background image */
+        background-size: cover; /* Adjust how the image covers the background */
+        background-repeat: no-repeat; /* Prevent the background image from repeating */
+        }
+        </style>
 </head>
-
-<body>
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+<a class="navbar-brand" href="keluar.php">
+        <img src="assets/img/bjb.png" alt="Logo" class="logo-img">
+    </a>
+        </nav>
 <div class="container">
+    <br>
 			<h2>Stock Tersedia</h2>
-				<div class="data-tables datatable-dark">
-					
+
+            <div>
+            <form method="GET" action="">
+        <label>Filter by Deskripsi:</label>
+        <input type="radio" name="filter" value="ATK"> ATK
+        <input type="radio" name="filter" value="Cetakan"> Cetakan
+        <button type="submit">Filter</button>
+    </form>
+</div>
+
+<?php
+
+$ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, '');
+
+
+function filterExportKeluarStockByDateRange($conn, $startDate, $endDate) {
+    $query = "SELECT * FROM stock WHERE tanggal BETWEEN '$startDate' AND '$endDate'";
+    $result = mysqli_query($conn, $query);
+    return $result;
+}
+
+function filterExportKeluarStockByTujuan($conn, $tujuan) {
+    $query = "SELECT * FROM stock WHERE tujuan = '$tujuan'";
+    $result = mysqli_query($conn, $query);
+    return $result;
+}
+?>
+<div>
+
+<form method="GET" action="">
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date" name="start-date">
+    
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date" name="end-date">
+    
+    <button type="submit">Filter</button>
+</form>
+<form method="GET" style="float:right">
+<label for="tujuan">Filter by Tujuan:</label>
+<select name="tujuan" class="form-control" required>
+<option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
+                                        <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
+                                        <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
+                                        <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
+                                        <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
+                                        <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
+                                        <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
+                                        <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
+                                        <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
+                                        <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" name="filter_location" style = "margin-left: 5px; margin-right: 20px">
+                                    Filter Lokasi
+                                 </button>
+</form>
+</div>
+            <div class="data-tables datatable-dark">
+					<br>
 					                    <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
+                                                <th>Tanggal</th>
                                                 <th>Nama Barang</th>
                                                 <th>Deskripsi</th>
                                                 <th>Keterangan</th>
@@ -34,11 +109,29 @@ require 'cek.php';
                                         </thead>
                                         <tbody>
 
-                                            <?php 
+                                        <?php 
 
-                                            $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM keluar");
+if (isset($_GET['start-date']) && isset($_GET['end-date'])) {
+    $startDate = $_GET['start-date'];
+    $endDate = $_GET['end-date'];
+    $ambil_alldatastock = filterExportKeluarStockByDateRange($conn, $startDate, $endDate);
+}
+
+if (isset($_GET['filter'])) {
+    $filter = $_GET['filter'];
+    $ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, $filter);
+}
+
+if (isset($_GET['tujuan'])) {
+    $tujuan = $_GET['tujuan'];
+    $ambil_alldatastock = filterExportKeluarStockByTujuan($conn, $tujuan);
+}
+
+
+                                            // $i = 1;
                                             $grand_total = 0;
                                             while ($data=mysqli_fetch_array($ambil_alldatastock)) :
+                                                $tanggal = $data['tanggal'];
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
                                                 $keterangan = $data['keterangan'];
@@ -49,14 +142,14 @@ require 'cek.php';
                                             ?>
 
                                             <tr>
-                                                <td><?= $i++;?></td>
-                                                <td><?php echo $namabarang?></td>
+                                                <!-- <td><?= $i++;?></td> -->
+                                                <td><?php echo$tanggal?></td>
+                                                <td><?php echo$namabarang?></td>
                                                 <td><?php echo$deskripsi?></td>
                                                 <td><?php echo$keterangan ?></td>
-                                                <td><?php echo$harga?></td>
-                                                <td><?php echo$jumlah ?></td>
-                                                <td><?php echo$total ?></td>
-
+                                                <td><?php echo number_format($harga, 0, ',', '.'); ?></td>
+                                                <td><?php echo number_format($jumlah, 0, ',', '.'); ?></td>
+                                                <td><?php echo number_format($total, 0, ',', '.'); ?></td>  
                                             </tr>            
                                             
                                             <?php 
@@ -71,7 +164,7 @@ require 'cek.php';
                                                 <td></td>
                                                 <td></td>
                                                 <td><b>Grand Total</b></td>
-                                                <td><b><?=$grand_total?></b></td>
+                                                <td><b>Rp <?php echo number_format($grand_total, 0, ',', '.'); ?></b></td>
                                             </tr> 
                                         </tfoot>
                                     </table>

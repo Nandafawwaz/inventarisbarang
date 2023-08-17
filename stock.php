@@ -100,7 +100,7 @@ require 'cek.php';
                             <div class="card-body">
 
                             <?php 
-                                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM stock where jumlah <= 10");
+                                $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM stock where jumlah <= 1");
 
                                 while ($fetch=mysqli_fetch_array($ambil_alldatastock)) :
                                     $barang = $fetch['namabarang'];
@@ -157,9 +157,9 @@ require 'cek.php';
                                                 <td><?=$namabarang?></td>
                                                 <td><?=$deskripsi?></td>
                                                 <td><?=$keterangan ?></td>
-                                                <td><?=$harga?></td>
-                                                <td><?=$jumlah ?></td>
-                                                <td><?=$total ?></td>
+                                                <td><?php echo number_format($harga, 0, ',', '.'); ?></td>
+                                                <td><?php echo number_format($jumlah, 0, ',', '.'); ?></td>
+                                                <td><?php echo number_format($total, 0, ',', '.'); ?></td> 
                                                 <td><?= $tanggal?></td>
                                                 <td>
                                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$idb;?>">
@@ -257,7 +257,7 @@ require 'cek.php';
                                             ?>
                                             <tr>
                                                 <td colspan="6" align="center"><b>Grand Total</b></td>
-                                                <td align="left"><b>Rp <?=$grand_total?></b></td>
+                                                <td><b>Rp <?php echo number_format($grand_total, 0, ',', '.'); ?></b></td>
                                                 <td></td>
                                             </tr>
                                                 

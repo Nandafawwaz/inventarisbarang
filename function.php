@@ -75,7 +75,7 @@ if (isset($_POST['barangkeluar'])) {
     if ($currentstock > $qty) {
         $tambahstock = $currentstock-$qty;
 
-        $addtokeluar = mysqli_query($conn,"insert into keluar (idbarang, tujuan, tanggal, qty) values('$item_barang','$tujuan','$tanggal','$qty')");
+        $addtokeluar = mysqli_query($conn,"insert into keluar (idbarang, tujuan, tanggal_k, qty) values('$item_barang','$tujuan','$tanggal','$qty')");
         $updatestockmasuk = mysqli_query($conn,"update stock set jumlah='$tambahstock' where idbarang='$item_barang'");
         $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$item_barang'");
         if ($addtokeluar && $updatestockmasuk && $updatetotal) {
@@ -298,9 +298,19 @@ if(isset($_POST['filter_location'])){
     $location = $_POST['location'];
     $datastockkeluar = filterKeluarStockByLokasi($conn, $location);                              
 }
+
+// filter semua
+if(isset($_POST['filter_all'])){
+    $location = $_POST['location'];
+    $desc_kl = $_POST['desc_kl'];
+    $tglmulai = $_POST['tgl_mulai1'];
+    $tglselesai = $_POST['tgl_selesai1'];
+    $datastockkeluar = filterKeluarStockByAll($conn, $location, $desc_kl, $tglmulai, $tglselesai);                              
+}
                     
 // get price
     
+// get price    
 if (isset($_GET['price'])) {
     $q = intval($_GET['price']);
     $sql="SELECT * FROM stock WHERE idbarang = '".$q."'";
