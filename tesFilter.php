@@ -40,19 +40,37 @@ function filterKeluarStockByDate($conn, $mulai, $selesai){
 }
 
 function filterKeluarStockByAll($conn, $location, $mulai, $selesai, $desc_kl){
-    if ($location != "" && $mulai != null && $selesai != null) {
-        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tujuan = '$location' AND keluar.tanggal_k BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
-        return $datastockkeluar;
-    } elseif ($location != "" && $desc_kl != "") {
-        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tujuan = '$location' AND stock.deskripsi = '$desc_kl'");
-        return $datastockkeluar;
-    }elseif ($mulai != null && $selesai != null && $desc_kl != "") {
-        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tanggal_k BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY) AND stock.deskripsi = '$desc_kl'");
-        return $datastockkeluar;
-    }elseif ($location != "" && $mulai != null && $selesai != null && $desc_kl != "") {
+    if($location != "" && $mulai != null && $selesai != null && $desc_kl != ""){
         $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tujuan = '$location' AND keluar.tanggal_k BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY) AND stock.deskripsi = '$desc_kl'");
         return $datastockkeluar;
     }
+    else if ($location != "" && $mulai != null && $selesai != null) {
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tujuan = '$location' AND keluar.tanggal_k BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
+        return $datastockkeluar;
+    } 
+    else if ($location != "" && $desc_kl != "") {
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tujuan = '$location' AND stock.deskripsi = '$desc_kl'");
+        return $datastockkeluar;
+    }
+    else if ($mulai != null && $selesai != null && $desc_kl != "") {
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tanggal_k BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY) AND stock.deskripsi = '$desc_kl'");
+        return $datastockkeluar;
+    }
+    else if($desc_kl != ""){
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE stock.deskripsi = '$desc_kl'");
+        return $datastockkeluar;
+    }
+    else if ($location != "") {
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tujuan = '$location'");
+        return $datastockkeluar;
+    }
+    else if ($mulai != null && $selesai != null) {
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tanggal_k BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)'");
+        return $datastockkeluar;
+    }
+
+    $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang");
+    return $datastockkeluar;
 }
 
 function filterKeluarStockByDeskripsi($conn, $desc_kl){
