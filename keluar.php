@@ -101,7 +101,7 @@ require 'cek.php';
 
                                 <input type ="date" name ="tgl_mulai1" class="form-control">
                                 <input type ="date" name ="tgl_selesai1" class="form-control ml-3">
-                                <button type ="submit" name="filter_all" class="btn btn-info ml-3">
+                                <button type ="submit" name="filter_keluar_all" class="btn btn-info ml-3">
                                 Filter
                                 </button>
                              </form>
@@ -140,7 +140,7 @@ require 'cek.php';
                                                 $harga = $data['harga'];
                                                 $qty = $data['qty'];
                                                 $total = $data['harga']*$qty;
-                                                $grandtotal += $total;
+                                                $grand_total += $total;
                                             
                                             ?>
 
@@ -242,7 +242,7 @@ require 'cek.php';
                                             
                                             <tr>
                                                 <td colspan="6" align="center"><b>Grand Total</b></td>
-                                                <td><b>Rp <?php echo number_format($grandtotal, 0, ',', '.'); ?></b></td>
+                                                <td><b>Rp <?php echo number_format($grand_total, 0, ',', '.'); ?></b></td>
                                                 <!-- <td></td> -->
                                             </tr>
                                         </tbody>
