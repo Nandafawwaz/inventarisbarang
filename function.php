@@ -234,37 +234,25 @@ if (isset($_POST['hapusadmin'])) {
 }
 
 
-// filter deskripsi stock
+// filter stock
 $desc = '';
-$datastock = filterStockByDeskripsi($conn, $desc);
+$mulai = '';
+$selesai = '';
 
-if (isset($_POST['filter_desc'])) {
-    $desc = (isset($_POST['desc']))? $_POST['desc'] : "";  
-    $datastock = filterStockByDeskripsi($conn, $desc);
-} 
+if (isset($_POST['filter_all'])) {
+    $desc = $_POST["desc"];
+    $mulai = $_POST["tgl_mulai"];  
+    $selesai = $_POST["tgl_selesai"];  
+    $datastock = filterStockByAll($conn, $desc, $mulai, $selesai);
+} else{
+    $datastock = mysqli_query($conn, "SELECT * FROM stock");
+}
 
-// filter deskripsi keluar
+// filter  keluar
 $desc_kl = '';
-$datastockkeluar = filterKeluarStockByDeskripsi($conn, "");   
-
-
-if(isset($_POST['filter_desc_kl'])){
-    
-    $desc_kl = (isset($_POST['desc_kl']))? $_POST['desc_kl'] : "";  
-
-    $datastockkeluar = filterKeluarStockByDeskripsi($conn, $desc_kl);   
-}
-
-
-// filter lokasi
-$i = 1;
-$grandtotal = 0;
 $location = '';
-
-if(isset($_POST['filter_location'])){
-    $location = $_POST['location'];
-    $datastockkeluar = filterKeluarStockByLokasi($conn, $location);                              
-}
+$mulaiKeluar = '';
+$selesaiKeluar = '';
 
 // filter semua di keluar
 if(isset($_POST['filter_all'])){
@@ -282,8 +270,7 @@ if(isset($_POST['filter_all_stock'])){
     $tglselesai = $_POST['tgl_selesai'];
     $datastock = filterStockByAll($conn, $tglmulai, $tglselesai, $desc);                              
 }
-                    
-// get price
+                
     
 // get price    
 if (isset($_GET['price'])) {

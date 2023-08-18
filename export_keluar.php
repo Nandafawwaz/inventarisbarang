@@ -157,6 +157,11 @@ function filterExportKeluarStockByTujuan($conn, $tujuan) {
     </div>
 </form>
 </div>
+
+<div>
+
+</div>
+            <span>Filter <?= $desc_kl?> di <?= ($location != "" ? $location : "Semua Lokasi")?> pada <?= ($mulaiKeluar != "" && $selesaiKeluar != "")? $mulaiKeluar." sampai ".$selesaiKeluar : "keseluruhan waktu" ?></span>
             <div class="data-tables datatable-dark">
 					<br>
                     <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">

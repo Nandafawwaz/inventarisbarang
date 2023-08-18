@@ -201,7 +201,7 @@ require 'cek.php';
                                                 $harga = $data['harga'];
                                                 $qty = $data['qty'];
                                                 $total = $data['harga']*$qty;
-                                                $grandtotal += $total;
+                                                $grand_total += $total;
                                             
                                             ?>
 
@@ -303,7 +303,7 @@ require 'cek.php';
                                             
                                             <tr>
                                                 <td colspan="6" align="center"><b>Grand Total</b></td>
-                                                <td><b>Rp <?php echo number_format($grandtotal, 0, ',', '.'); ?></b></td>
+                                                <td><b>Rp <?php echo number_format($grand_total, 0, ',', '.'); ?></b></td>
                                                 <!-- <td></td> -->
                                             </tr>
                                         </tbody>
