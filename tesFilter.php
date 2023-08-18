@@ -12,30 +12,10 @@ function filterStockByDeskripsi($conn, $desc){
 }
 
 function filterStockByDate($conn,$mulai,$selesai){
-    if($mulai !=null && $selesai !=null){
+    if($mulai !=null || $selesai !=null){
         $datastock = mysqli_query($conn,"SELECT * FROM  stock WHERE tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
         return $datastock;
     } 
-    $datastock = mysqli_query($conn, "SELECT * FROM stock");
-    return $datastock; 
-
-    
-}
-
-function filterStockByAll($conn,$desc,$mulai,$selesai){
-    if($desc != "" && $mulai !=null && $selesai !=null){
-        $datastock = mysqli_query($conn,"SELECT * FROM  stock WHERE tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY) AND deskripsi='$desc'");
-        return $datastock;
-    }
-    else if($mulai !=null || $selesai !=null){
-        $datastock = mysqli_query($conn,"SELECT * FROM  stock WHERE tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
-        return $datastock;
-    } 
-    else if ($desc != "") {
-        $datastock = mysqli_query($conn, "SELECT * FROM stock WHERE deskripsi='$desc'");
-        return $datastock; 
-        
-    }
     $datastock = mysqli_query($conn, "SELECT * FROM stock");
     return $datastock; 
 }
