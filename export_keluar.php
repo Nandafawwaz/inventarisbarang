@@ -46,23 +46,6 @@ require 'cek.php';
     </form>
 </div>
 
-<?php
-
-$ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, '');
-
-
-function filterExportKeluarStockByDateRange($conn, $startDate, $endDate) {
-    $query = "SELECT * FROM stock WHERE tanggal BETWEEN '$startDate' AND '$endDate'";
-    $result = mysqli_query($conn, $query);
-    return $result;
-}
-
-function filterExportKeluarStockByTujuan($conn, $tujuan) {
-    $query = "SELECT * FROM stock WHERE tujuan = '$tujuan'";
-    $result = mysqli_query($conn, $query);
-    return $result;
-}
-?>
 <div>
 
 <form method="GET" action="">
@@ -110,22 +93,6 @@ function filterExportKeluarStockByTujuan($conn, $tujuan) {
                                         <tbody>
 
                                         <?php 
-
-if (isset($_GET['start-date']) && isset($_GET['end-date'])) {
-    $startDate = $_GET['start-date'];
-    $endDate = $_GET['end-date'];
-    $ambil_alldatastock = filterExportKeluarStockByDateRange($conn, $startDate, $endDate);
-}
-
-if (isset($_GET['filter'])) {
-    $filter = $_GET['filter'];
-    $ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, $filter);
-}
-
-if (isset($_GET['tujuan'])) {
-    $tujuan = $_GET['tujuan'];
-    $ambil_alldatastock = filterExportKeluarStockByTujuan($conn, $tujuan);
-}
 
 
                                             // $i = 1;
