@@ -52,13 +52,13 @@ $ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, '');
 
 
 function filterExportKeluarStockByDateRange($conn, $startDate, $endDate) {
-    $query = "SELECT * FROM stock WHERE tanggal BETWEEN '$startDate' AND '$endDate'";
+    $query = "SELECT * FROM keluar WHERE tanggal BETWEEN '$startDate' AND '$endDate'";
     $result = mysqli_query($conn, $query);
     return $result;
 }
 
 function filterExportKeluarStockByTujuan($conn, $tujuan) {
-    $query = "SELECT * FROM stock WHERE tujuan = '$tujuan'";
+    $query = "SELECT * FROM keluar WHERE tujuan = '$tujuan'";
     $result = mysqli_query($conn, $query);
     return $result;
 }
@@ -95,22 +95,20 @@ function filterExportKeluarStockByTujuan($conn, $tujuan) {
 </div>
             <div class="data-tables datatable-dark">
 					<br>
-					                    <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Tanggal</th>
                                                 <th>Nama Barang</th>
                                                 <th>Deskripsi</th>
-                                                <th>Keterangan</th>
+                                                <th>Tujuan</th>
                                                 <th>Harga</th>
                                                 <th>Jumlah</th>
                                                 <th>Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                         <?php 
-
 if (isset($_GET['start-date']) && isset($_GET['end-date'])) {
     $startDate = $_GET['start-date'];
     $endDate = $_GET['end-date'];
@@ -121,37 +119,32 @@ if (isset($_GET['filter'])) {
     $filter = $_GET['filter'];
     $ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, $filter);
 }
-
-if (isset($_GET['tujuan'])) {
-    $tujuan = $_GET['tujuan'];
-    $ambil_alldatastock = filterExportKeluarStockByTujuan($conn, $tujuan);
-}
-
-
-                                            // $i = 1;
-                                            $grand_total = 0;
-                                            while ($data=mysqli_fetch_array($ambil_alldatastock)) :
-                                                $tanggal = $data['tanggal'];
+                                            $grandtotal = 0;
+                                            while ($data=mysqli_fetch_array($datastockkeluar)) :
+                                                $idk = $data['idkeluar'];
+                                                $idb = $data['idbarang'];
+                                                $tanggal = $data['tanggal_k'];
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
-                                                $keterangan = $data['keterangan'];
+                                                $tujuan = $data['tujuan'];
                                                 $harga = $data['harga'];
-                                                $jumlah = $data['jumlah'];
-                                                $total = $data['total'];   
-                                                $grand_total += $total;                
+                                                $qty = $data['qty'];
+                                                $total = $data['harga']*$qty;
+                                                $grandtotal += $total;
+                                            
                                             ?>
 
                                             <tr>
-                                                <!-- <td><?= $i++;?></td> -->
                                                 <td><?php echo$tanggal?></td>
                                                 <td><?php echo$namabarang?></td>
                                                 <td><?php echo$deskripsi?></td>
-                                                <td><?php echo$keterangan ?></td>
+                                                <td><?php echo$tujuan?></td>    
                                                 <td><?php echo number_format($harga, 0, ',', '.'); ?></td>
-                                                <td><?php echo number_format($jumlah, 0, ',', '.'); ?></td>
-                                                <td><?php echo number_format($total, 0, ',', '.'); ?></td>  
-                                            </tr>            
-                                            
+                                                <td><?php echo number_format($qty, 0, ',', '.'); ?></td>
+                                                <td><?php echo number_format($total, 0, ',', '.'); ?></td>                                        
+                                            </tr>         
+                            
+                                                
                                             <?php 
                                                 endwhile;
                                             ?>
@@ -164,7 +157,7 @@ if (isset($_GET['tujuan'])) {
                                                 <td></td>
                                                 <td></td>
                                                 <td><b>Grand Total</b></td>
-                                                <td><b>Rp <?php echo number_format($grand_total, 0, ',', '.'); ?></b></td>
+                                                <td><b>Rp <?php echo number_format($grandtotal, 0, ',', '.'); ?></b></td>
                                             </tr> 
                                         </tfoot>
                                     </table>

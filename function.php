@@ -2,7 +2,7 @@
 
 require 'tesFilter.php';
 
-session_start();
+// session_start();
 // Koneksi ke database
 $conn = mysqli_connect("localhost","root","","inventaris_db");
 
