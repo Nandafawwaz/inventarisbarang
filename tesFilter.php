@@ -65,7 +65,7 @@ function filterKeluarStockByAll($conn, $location, $mulai, $selesai, $desc_kl){
         return $datastockkeluar;
     }
     else if ($mulai != null && $selesai != null) {
-        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tanggal_k BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)'");
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE keluar.tanggal_k BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
         return $datastockkeluar;
     }
 
