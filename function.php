@@ -2,8 +2,6 @@
 
 require 'tesFilter.php';
 
-session_start();
-// Koneksi ke database
 $conn = mysqli_connect("localhost","root","","inventaris_db");
 
 
@@ -27,37 +25,6 @@ if (isset($_POST['addnewbarang'])) {
         header('location:stock.php');
     }
 }
-
-// Menampilkan isi kolom "total"
-// $result = mysqli_query($conn, "SELECT total FROM stock");
-// while ($row = mysqli_fetch_assoc($result)) {
-//     echo $row['total'] . "<br>";
-// }
-
-// Menambah barang masuk
-// if (isset($_POST['barangmasuk'])) {
-//     $item_barang = $_POST['item_barang'];
-//     $penerima = $_POST['penerima'];
-//     $tanggal = $_POST['tanggal'];
-//     $qty = $_POST['qty'];
-
-//     $cekstocksekarang = mysqli_query($conn,"select * from stock where idbarang='$item_barang'");
-//     $ambil_data = mysqli_fetch_array($cekstocksekarang);
-
-//     $currentstock = $ambil_data['jumlah'];
-//     $tambahstock = $currentstock+$qty;
-
-//     $addtomasuk = mysqli_query($conn,"insert into masuk (idbarang, penerima, tanggal, qty) values('$item_barang','$penerima','$tanggal','$qty')");
-//     $updatestockmasuk = mysqli_query($conn,"update stock set jumlah ='$tambahstock' where idbarang='$item_barang'");
-//     $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$item_barang'");
-//     if ($addtomasuk && $updatestockmasuk && $updatetotal) {
-//         header('location:masuk.php');
-
-//     }else {
-//         echo 'Gagal';
-//         header('location:masuk.php');
-//     }
-// }
 
 // Menambah barang keluar
 if (isset($_POST['barangkeluar'])) {
@@ -111,11 +78,11 @@ if (isset($_POST['barangkeluar'])) {
         $updatestock = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
         $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$item_barang'");
         if ($update && $updatestock && $updatetotal) {
-            header('location:index.php');
+            header('location:stock.php');
     
         }else {
             echo 'Gagal';
-            header('location:index.php');
+            header('location:stock.php');
         }
     }
 
@@ -125,20 +92,20 @@ if (isset($_POST['barangkeluar'])) {
 
         $hapus = mysqli_query($conn,"delete from stock where idbarang='$idb'");
         if ($hapus) {
-            header('location:index.php');
+            header('location:stock.php');
     
         }else {
             echo 'Gagal';
-            header('location:index.php');
+            header('location:stock.php');
         }
     }
 
     //Edit barang keluar atk
-    if (isset($_POST['updatebarangkeluar_atk'])) {   
+    if (isset($_POST['updatebarangkeluar'])) {   
         $idb = $_POST['idb'];
         $idk = $_POST['idk'];
 
-        $tanggal = $_POST['tanggal'];
+        $tanggal = $_POST['tanggal_k'];
         $tujuan = $_POST['tujuan'];
         $qty = $_POST['qty'];
 
@@ -155,28 +122,28 @@ if (isset($_POST['barangkeluar'])) {
                 $selisih = $qty-$qtyskrg;
                 $kurangin = $stockskrg - $selisih;
                 $kurangistock = mysqli_query($conn, "update stock set jumlah ='$kurangin' where idbarang = '$idb'");
-                $updatenya = mysqli_query($conn, "update keluar set qty='$qty', tanggal ='$tanggal', tujuan ='$tujuan' where idkeluar ='$idk'");
+                $updatenya = mysqli_query($conn, "update keluar set qty='$qty', tanggal_k ='$tanggal', tujuan ='$tujuan' where idkeluar ='$idk'");
                 $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
 
                 if($kurangistock&&$updatenya&&$updatetotal){
-                    header('location:keluar_atk.php');
+                    header('location:keluar.php');
         
                 }else {
                     echo 'Gagal';
-                    header('location:keluar_atk.php');
+                    header('location:keluar.php');
                 }
             } else {
                 $selisih = $qtyskrg-$qty;
                 $kurangin = $stockskrg + $selisih;
                 $kurangistock = mysqli_query($conn, "update stock set jumlah ='$kurangin' where idbarang = '$idb'");
-                $updatenya = mysqli_query($conn, "update keluar set qty='$qty', tanggal ='$tanggal', tujuan ='$tujuan' where idkeluar ='$idk'");
+                $updatenya = mysqli_query($conn, "update keluar set qty='$qty', tanggal_k ='$tanggal', tujuan ='$tujuan' where idkeluar ='$idk'");
                 $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
                 if($kurangistock&&$updatenya&&$updatetotal){
-                    header('location:keluar_atk.php');
+                    header('location:keluar.php');
         
                 }else {
                     echo 'Gagal';
-                    header('location:keluar_atk.php');
+                    header('location:keluar.php');
                 }
             }
         } else {
@@ -287,15 +254,21 @@ $location = '';
 $mulaiKeluar = '';
 $selesaiKeluar = '';
 
-// filter semua
-if(isset($_POST['filter_keluar_all'])){
+// filter semua di keluar
+if(isset($_POST['filter_all'])){
     $location = $_POST['location'];
     $desc_kl = $_POST['desc_kl'];
-    $mulaiKeluar = $_POST['tgl_mulai1'];
-    $selesaiKeluar = $_POST['tgl_selesai1'];
-    $datastockkeluar = filterKeluarStockByAll($conn, $location, $mulaiKeluar, $selesaiKeluar, $desc_kl);                              
-}else{
-    $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar k, stock s WHERE s.idbarang=k.idbarang");
+    $tglmulai = $_POST['tgl_mulai1'];
+    $tglselesai = $_POST['tgl_selesai1'];
+    $datastockkeluar = filterKeluarStockByAll($conn, $location, $tglmulai, $tglselesai, $desc_kl);                              
+}
+
+//filter semua di stock
+if(isset($_POST['filter_all_stock'])){
+    $desc = $_POST['desc'];
+    $tglmulai = $_POST['tgl_mulai'];
+    $tglselesai = $_POST['tgl_selesai'];
+    $datastock = filterStockByAll($conn, $tglmulai, $tglselesai, $desc);                              
 }
                 
     
@@ -308,6 +281,23 @@ if (isset($_GET['price'])) {
         echo '<input type="text" name="harga" class="form-control" id="harga" value="'.$row['harga'].'" readonly>';
     }
 }
+
+
+// filter tanggal stock
+if(isset($_POST['filter_tgl_st'])){
+    $mulai = $_POST['tgl_mulai'];
+    $selesai = $_POST['tgl_selesai'];
+    $datastock = filterStockByDate($conn, $mulai, $selesai);
+} 
+
+
+// filter tanggal keluar
+if(isset($_POST['filter_tgl_kl'])){
+    $mulai1 = $_POST['tgl_mulai1'];
+    $selesai1 = $_POST['tgl_selesai1'];
+    $datastockkeluar = filterKeluarStockByDate($conn, $mulai1, $selesai1);
+} 
+
 
 // inisiasi variabel filter dan month untuk digunakan di module exports
 $filter = '';

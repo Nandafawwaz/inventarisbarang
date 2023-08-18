@@ -5,7 +5,7 @@ require 'cek.php';
 
 <html>
 <head>
-  <title>Stock Barang</title>
+  <title>Barang Keluar</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -25,6 +25,57 @@ require 'cek.php';
         background-size: cover; /* Adjust how the image covers the background */
         background-repeat: no-repeat; /* Prevent the background image from repeating */
         }
+        .filter-form {
+            width: 100%;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap; /* Allow elements to wrap within the container */
+    align-items: flex-start;
+}
+
+.filter-left {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.filter-right {
+    flex: 1;
+}
+
+.filter-button {
+    flex-basis: 100%; /* Make the button span the full width */
+    display: flex;
+    justify-content: flex-end; /* Align the button to the right */
+    margin-top: 15px; /* Add some space from the form elements */
+    color: #f79423;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.btn {
+    padding: 8px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: #f79423; /* Change this to your desired background color */
+    color: #fff; /* Change this to your desired text color */
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
         </style>
 </head>
 <body class="sb-nav-fixed">
@@ -35,40 +86,76 @@ require 'cek.php';
         </nav>
 <div class="container">
     <br>
-			<h2>Stock Tersedia</h2>
+			<h2>Barang Keluar</h2>
 
-        <div>
-        <form method="POST" action="">
-        <label>Filter by Deskripsi:</label>
-        <input type="radio" name="desc_kl" value="" <?= ($desc_kl == "" || $desc_kl == null) ? "checked" : "" ?>> All Desc
-        <input type="radio" name="desc_kl" value="ATK" <?= $desc_kl == "ATK" ? "checked" : "" ?>> ATK
-        <input type="radio" name="desc_kl" value="Cetakan" <?= $desc_kl == "Cetakan" ? "checked" : "" ?>> Cetakan
-        <br>
+            <div>
+</div>
 
-        <label for="tgl_mulai1">Start Date:</label>
-        <input type="date" id="tgl_mulai1" name="tgl_mulai1"  value = <?= $mulaiKeluar != null ? "$mulaiKeluar" : ""?>>
-        
-        <label for="tgl_selesai1">End Date:</label>
-        <input type="date" id="tgl_selesai1" name="tgl_selesai1" value = <?= $selesaiKeluar != null ? "$selesaiKeluar" : ""?>>
+<?php
 
-        <select name="location" class="form-control">
-            <option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
-            <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
-            <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
-            <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
-            <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
-            <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
-            <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
-            <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
-            <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
-            <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
+$ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, '');
+
+
+function filterExportKeluarStockByDateRange($conn, $startDate, $endDate) {
+    $query = "SELECT * FROM keluar WHERE tanggal BETWEEN '$startDate' AND '$endDate'";
+    $result = mysqli_query($conn, $query);
+    return $result;
+}
+
+function filterExportKeluarStockByTujuan($conn, $tujuan) {
+    $query = "SELECT * FROM keluar WHERE tujuan = '$tujuan'";
+    $result = mysqli_query($conn, $query);
+    return $result;
+}
+?>
+<div>
+
+<form id="descForm" method="post" class="filter-form" action="">
+<div class="filter-left">
+    <div class="form-group">
+        <label for="desc_kl">Pilih Jenis Barang:</label>
+        <select name="desc_kl" id="desc_kl" class="form-control">
+            <option value="" <?php echo ($desc_kl == '') ? "selected" : "" ?>>All Deskripsi</option>
+	    <option value="ATK" <?php echo ($desc_kl == 'ATK')?"selected":"" ?>>ATK</option>
+	    <option value="Cetakan" <?php echo ($desc_kl == 'Cetakan')?"selected":"" ?>>Cetakan</option>
         </select>
+    </div>
 
-        <br>
+    <div class="form-group">
+        <label for="location">Pilih Lokasi:</label>
+        <select name="location" id="location" class="form-control">
+            <option value="" <?php echo ($location == '') ? "selected" : "" ?>>All Location</option>
+                                    <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
+                                    <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
+                                    <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
+                                    <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
+                                    <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
+                                    <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
+                                    <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
+                                    <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
+                                    <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
+        </select>
+    </div>
+ </div>
 
-        <button type="submit" name="filter_keluar_all">Filter</button>
 
-    </form>
+    <div class="filter-right">
+        <div class="form-group">
+            <label for="tgl_mulai1">Tanggal Mulai:</label>
+            <input type="date" name="tgl_mulai1" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="tgl_selesai1">Tanggal Akhir:</label>
+            <input type="date" name="tgl_selesai1" class="form-control">
+        </div>
+    </div>
+    <div class="filter-button">
+        <button type="submit" name="filter_all" class="btn btn-info">
+            Filter
+        </button>
+    </div>
+</form>
 </div>
 
 <div>
@@ -77,7 +164,7 @@ require 'cek.php';
             <span>Filter <?= $desc_kl?> di <?= ($location != "" ? $location : "Semua Lokasi")?> pada <?= ($mulaiKeluar != "" && $selesaiKeluar != "")? $mulaiKeluar." sampai ".$selesaiKeluar : "keseluruhan waktu" ?></span>
             <div class="data-tables datatable-dark">
 					<br>
-					                    <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Tanggal</th>
@@ -90,35 +177,33 @@ require 'cek.php';
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                         <?php 
-
-                                            
-                                            $grand_total = 0;
+                                            $grandtotal = 0;
                                             while ($data=mysqli_fetch_array($datastockkeluar)) :
-                                                $tanggal = $data['tanggal'];
+                                                $idk = $data['idkeluar'];
+                                                $idb = $data['idbarang'];
+                                                $tanggal = $data['tanggal_k'];
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
                                                 $tujuan = $data['tujuan'];
-                                                $keterangan = $data['keterangan'];
                                                 $harga = $data['harga'];
                                                 $qty = $data['qty'];
-                                                $jumlah = $data['jumlah'];
-                                                $total = $data['total'];   
-                                                $grand_total += $total;                
+                                                $total = $data['harga']*$qty;
+                                                $grandtotal += $total;
+                                            
                                             ?>
 
                                             <tr>
-                                            
-                                                <td><?=$tanggal?></td>
-                                                <td><?=$namabarang?></td>
-                                                <td><?=$deskripsi?></td>
-                                                <td><?=$tujuan?></td>    
+                                                <td><?php echo$tanggal?></td>
+                                                <td><?php echo$namabarang?></td>
+                                                <td><?php echo$deskripsi?></td>
+                                                <td><?php echo$tujuan?></td>    
                                                 <td><?php echo number_format($harga, 0, ',', '.'); ?></td>
                                                 <td><?php echo number_format($qty, 0, ',', '.'); ?></td>
-                                                <td><?php echo number_format($total, 0, ',', '.'); ?></td>   
-                                            </tr>            
-                                            
+                                                <td><?php echo number_format($total, 0, ',', '.'); ?></td>                                        
+                                            </tr>         
+                            
+                                                
                                             <?php 
                                                 endwhile;
                                             ?>
@@ -131,7 +216,7 @@ require 'cek.php';
                                                 <td></td>
                                                 <td></td>
                                                 <td><b>Grand Total</b></td>
-                                                <td><b>Rp <?php echo number_format($grand_total, 0, ',', '.'); ?></b></td>
+                                                <td><b>Rp <?php echo number_format($grandtotal, 0, ',', '.'); ?></b></td>
                                             </tr> 
                                         </tfoot>
                                     </table>
