@@ -18,14 +18,10 @@
         } else {
             header("location:index.php?pesan=gagal");
         };
+if(!isset($_SESSION['log'])){
 
-
-
-    // if (!isset($_SESSION['log'])) {
-        
-    // } else {
-    //     header('location:stock.php');
-    // };
-    
+} else {
+    header("location:stock.php");
+};
 
 ?>

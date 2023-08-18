@@ -1,11 +1,15 @@
 <?php
 require 'function.php';
 require 'cek.php';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
+    <script type="text/javascript">
+      function preventBack() {window.history.forward()};
+      setTimeout("preventBack()",0);
+        window.onunload=function(){null;}
+    </script>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -28,6 +32,48 @@ require 'cek.php';
         background-size: cover; /* Adjust how the image covers the background */
         background-repeat: no-repeat; /* Prevent the background image from repeating */
         }
+        .filter-form {
+            width: 100%;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap; /* Allow elements to wrap within the container */
+    align-items: flex-start;
+}
+
+.filter-left {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.filter-right {
+    flex: 1;
+}
+
+.filter-button {
+    flex-basis: 100%; /* Make the button span the full width */
+    display: flex;
+    justify-content: flex-end; /* Align the button to the right */
+    margin-top: 15px; /* Add some space from the form elements */
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
         </style>
     </head>
     <body class="sb-nav-fixed">
@@ -67,37 +113,57 @@ require 'cek.php';
                     <div class="container-fluid">
                         <h1 class="mt-4">Inventaris Bank BJB</h1>
                         <div class="card mb-4">
-                            <div class="card-header">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                    Tambah Barang
-                                 </button>
-                                 <a href="export.php" class="btn btn-info">Export Tabel</a>
-                                 <form action="" method="post" style="float:right">
-                                    <select name="desc" id="desc">
-                                        <option value="" <?= ($desc == "") ? "selected" : "" ?>>All Deskripsi</option>
-                                        <option value="ATK" <?= ($desc == "ATK") ? "selected" : "" ?>>ATK</option>
-                                        <option value="Cetakan" <?= ($desc == "Cetakan") ? "selected" : "" ?>>Cetakan</option>
-                                    </select>
-                                    <button type="submit" class="btn btn-primary" name="filter_desc">
-                                    Filter Deskripsi
-                                 </button>
-                                 </form>
-                                 <br>
-
-                                 <div class="row mt-4">
-                                 <div class="col">
-                                 <form method ="post" class="form-inline">
-                                    <input type ="date" name ="tgl_mulai" class="form-control">
-                                    <input type ="date" name ="tgl_selesai" class="form-control ml-3">
-                                    <button type ="submit" name="filter_tgl_st" class="btn btn-info ml-3">
-                                    Filter
-                                    </button>
-
-                                 </form>  
-                                 </div>
-                                 </div>
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                Tambah Barang
+            </button>
+            <a href="export.php" class="btn btn-info">Print</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Deskripsi Filter -->
+                <form id="descForm" method="post" class="filter-form" action="">
+                    <div class="form-group">
+                        <label for="desc">Pilih Jenis Barang:</label>
+                        <select name="desc" id="desc" class="form-control">
+                            <option value="" <?php echo ($desc == '') ? "selected" : "" ?>>All Deskripsi</option>
+                            <option value="ATK" <?php echo ($desc == 'ATK')?"selected":"" ?>>ATK</option>
+                            <option value="Cetakan" <?php echo ($desc == 'Cetakan')?"selected":"" ?>>Cetakan</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <!-- Start and End Date Filters -->
+                <form id="dateForm" method="post" class="filter-form" action="">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="tgl_mulai">Tanggal Mulai:</label>
+                                <input type="date" name="tgl_mulai" class="form-control">
                             </div>
-                            <div class="card-body">
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="tgl_selesai">Tanggal Akhir:</label>
+                                <input type="date" name="tgl_selesai" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" name="filter_all_stock" class="btn btn-info">
+                                Filter
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
                             <?php 
                                 $ambil_alldatastock = mysqli_query($conn,"SELECT * FROM stock where jumlah <= 1");
@@ -279,6 +345,24 @@ require 'cek.php';
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/datatables-demo.js"></script>
+        <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const descForm = document.getElementById("descForm");
+        const dateForm = document.getElementById("dateForm");
+
+        descForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Submit description form
+            this.submit();
+        });
+
+        dateForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Submit date form
+            this.submit();
+        });
+    });
+</script>
     </body>
 
     <!-- The Modal -->

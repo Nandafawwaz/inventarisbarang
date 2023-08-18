@@ -29,6 +29,49 @@ require 'cek.php';
         background-size: cover; /* Adjust how the image covers the background */
         background-repeat: no-repeat; /* Prevent the background image from repeating */
         }
+        .filter-form {
+            width: 100%;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap; /* Allow elements to wrap within the container */
+    align-items: flex-start;
+}
+
+.filter-left {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.filter-right {
+    flex: 1;
+}
+
+.filter-button {
+    flex-basis: 100%; /* Make the button span the full width */
+    display: flex;
+    justify-content: flex-end; /* Align the button to the right */
+    margin-top: 15px; /* Add some space from the form elements */
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
         </style>
     </head>
     <body class="sb-nav-fixed">
@@ -72,22 +115,26 @@ require 'cek.php';
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="float: left; margin-right: 4px;">
                                     Tambah Barang
                                 </button>
-                                <a href="export_keluar.php" class="btn btn-info">Export Tabel</a>
+                                <a href="export_keluar.php" class="btn btn-info">Print</a>
 
                                 <div class="row mt-4">
                                 <div class="col">
-                                <br>
-                                <form id="descForm" method="post" style="float:right" action="">
-                                
-                                <select name="desc_kl" id="desc_kl">
-                                    <option value="" <?php echo ($desc_kl == '')?"selected":"" ?>>All Deskripsi</option>
-                                    <option value="ATK" <?php echo ($desc_kl == 'ATK')?"selected":"" ?>>ATK</option>
-                                    <option value="Cetakan" <?php echo ($desc_kl == 'Cetakan')?"selected":"" ?>>Cetakan</option>
-                        
-                                </select>
+                            
+                                <form id="descForm" method="post" class="filter-form" action="">
+<div class="filter-left">
+    <div class="form-group">
+        <label for="desc_kl">Pilih Jenis Barang:</label>
+        <select name="desc_kl" id="desc_kl" class="form-control">
+            <option value="" <?php echo ($desc_kl == '') ? "selected" : "" ?>>All Deskripsi</option>
+	    <option value="ATK" <?php echo ($desc_kl == 'ATK')?"selected":"" ?>>ATK</option>
+	    <option value="Cetakan" <?php echo ($desc_kl == 'Cetakan')?"selected":"" ?>>Cetakan</option>
+        </select>
+    </div>
 
-                                <select name="location" id="location">
-                                    <option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
+    <div class="form-group">
+        <label for="location">Pilih Lokasi:</label>
+        <select name="location" id="location" class="form-control">
+            <option value="" <?php echo ($location == '') ? "selected" : "" ?>>All Location</option>
                                     <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
                                     <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
                                     <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
@@ -97,19 +144,33 @@ require 'cek.php';
                                     <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
                                     <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
                                     <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
-                                </select>
+        </select>
+    </div>
+ </div>
 
-                                <input type ="date" name ="tgl_mulai1" class="form-control">
-                                <input type ="date" name ="tgl_selesai1" class="form-control ml-3">
-                                <button type ="submit" name="filter_all" class="btn btn-info ml-3">
-                                Filter
-                                </button>
-                             </form>
+
+    <div class="filter-right">
+        <div class="form-group">
+            <label for="tgl_mulai1">Tanggal Mulai:</label>
+            <input type="date" name="tgl_mulai1" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="tgl_selesai1">Tanggal Akhir:</label>
+            <input type="date" name="tgl_selesai1" class="form-control">
+        </div>
+    </div>
+    <div class="filter-button">
+        <button type="submit" name="filter_all" class="btn btn-info">
+            Filter
+        </button>
+    </div>
+</form>
                                 
                                 </div>
                                 </div>
                                 
-                                <br>
+
                                 <div class="row mt-4">
                                  
                             <div class="card-body">
@@ -119,7 +180,7 @@ require 'cek.php';
                                             <tr>
                                                 <th>Tanggal</th>
                                                 <th>Nama Barang</th>
-                                                <th>Deskripsi</th>
+                                                <th>Jenis Barang</th>
                                                 <th>Tujuan</th>
                                                 <th>Harga</th>
                                                 <th>Jumlah</th>
