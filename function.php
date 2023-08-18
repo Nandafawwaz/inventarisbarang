@@ -2,8 +2,6 @@
 
 require 'tesFilter.php';
 
-session_start();
-// Koneksi ke database
 $conn = mysqli_connect("localhost","root","","inventaris_db");
 
 
@@ -299,13 +297,21 @@ if(isset($_POST['filter_location'])){
     $datastockkeluar = filterKeluarStockByLokasi($conn, $location);                              
 }
 
-// filter semua
+// filter semua di keluar
 if(isset($_POST['filter_all'])){
     $location = $_POST['location'];
     $desc_kl = $_POST['desc_kl'];
     $tglmulai = $_POST['tgl_mulai1'];
     $tglselesai = $_POST['tgl_selesai1'];
     $datastockkeluar = filterKeluarStockByAll($conn, $location, $tglmulai, $tglselesai, $desc_kl);                              
+}
+
+//filter semua di stock
+if(isset($_POST['filter_all_stock'])){
+    $desc = $_POST['desc'];
+    $tglmulai = $_POST['tgl_mulai'];
+    $tglselesai = $_POST['tgl_selesai'];
+    $datastock = filterStockByAll($conn, $tglmulai, $tglselesai, $desc);                              
 }
                     
 // get price

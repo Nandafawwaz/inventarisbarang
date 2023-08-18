@@ -73,9 +73,28 @@ function filterKeluarStockByAll($conn, $location, $mulai, $selesai, $desc_kl){
     return $datastockkeluar;
 }
 
+function filterStockByAll($conn, $mulai, $selesai, $desc){
+
+    if ($mulai != null && $selesai != null && $desc != "") {
+        $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE stock.tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY) AND stock.deskripsi = '$desc'");
+        return $datastock;
+    }
+    else if($desc != ""){
+        $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE stock.deskripsi = '$desc'");
+        return $datastock;
+    }
+    else if ($mulai != null && $selesai != null) {
+        $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE stock.tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
+        return $datastock;
+    }
+
+    $datastock = mysqli_query($conn,"SELECT * FROM stock");
+    return $datastock;
+}
+
 function filterKeluarStockByDeskripsi($conn, $desc_kl){
     if($desc_kl != ""){
-        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE stock.deskripsi = '$desc_kl'");
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE stock.deskripsi = '$desc'");
         return $datastockkeluar;
     }
 
