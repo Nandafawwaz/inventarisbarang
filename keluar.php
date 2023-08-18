@@ -76,8 +76,8 @@ require 'cek.php';
 
                                 <div class="row mt-4">
                                 <div class="col">
-                                    <br>
-                                    <form id="descForm" method="post" style="float:right">
+                                <br>
+                                <form id="descForm" method="post" style="float:right" action="">
                                 
                                 <select name="desc_kl" id="desc_kl">
                                     <option value="" <?php echo ($desc_kl == '')?"selected":"" ?>>All Deskripsi</option>

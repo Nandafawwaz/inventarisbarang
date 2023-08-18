@@ -305,7 +305,7 @@ if(isset($_POST['filter_all'])){
     $desc_kl = $_POST['desc_kl'];
     $tglmulai = $_POST['tgl_mulai1'];
     $tglselesai = $_POST['tgl_selesai1'];
-    $datastockkeluar = filterKeluarStockByAll($conn, $location, $desc_kl, $tglmulai, $tglselesai);                              
+    $datastockkeluar = filterKeluarStockByAll($conn, $location, $tglmulai, $tglselesai, $desc_kl);                              
 }
                     
 // get price
