@@ -239,19 +239,19 @@ require 'cek.php';
                                                 <form method="post">
                                                 <div class="modal-body">
                                                 <select name="tujuan" class="form-control" required>
-                                                    <option value="">Tujuan</option>
-                                                    <option value="Cabang Tangerang Selatan">Cabang Tangerang Selatan</option>
-                                                    <option value="KCP Alam Sutera">KCP Alam Sutera</option>
-                                                    <option value="KCP Bintaro Jaya">KCP Bintaro Jaya</option>
-                                                    <option value="KCP Bintaro">KCP Bintaro</option>
-                                                    <option value="KCP Cirendeu">KCP Cirendeu</option>
-                                                    <option value="KCP Ciputat">KCP Ciputat</option>
-                                                    <option value="KCP Pamulang">KCP Pamulang</option>
-                                                    <option value="KCP Pahlawan Seribu">KCP Pahlawan Seribu</option>
-                                                    <option value="KCP Serpong">KCP Serpong</option>
+                                                <option value="" <?php echo ($tujuan == 'Tujuan') ? "selected" : "" ?>>Tujuan</option>
+                                    <option value="Cabang Tangerang Selatan" <?php echo ($tujuan == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
+                                    <option value="KCP Alam Sutera" <?php echo ($tujuan == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
+                                    <option value="KCP Bintaro Jaya" <?php echo ($tujuan == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
+                                    <option value="KCP Bintaro" <?php echo ($tujuan == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
+                                    <option value="KCP Cirendeu" <?php echo ($tujuan == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
+                                    <option value="KCP Ciputat" <?php echo ($tujuan == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
+                                    <option value="KCP Pamulang" <?php echo ($tujuan == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
+                                    <option value="KCP Pahlawan Seribu" <?php echo ($tujuan == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
+                                    <option value="KCP Serpong" <?php echo ($tujuan == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
                                                 </select>
                                                 <br>
-                                                <input type="date" name="tanggal" value="<?$tanggal;?>" class="form-control" required>
+                                                <input type="date" name="tanggal_k" value="<?php echo $tanggal; ?>" class="form-control" required>
                                                 
                                                 <br>
                                                 <input type="number" name="qty" value="<?=$qty;?>" class="form-control" required>

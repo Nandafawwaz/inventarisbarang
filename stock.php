@@ -114,18 +114,16 @@ require 'cek.php';
                     <div class="container-fluid">
                         <h1 class="mt-4">Inventaris Bank BJB</h1>
                         <div class="card mb-4">
-    <div class="card-header">
-        <div class="d-flex justify-content-between align-items-center">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                Tambah Barang
-            </button>
-            <a href="export.php" class="btn btn-info">Print</a>
-        </div>
-    </div>
-    <div class="card-body">
-        <div class="row">
+                        <div class="card-header">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="float: left; margin-right: 4px;">
+                                    Tambah Barang
+                                </button>
+                                <a href="export.php" class="btn btn-info">Print</a>
 
-            <form id="descForm" method="post" class="filter-form" action="">
+                                <div class="row mt-4">
+                                <div class="col">
+                            
+                                <form id="descForm" method="post" class="filter-form" action="">
 <div class="filter-left">
     <div class="form-group">
         <label for="desc">Pilih Jenis Barang:</label>
@@ -156,9 +154,9 @@ require 'cek.php';
         </button>
     </div>
 </form>
-
-    </div>
-</div>
+                                
+                                </div>
+                                </div>
 
 
                             <?php 
@@ -180,6 +178,8 @@ require 'cek.php';
                             
                             ?>
 
+<div class="row mt-4">
+<div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
@@ -251,22 +251,22 @@ require 'cek.php';
                                                 <input type="text" name="namabarang" value="<?=$namabarang;?>" class="form-control" required>
                                                 <br>
                                                 <select name="deskripsi" class="form-control" required>
-                                                    <option value="">Pilih Deskripsi</option>
-                                                    <option value="ATK">ATK</option>
-                                                    <option value="Cetakan">Cetakan</option>
+                                                    <option value="" <?php echo ($deskripsi == '') ? "selected" : "" ?>>Pilih Deskripsi</option>
+                                                    <option value="ATK" <?php echo ($deskripsi == 'ATK') ? "selected" : "" ?>>ATK</option>
+                                                    <option value="Cetakan" <?php echo ($deskripsi == 'Cetakan') ? "selected" : "" ?>>Cetakan</option>
                                                 </select>
                                                 <br>
                                                 <select name="keterangan" class="form-control" required>
-                                                    <option value="">Keterangan</option>
-                                                    <option value="bk">bk</option>
-                                                    <option value="buku">buku</option>
-                                                    <option value="pack">pack</option>
-                                                    <option value="pcs">pcs</option>
-                                                    <option value="roll">roll</option>
-                                                    <option value="dus">dus</option>
-                                                    <option value="rim">rim</option>
-                                                    <option value="lusin">lusin</option>
-                                                    <option value="set">set</option>
+                                                    <option value=""<?php echo ($keterangan == '') ? "selected" : ""?>>Keterangan</option>
+                                                    <option value="bk"<?php echo ($keterangan == 'bk') ? "selected" : ""?>>bk</option>
+                                                    <option value="buku" <?php echo ($keterangan == 'buku') ? "selected" : ""?>>buku</option>
+                                                    <option value="pack" <?php echo ($keterangan == 'pack') ? "selected" : ""?>>pack</option>
+                                                    <option value="pcs" <?php echo ($keterangan == 'pcs') ? "selected" : ""?>>pcs</option>
+                                                    <option value="roll" <?php echo ($keterangan == 'roll') ? "selected" : ""?>>roll</option>
+                                                    <option value="dus" <?php echo ($keterangan == 'dus') ? "selected" : ""?>>dus</option>
+                                                    <option value="rim" <?php echo ($keterangan == 'rim') ? "selected" : ""?>>rim</option>
+                                                    <option value="lusin" <?php echo ($keterangan == 'lusin') ? "selected" : ""?>>lusin</option>
+                                                    <option value="set" <?php echo ($keterangan == 'set') ? "selected" : ""?>>set</option>
 
                                                 </select>
                                                 <br>
@@ -274,7 +274,7 @@ require 'cek.php';
                                                 <br>
                                                 <input type="number" name="jumlah" value="<?=$jumlah?>" class="form-control" required>
                                                 <br>
-                                                <input type="date" name="tanggal" value="<?$tanggal;?>" class="form-control" required>
+                                                <input type="date" name="tanggal" value="<?php echo $tanggal; ?>" class="form-control" required>
                                                 <br>
                                                 <br>
                                                 <input type ="hidden" name ="idb" value = "<?=$idb;?>">

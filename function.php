@@ -26,37 +26,6 @@ if (isset($_POST['addnewbarang'])) {
     }
 }
 
-// Menampilkan isi kolom "total"
-// $result = mysqli_query($conn, "SELECT total FROM stock");
-// while ($row = mysqli_fetch_assoc($result)) {
-//     echo $row['total'] . "<br>";
-// }
-
-// Menambah barang masuk
-// if (isset($_POST['barangmasuk'])) {
-//     $item_barang = $_POST['item_barang'];
-//     $penerima = $_POST['penerima'];
-//     $tanggal = $_POST['tanggal'];
-//     $qty = $_POST['qty'];
-
-//     $cekstocksekarang = mysqli_query($conn,"select * from stock where idbarang='$item_barang'");
-//     $ambil_data = mysqli_fetch_array($cekstocksekarang);
-
-//     $currentstock = $ambil_data['jumlah'];
-//     $tambahstock = $currentstock+$qty;
-
-//     $addtomasuk = mysqli_query($conn,"insert into masuk (idbarang, penerima, tanggal, qty) values('$item_barang','$penerima','$tanggal','$qty')");
-//     $updatestockmasuk = mysqli_query($conn,"update stock set jumlah ='$tambahstock' where idbarang='$item_barang'");
-//     $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$item_barang'");
-//     if ($addtomasuk && $updatestockmasuk && $updatetotal) {
-//         header('location:masuk.php');
-
-//     }else {
-//         echo 'Gagal';
-//         header('location:masuk.php');
-//     }
-// }
-
 // Menambah barang keluar
 if (isset($_POST['barangkeluar'])) {
     $item_barang = $_POST['item_barang'];
@@ -136,7 +105,7 @@ if (isset($_POST['barangkeluar'])) {
         $idb = $_POST['idb'];
         $idk = $_POST['idk'];
 
-        $tanggal = $_POST['tanggal'];
+        $tanggal = $_POST['tanggal_k'];
         $tujuan = $_POST['tujuan'];
         $qty = $_POST['qty'];
 
@@ -153,7 +122,7 @@ if (isset($_POST['barangkeluar'])) {
                 $selisih = $qty-$qtyskrg;
                 $kurangin = $stockskrg - $selisih;
                 $kurangistock = mysqli_query($conn, "update stock set jumlah ='$kurangin' where idbarang = '$idb'");
-                $updatenya = mysqli_query($conn, "update keluar set qty='$qty', tanggal ='$tanggal', tujuan ='$tujuan' where idkeluar ='$idk'");
+                $updatenya = mysqli_query($conn, "update keluar set qty='$qty', tanggal_k ='$tanggal', tujuan ='$tujuan' where idkeluar ='$idk'");
                 $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
 
                 if($kurangistock&&$updatenya&&$updatetotal){
@@ -167,7 +136,7 @@ if (isset($_POST['barangkeluar'])) {
                 $selisih = $qtyskrg-$qty;
                 $kurangin = $stockskrg + $selisih;
                 $kurangistock = mysqli_query($conn, "update stock set jumlah ='$kurangin' where idbarang = '$idb'");
-                $updatenya = mysqli_query($conn, "update keluar set qty='$qty', tanggal ='$tanggal', tujuan ='$tujuan' where idkeluar ='$idk'");
+                $updatenya = mysqli_query($conn, "update keluar set qty='$qty', tanggal_k ='$tanggal', tujuan ='$tujuan' where idkeluar ='$idk'");
                 $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
                 if($kurangistock&&$updatenya&&$updatetotal){
                     header('location:keluar.php');
@@ -341,6 +310,7 @@ if(isset($_POST['filter_tgl_kl'])){
     $selesai1 = $_POST['tgl_selesai1'];
     $datastockkeluar = filterKeluarStockByDate($conn, $mulai1, $selesai1);
 } 
+
 
 // inisiasi variabel filter dan month untuk digunakan di module exports
 $filter = '';

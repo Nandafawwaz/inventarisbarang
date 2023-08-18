@@ -111,6 +111,15 @@ function filterExportKeluarStockByDeskripsi($conn, $desc){
     return $ambil_alldatastock; 
 }
 
+function filterExportStockByDeskripsi($conn, $desc){
+    if ($desc === "ATK" || $desc === "Cetakan") {
+        $ambil_alldatastock = mysqli_query($conn,  "SELECT * FROM stock WHERE deskripsi LIKE '%$desc%'");
+        return $ambil_alldatastock;
+    }
+    $ambil_alldatastock = mysqli_query($conn, "SELECT * FROM stock");
+    return $ambil_alldatastock; 
+}
+
 function filterExportKeluarStockByBulan($conn, $month){
     if ($month != "") {
         $ambil_alldatastock = mysqli_query($conn,  "SELECT * FROM stock WHERE  MONTH(tanggal_k) = '$month'");

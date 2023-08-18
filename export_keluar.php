@@ -173,16 +173,6 @@ function filterExportKeluarStockByTujuan($conn, $tujuan) {
                                         </thead>
                                         <tbody>
                                         <?php 
-if (isset($_GET['start-date']) && isset($_GET['end-date'])) {
-    $startDate = $_GET['start-date'];
-    $endDate = $_GET['end-date'];
-    $ambil_alldatastock = filterExportKeluarStockByDateRange($conn, $startDate, $endDate);
-}
-
-if (isset($_GET['filter'])) {
-    $filter = $_GET['filter'];
-    $ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, $filter);
-}
                                             $grandtotal = 0;
                                             while ($data=mysqli_fetch_array($datastockkeluar)) :
                                                 $idk = $data['idkeluar'];
