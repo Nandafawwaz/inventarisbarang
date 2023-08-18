@@ -19,6 +19,7 @@ require 'cek.php';
         <link href="css/styles.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
         <style>
         .sb-nav-link-icon img {
         max-width: 130px; 
@@ -123,44 +124,39 @@ require 'cek.php';
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-6">
-                <!-- Deskripsi Filter -->
-                <form id="descForm" method="post" class="filter-form" action="">
-                    <div class="form-group">
-                        <label for="desc">Pilih Jenis Barang:</label>
-                        <select name="desc" id="desc" class="form-control">
-                            <option value="" <?php echo ($desc == '') ? "selected" : "" ?>>All Deskripsi</option>
-                            <option value="ATK" <?php echo ($desc == 'ATK')?"selected":"" ?>>ATK</option>
-                            <option value="Cetakan" <?php echo ($desc == 'Cetakan')?"selected":"" ?>>Cetakan</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-6">
-                <!-- Start and End Date Filters -->
-                <form id="dateForm" method="post" class="filter-form" action="">
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="tgl_mulai">Tanggal Mulai:</label>
-                                <input type="date" name="tgl_mulai" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="tgl_selesai">Tanggal Akhir:</label>
-                                <input type="date" name="tgl_selesai" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <button type="submit" name="filter_all_stock" class="btn btn-info">
-                                Filter
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+
+            <form id="descForm" method="post" class="filter-form" action="">
+<div class="filter-left">
+    <div class="form-group">
+        <label for="desc">Pilih Jenis Barang:</label>
+        <select name="desc" id="desc" class="form-control">
+            <option value="" <?php echo ($desc == '') ? "selected" : "" ?>>All Deskripsi</option>
+	    <option value="ATK" <?php echo ($desc == 'ATK')?"selected":"" ?>>ATK</option>
+	    <option value="Cetakan" <?php echo ($desc == 'Cetakan')?"selected":"" ?>>Cetakan</option>
+        </select>
+    </div>
+
+ </div>
+
+
+    <div class="filter-right">
+        <div class="form-group">
+            <label for="tgl_mulai">Tanggal Mulai:</label>
+            <input type="date" name="tgl_mulai" class="form-control">
         </div>
+
+        <div class="form-group">
+            <label for="tgl_selesai">Tanggal Akhir:</label>
+            <input type="date" name="tgl_selesai" class="form-control">
+        </div>
+    </div>
+    <div class="filter-button">
+        <button type="submit" name="filter_all_stock" class="btn btn-info">
+            Filter
+        </button>
+    </div>
+</form>
+
     </div>
 </div>
 
@@ -345,10 +341,23 @@ require 'cek.php';
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/datatables-demo.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2();
+            });
+        </script>
         <script>
     document.addEventListener("DOMContentLoaded", function() {
+        const locationForm = document.getElementById("locationForm");
         const descForm = document.getElementById("descForm");
         const dateForm = document.getElementById("dateForm");
+
+        locationForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Submit location form
+            this.submit();
+        });
 
         descForm.addEventListener("submit", function(event) {
             event.preventDefault();

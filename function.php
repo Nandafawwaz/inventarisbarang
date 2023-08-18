@@ -109,11 +109,11 @@ if (isset($_POST['barangkeluar'])) {
         $updatestock = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
         $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$item_barang'");
         if ($update && $updatestock && $updatetotal) {
-            header('location:index.php');
+            header('location:stock.php');
     
         }else {
             echo 'Gagal';
-            header('location:index.php');
+            header('location:stock.php');
         }
     }
 
@@ -123,16 +123,16 @@ if (isset($_POST['barangkeluar'])) {
 
         $hapus = mysqli_query($conn,"delete from stock where idbarang='$idb'");
         if ($hapus) {
-            header('location:index.php');
+            header('location:stock.php');
     
         }else {
             echo 'Gagal';
-            header('location:index.php');
+            header('location:stock.php');
         }
     }
 
     //Edit barang keluar atk
-    if (isset($_POST['updatebarangkeluar_atk'])) {   
+    if (isset($_POST['updatebarangkeluar'])) {   
         $idb = $_POST['idb'];
         $idk = $_POST['idk'];
 
@@ -157,11 +157,11 @@ if (isset($_POST['barangkeluar'])) {
                 $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
 
                 if($kurangistock&&$updatenya&&$updatetotal){
-                    header('location:keluar_atk.php');
+                    header('location:keluar.php');
         
                 }else {
                     echo 'Gagal';
-                    header('location:keluar_atk.php');
+                    header('location:keluar.php');
                 }
             } else {
                 $selisih = $qtyskrg-$qty;
@@ -170,11 +170,11 @@ if (isset($_POST['barangkeluar'])) {
                 $updatenya = mysqli_query($conn, "update keluar set qty='$qty', tanggal ='$tanggal', tujuan ='$tujuan' where idkeluar ='$idk'");
                 $updatetotal = mysqli_query($conn,"update stock set total = jumlah * harga where idbarang='$idb'");
                 if($kurangistock&&$updatenya&&$updatetotal){
-                    header('location:keluar_atk.php');
+                    header('location:keluar.php');
         
                 }else {
                     echo 'Gagal';
-                    header('location:keluar_atk.php');
+                    header('location:keluar.php');
                 }
             }
         } else {

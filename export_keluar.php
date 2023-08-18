@@ -50,7 +50,7 @@ require 'cek.php';
     display: flex;
     justify-content: flex-end; /* Align the button to the right */
     margin-top: 15px; /* Add some space from the form elements */
-    color: ##a1a7b3;
+    color: #f79423;
 }
 
 .form-group {
@@ -69,7 +69,7 @@ require 'cek.php';
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    background-color: #a1a7b3; /* Change this to your desired background color */
+    background-color: #f79423; /* Change this to your desired background color */
     color: #fff; /* Change this to your desired text color */
 }
 

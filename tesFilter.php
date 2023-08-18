@@ -76,15 +76,15 @@ function filterKeluarStockByAll($conn, $location, $mulai, $selesai, $desc_kl){
 function filterStockByAll($conn, $mulai, $selesai, $desc){
 
     if ($mulai != null && $selesai != null && $desc != "") {
-        $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE stock.tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY) AND stock.deskripsi = '$desc'");
+        $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY) AND deskripsi = '$desc'");
         return $datastock;
     }
     else if($desc != ""){
-        $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE stock.deskripsi = '$desc'");
+        $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE deskripsi = '$desc'");
         return $datastock;
     }
     else if ($mulai != null && $selesai != null) {
-        $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE stock.tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
+        $datastock = mysqli_query($conn,"SELECT * FROM stock WHERE tanggal BETWEEN '$mulai' and DATE_ADD('$selesai',INTERVAL 1 DAY)");
         return $datastock;
     }
 
