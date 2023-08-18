@@ -74,26 +74,24 @@ require 'cek.php';
                                  <a href="export.php" class="btn btn-info">Export Tabel</a>
                                  <form action="" method="post" style="float:right">
                                     <select name="desc" id="desc">
-                                        <option value="" <?= ($desc == "") ? "selected" : "" ?>>All Deskripsi</option>
+                                        <option value="" <?= ($desc == "" || $desc == null) ? "selected" : "" ?>>All Deskripsi</option>
                                         <option value="ATK" <?= ($desc == "ATK") ? "selected" : "" ?>>ATK</option>
                                         <option value="Cetakan" <?= ($desc == "Cetakan") ? "selected" : "" ?>>Cetakan</option>
                                     </select>
-                                    <button type="submit" class="btn btn-primary" name="filter_desc">
-                                    Filter Deskripsi
-                                 </button>
-                                 </form>
-                                 <br>
+                                    <br>
 
                                  <div class="row mt-4">
                                  <div class="col">
-                                 <form method ="post" class="form-inline">
-                                    <input type ="date" name ="tgl_mulai" class="form-control">
-                                    <input type ="date" name ="tgl_selesai" class="form-control ml-3">
-                                    <button type ="submit" name="filter_tgl_st" class="btn btn-info ml-3">
+                                
+                                    <input type ="date" name ="tgl_mulai" class="form-control" value=<?= $mulai != null ? "$mulai" : ""?>>
+                                    <input type ="date" name ="tgl_selesai" class="form-control ml-3"  value=<?= $selesai != null ? "$selesai" : ""?>>
+                                    <button type ="submit" name="filter_all" class="btn btn-info ml-3">
                                     Filter
                                     </button>
+                                    
+                                 </form>
+                                 
 
-                                 </form>  
                                  </div>
                                  </div>
                             </div>

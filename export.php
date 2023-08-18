@@ -36,41 +36,26 @@ require 'cek.php';
         </nav>
 <div class="container">
     <br>
-			<h2>Stock Tersedia</h2>
+        <h2>Stock Tersedia</h2>
 
-            <div>
-            <form method="GET" action="">
-        <label>Filter by Deskripsi:</label>
-        <input type="radio" name="filter" value="ATK"> ATK
-        <input type="radio" name="filter" value="Cetakan"> Cetakan
-        <button type="submit">Filter</button>
-    </form>
-</div>
+        <div>
+            <form method="POST" action="">
+            <label>Filter:</label>
+            <input type="radio" name="desc" value="" <?= ($desc == "" || $desc == null) ? "checked" : "" ?>> All Desc
+            <input type="radio" name="desc" value="ATK" <?= $desc == "ATK" ? "checked" : "" ?>> ATK
+            <input type="radio" name="desc" value="Cetakan" <?= $desc == "Cetakan" ? "checked" : "" ?>> Cetakan
+            <br>
 
-<?php
+            <label for="tgl_mulai1">Start Date:</label>
+            <input type="date" id="tgl_mulai" name="tgl_mulai"  value = <?= $mulai != null ? "$mulai" : ""?>>
+            
+            <label for="tgl_selesai1">End Date:</label>
+            <input type="date" id="tgl_selesai" name="tgl_selesai" value = <?= $selesai != null ? "$selesai" : ""?>>
 
-$ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, '');
-
-
-function filterExportKeluarStockByDateRange($conn, $startDate, $endDate) {
-    $query = "SELECT * FROM stock WHERE tanggal BETWEEN '$startDate' AND '$endDate'";
-    $result = mysqli_query($conn, $query);
-    return $result;
-}
-?>
-
-<div>
-
-<form method="GET" action="">
-    <label for="start-date">Start Date:</label>
-    <input type="date" id="start-date" name="start-date">
-    
-    <label for="end-date">End Date:</label>
-    <input type="date" id="end-date" name="end-date">
-    
-    <button type="submit">Filter</button>
-</form>
-</div>
+            <button type="submit" name="filter_all">Filter</button>
+            </form>
+        </div>
+        <span>Filter <?= $desc?> pada <?= ($mulai != "" && $selesai != "")? $mulai." sampai ".$selesai : "keseluruhan waktu" ?></span>
 				<div class="data-tables datatable-dark">
 					<br>
 					                    <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">
@@ -89,21 +74,10 @@ function filterExportKeluarStockByDateRange($conn, $startDate, $endDate) {
 
                                             <?php 
 
-if (isset($_GET['start-date']) && isset($_GET['end-date'])) {
-    $startDate = $_GET['start-date'];
-    $endDate = $_GET['end-date'];
-    $ambil_alldatastock = filterExportKeluarStockByDateRange($conn, $startDate, $endDate);
-}
-
-if (isset($_GET['filter'])) {
-    $filter = $_GET['filter'];
-    $ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, $filter);
-}
-
 
                                             // $i = 1;
                                             $grand_total = 0;
-                                            while ($data=mysqli_fetch_array($ambil_alldatastock)) :
+                                            while ($data=mysqli_fetch_array($datastock)) :
                                                 $tanggal = $data['tanggal'];
                                                 $deskripsi = $data['deskripsi'];
                                                 $namabarang = $data['namabarang'];

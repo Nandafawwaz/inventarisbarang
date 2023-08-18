@@ -37,62 +37,44 @@ require 'cek.php';
     <br>
 			<h2>Stock Tersedia</h2>
 
-            <div>
-            <form method="GET" action="">
+        <div>
+        <form method="POST" action="">
         <label>Filter by Deskripsi:</label>
-        <input type="radio" name="filter" value="ATK"> ATK
-        <input type="radio" name="filter" value="Cetakan"> Cetakan
-        <button type="submit">Filter</button>
+        <input type="radio" name="desc_kl" value="" <?= ($desc_kl == "" || $desc_kl == null) ? "checked" : "" ?>> All Desc
+        <input type="radio" name="desc_kl" value="ATK" <?= $desc_kl == "ATK" ? "checked" : "" ?>> ATK
+        <input type="radio" name="desc_kl" value="Cetakan" <?= $desc_kl == "Cetakan" ? "checked" : "" ?>> Cetakan
+        <br>
+
+        <label for="tgl_mulai1">Start Date:</label>
+        <input type="date" id="tgl_mulai1" name="tgl_mulai1"  value = <?= $mulaiKeluar != null ? "$mulaiKeluar" : ""?>>
+        
+        <label for="tgl_selesai1">End Date:</label>
+        <input type="date" id="tgl_selesai1" name="tgl_selesai1" value = <?= $selesaiKeluar != null ? "$selesaiKeluar" : ""?>>
+
+        <select name="location" class="form-control">
+            <option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
+            <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
+            <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
+            <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
+            <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
+            <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
+            <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
+            <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
+            <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
+            <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
+        </select>
+
+        <br>
+
+        <button type="submit" name="filter_keluar_all">Filter</button>
+
     </form>
 </div>
 
-<?php
-
-$ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, '');
-
-
-function filterExportKeluarStockByDateRange($conn, $startDate, $endDate) {
-    $query = "SELECT * FROM stock WHERE tanggal BETWEEN '$startDate' AND '$endDate'";
-    $result = mysqli_query($conn, $query);
-    return $result;
-}
-
-function filterExportKeluarStockByTujuan($conn, $tujuan) {
-    $query = "SELECT * FROM stock WHERE tujuan = '$tujuan'";
-    $result = mysqli_query($conn, $query);
-    return $result;
-}
-?>
 <div>
 
-<form method="GET" action="">
-    <label for="start-date">Start Date:</label>
-    <input type="date" id="start-date" name="start-date">
-    
-    <label for="end-date">End Date:</label>
-    <input type="date" id="end-date" name="end-date">
-    
-    <button type="submit">Filter</button>
-</form>
-<form method="GET" style="float:right">
-<label for="tujuan">Filter by Tujuan:</label>
-<select name="tujuan" class="form-control" required>
-<option value="" <?php echo ($location == '')?"selected":"" ?>>All Location</option>
-                                        <option value="Cabang Tangerang Selatan" <?php echo ($location == 'Cabang Tangerang Selatan')?"selected":"" ?>>Cabang Tangerang Selatan</option>
-                                        <option value="KCP Alam Sutera" <?php echo ($location == 'KCP Alam Sutera')?"selected":"" ?>>KCP Alam Sutera</option>
-                                        <option value="KCP Bintaro Jaya" <?php echo ($location == 'KCP Bintaro Jaya')?"selected":"" ?>>KCP Bintaro Jaya</option>
-                                        <option value="KCP Bintaro" <?php echo ($location == 'KCP Bintaro')?"selected":"" ?>>KCP Bintaro</option>
-                                        <option value="KCP Cirendeu" <?php echo ($location == 'KCP Cirendeu')?"selected":"" ?>>KCP Cirendeu</option>
-                                        <option value="KCP Ciputat" <?php echo ($location == 'KCP Ciputat')?"selected":"" ?>>KCP Ciputat</option>
-                                        <option value="KCP Pamulang" <?php echo ($location == 'KCP Pamulang')?"selected":"" ?>>KCP Pamulang</option>
-                                        <option value="KCP Pahlawan Seribu" <?php echo ($location == 'KCP Pahlawan Seribu')?"selected":"" ?>>KCP Pahlawan Seribu</option>
-                                        <option value="KCP Serpong" <?php echo ($location == 'KCP Serpong')?"selected":"" ?>>KCP Serpong</option>
-                                    </select>
-                                    <button type="submit" class="btn btn-primary" name="filter_location" style = "margin-left: 5px; margin-right: 20px">
-                                    Filter Lokasi
-                                 </button>
-</form>
 </div>
+            <span>Filter <?= $desc_kl?> di <?= ($location != "" ? $location : "Semua Lokasi")?> pada <?= ($mulaiKeluar != "" && $selesaiKeluar != "")? $mulaiKeluar." sampai ".$selesaiKeluar : "keseluruhan waktu" ?></span>
             <div class="data-tables datatable-dark">
 					<br>
 					                    <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">
@@ -101,7 +83,7 @@ function filterExportKeluarStockByTujuan($conn, $tujuan) {
                                                 <th>Tanggal</th>
                                                 <th>Nama Barang</th>
                                                 <th>Deskripsi</th>
-                                                <th>Keterangan</th>
+                                                <th>Tujuan</th>
                                                 <th>Harga</th>
                                                 <th>Jumlah</th>
                                                 <th>Total</th>
@@ -111,45 +93,30 @@ function filterExportKeluarStockByTujuan($conn, $tujuan) {
 
                                         <?php 
 
-if (isset($_GET['start-date']) && isset($_GET['end-date'])) {
-    $startDate = $_GET['start-date'];
-    $endDate = $_GET['end-date'];
-    $ambil_alldatastock = filterExportKeluarStockByDateRange($conn, $startDate, $endDate);
-}
-
-if (isset($_GET['filter'])) {
-    $filter = $_GET['filter'];
-    $ambil_alldatastock = filterExportKeluarStockByDeskripsi($conn, $filter);
-}
-
-if (isset($_GET['tujuan'])) {
-    $tujuan = $_GET['tujuan'];
-    $ambil_alldatastock = filterExportKeluarStockByTujuan($conn, $tujuan);
-}
-
-
-                                            // $i = 1;
+                                            
                                             $grand_total = 0;
-                                            while ($data=mysqli_fetch_array($ambil_alldatastock)) :
+                                            while ($data=mysqli_fetch_array($datastockkeluar)) :
                                                 $tanggal = $data['tanggal'];
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
+                                                $tujuan = $data['tujuan'];
                                                 $keterangan = $data['keterangan'];
                                                 $harga = $data['harga'];
+                                                $qty = $data['qty'];
                                                 $jumlah = $data['jumlah'];
                                                 $total = $data['total'];   
                                                 $grand_total += $total;                
                                             ?>
 
                                             <tr>
-                                                <!-- <td><?= $i++;?></td> -->
-                                                <td><?php echo$tanggal?></td>
-                                                <td><?php echo$namabarang?></td>
-                                                <td><?php echo$deskripsi?></td>
-                                                <td><?php echo$keterangan ?></td>
+                                            
+                                                <td><?=$tanggal?></td>
+                                                <td><?=$namabarang?></td>
+                                                <td><?=$deskripsi?></td>
+                                                <td><?=$tujuan?></td>    
                                                 <td><?php echo number_format($harga, 0, ',', '.'); ?></td>
-                                                <td><?php echo number_format($jumlah, 0, ',', '.'); ?></td>
-                                                <td><?php echo number_format($total, 0, ',', '.'); ?></td>  
+                                                <td><?php echo number_format($qty, 0, ',', '.'); ?></td>
+                                                <td><?php echo number_format($total, 0, ',', '.'); ?></td>   
                                             </tr>            
                                             
                                             <?php 
