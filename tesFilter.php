@@ -94,7 +94,7 @@ function filterStockByAll($conn, $mulai, $selesai, $desc){
 
 function filterKeluarStockByDeskripsi($conn, $desc_kl){
     if($desc_kl != ""){
-        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE stock.deskripsi = '$desc'");
+        $datastockkeluar = mysqli_query($conn,"SELECT * FROM keluar INNER JOIN stock ON keluar.idbarang = stock.idbarang WHERE stock.deskripsi = '$desc_kl'");
         return $datastockkeluar;
     }
 
